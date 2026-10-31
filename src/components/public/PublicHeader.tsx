@@ -6,9 +6,6 @@ import {
   BookmarkCheck,
   Phone,
   MessageCircle,
-  MapPin,
-  Building2,
-  Sparkles,
   ChevronRight,
 } from 'lucide-react';
 import { KriyaaLogo } from '../KriyaaLogo';
@@ -18,7 +15,7 @@ interface PublicHeaderProps {
   activeTab: PublicTab;
   onTabChange: (tab: PublicTab) => void;
   savedCount: number;
-  onOpenConsultation: () => void;
+  onOpenConsultation?: () => void;
 }
 
 export const PublicHeader: React.FC<PublicHeaderProps> = ({
@@ -120,26 +117,13 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({
           </nav>
 
           {/* ─────────────────────────────────────────────────────────────
-              RIGHT ACTIONS:
-              - Fast Consultation CTA
-              - Mobile Hamburger
+              MOBILE HAMBURGER TOGGLE (<768px)
               ───────────────────────────────────────────────────────────── */}
-          <div className="flex items-center gap-2.5">
-            {/* Quick Consultation CTA */}
-            <button
-              type="button"
-              onClick={onOpenConsultation}
-              className="flex min-h-[44px] items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-[#EAB308] to-[#CA8A04] hover:brightness-110 text-slate-950 text-xs font-black shadow-md transition-all cursor-pointer active:scale-95"
-            >
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Free Consultation</span>
-            </button>
-
-            {/* Mobile Hamburger Toggle (<768px) */}
+          <div className="flex items-center md:hidden">
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden min-h-[44px] min-w-[44px] rounded-xl bg-white/10 hover:bg-white/15 text-white flex items-center justify-center transition-colors cursor-pointer"
+              className="min-h-[44px] min-w-[44px] rounded-xl bg-white/10 hover:bg-white/15 text-white flex items-center justify-center transition-colors cursor-pointer"
               aria-label="Toggle Navigation Drawer"
             >
               {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -233,19 +217,6 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({
                     );
                   })}
                 </nav>
-
-                {/* Free Consultation CTA */}
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    onOpenConsultation();
-                  }}
-                  className="w-full min-h-[48px] rounded-2xl bg-gradient-to-r from-[#EAB308] to-[#CA8A04] text-slate-950 font-black text-sm flex items-center justify-center gap-2 shadow-lg"
-                >
-                  <Sparkles className="w-4 h-4" />
-                  <span>Get Free Consultation</span>
-                </button>
               </div>
 
               {/* Drawer Bottom: Direct Contact & Office Details */}
