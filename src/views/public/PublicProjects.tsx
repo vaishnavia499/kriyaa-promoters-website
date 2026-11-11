@@ -50,6 +50,9 @@ interface PublicProjectsProps {
   onOpenConsultation: (prefillPlot?: Property) => void;
   onOpenCabBooking: (prefillPlot?: Property) => void;
   initialViewingProjectId?: string | null;
+  activeProjectId?: string | null;
+  onActiveProjectChange?: (id: string | null) => void;
+  onBack?: () => void;
 }
 
 export const PublicProjects: React.FC<PublicProjectsProps> = ({
@@ -57,6 +60,9 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
   onOpenConsultation,
   onOpenCabBooking,
   initialViewingProjectId,
+  activeProjectId: activeProjectIdProp,
+  onActiveProjectChange,
+  onBack,
 }) => {
   const {
     projects,
@@ -72,9 +78,15 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
   } = useApp();
 
   // Full-screen project view state (null = catalog list, string = specific project full screen)
-  const [activeProjectId, setActiveProjectId] = useState<string | null>(
+  const [internalActiveProjectId, setInternalActiveProjectId] = useState<string | null>(
     initialViewingProjectId || null
   );
+
+  const activeProjectId = activeProjectIdProp !== undefined ? activeProjectIdProp : internalActiveProjectId;
+  const setActiveProjectId = (id: string | null) => {
+    setInternalActiveProjectId(id);
+    onActiveProjectChange?.(id);
+  };
 
   // Top tab switcher inside full screen project view:
   // Tab 1: 'details' (Plot Details & Full Project Overview Showcase)
@@ -242,51 +254,60 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
       <div className="w-full min-h-screen bg-white text-slate-900 flex flex-col justify-between select-none">
         <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 w-full space-y-6">
           {/* Top Bar: Back Button + Project Identity matching Reference Image */}
-          <div className="bg-white rounded-3xl p-4 sm:p-6 border border-slate-200/80 shadow-xs space-y-4">
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex items-start gap-3 sm:gap-4">
-                <button
-                  type="button"
-                  onClick={() => setActiveProjectId(null)}
-                  className="min-h-[44px] min-w-[44px] rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 flex items-center justify-center transition-all cursor-pointer shadow-xs group shrink-0 mt-0.5"
-                  title="Back to All Projects"
-                  aria-label="Back to All Projects"
-                >
-                  <ArrowLeft className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform text-[#0B3B24]" />
-                </button>
+          <div className="bg-white rounded-3xl p-4 sm:p-6 border border-slate-200/80 shadow-xs space-y-3.5">
+            <div className="flex items-start gap-3">
+              <button
+                type="button"
+                onClick={() => {
+                  if (onBack) {
+                    onBack();
+                  } else {
+                    setActiveProjectId(null);
+                  }
+                }}
+                className="min-h-[42px] min-w-[42px] rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 flex items-center justify-center transition-all cursor-pointer shadow-xs group shrink-0 mt-0.5"
+                title="Back to Previous Page"
+                aria-label="Back to Previous Page"
+              >
+                <ArrowLeft className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform text-[#0B3B24]" />
+              </button>
 
-                <div className="space-y-1">
-                  <h1 className="text-2xl sm:text-3xl font-black text-[#0B3B24] tracking-tight leading-tight">
+              <div className="flex-1 min-w-0 space-y-2">
+                <div className="flex items-center justify-between gap-2 flex-wrap">
+                  <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-[#0B3B24] tracking-tight whitespace-nowrap truncate">
                     {viewingProject.name}
                   </h1>
-                  <div>
-                    <span className="px-3 py-1 rounded-md bg-[#0B3B24] text-white text-xs font-bold tracking-wide shadow-xs inline-block">
-                      {viewingProject.dtcpNumber}
-                    </span>
-                  </div>
-                  <p className="text-xs sm:text-sm text-slate-600 font-medium flex items-center gap-1.5 pt-0.5">
+
+                  {/* RERA Badge on Top Right */}
+                  {viewingProject.reraNumber && (
+                    <div className="px-3 py-1 rounded-full bg-[#E8F8EE] text-[#15803D] border border-[#BDE8CD] text-[11px] sm:text-xs font-bold flex items-center gap-1.5 shadow-xs shrink-0 whitespace-nowrap">
+                      <span className="w-2 h-2 rounded-full bg-[#15803D] shrink-0" />
+                      <span>TN/RERA Active</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Sub-row: DTCP Badge + Location aligned under Title */}
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs">
+                  <span className="px-2.5 py-0.5 rounded-md bg-[#0B3B24] text-white text-[11px] sm:text-xs font-bold tracking-wide shadow-xs whitespace-nowrap inline-flex items-center shrink-0">
+                    {viewingProject.dtcpNumber.replace(/^DTCP\s*No\.?\s*/i, 'DTCP ')}
+                  </span>
+
+                  <p className="text-xs sm:text-sm text-slate-600 font-medium flex items-center gap-1 whitespace-nowrap">
                     <MapPin className="w-3.5 h-3.5 text-[#E5A91E] shrink-0" />
                     <span>
-                      {viewingProject.district} District · {viewingProject.totalAreaExtent || '12.5 Gated Acres'}
+                      {(viewingProject.district || 'Cuddalore').replace(/\s*district\s*/gi, '').trim()} District · {viewingProject.totalAreaExtent || '12.5 Gated Acres'}
                     </span>
                   </p>
                 </div>
               </div>
-
-              {/* RERA Badge on Top Right */}
-              {viewingProject.reraNumber && (
-                <div className="px-3.5 py-1.5 rounded-full bg-[#E8F8EE] text-[#15803D] border border-[#BDE8CD] text-xs font-bold flex items-center gap-1.5 shadow-xs shrink-0">
-                  <span className="w-2 h-2 rounded-full bg-[#15803D] shrink-0" />
-                  <span>{viewingProject.reraNumber.includes('TN/RERA') ? 'TN/RERA Active' : viewingProject.reraNumber}</span>
-                </div>
-              )}
             </div>
 
             {/* Full-width Book Doorstep Cab Visit Button (Exact from Reference) */}
             <button
               type="button"
               onClick={() => onOpenCabBooking(inspectedPlot || undefined)}
-              className="w-full min-h-[48px] sm:min-h-[52px] rounded-2xl bg-[#0B3B24] hover:bg-[#14563D] active:scale-[0.99] text-white font-black text-xs sm:text-sm md:text-base flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer"
+              className="w-full min-h-[48px] sm:min-h-[52px] rounded-2xl bg-[#0B3B24] hover:bg-[#14563D] active:scale-[0.99] text-white font-black text-xs sm:text-sm md:text-base flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer mt-1"
             >
               <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-[#EAB308] shrink-0" />
               <span className="tracking-wider uppercase">BOOK FREE DOORSTEP CAB VISIT</span>
@@ -990,11 +1011,23 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
         {/* ─────────────────────────────────────────────────────────────
             1. CLEAN HEADER (Title Only - No Subtitle)
             ───────────────────────────────────────────────────────────── */}
-        <div className="text-center max-w-4xl mx-auto pt-2">
-          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+        <div className="flex items-center justify-between max-w-4xl mx-auto pt-2 gap-3">
+          {onBack && (
+            <button
+              type="button"
+              onClick={onBack}
+              className="min-h-[42px] min-w-[42px] rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 flex items-center justify-center transition-all cursor-pointer shadow-xs group shrink-0"
+              title="Back to Previous Page"
+              aria-label="Back to Previous Page"
+            >
+              <ArrowLeft className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform text-[#0B3B24]" />
+            </button>
+          )}
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight flex-1 text-center">
             Ready to Find Your Ideal{' '}
             <span className="text-[#CA8A04]">Vastu-Compliant Plot?</span>
           </h1>
+          {onBack && <div className="w-[42px] shrink-0 hidden sm:block" />}
         </div>
 
         {/* ─────────────────────────────────────────────────────────────

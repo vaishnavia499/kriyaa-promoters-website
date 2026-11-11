@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
 import { PublicTab, Property } from '../../types';
 import { PublicHeader } from '../../components/public/PublicHeader';
@@ -19,12 +19,122 @@ export const PublicWebsite: React.FC = () => {
     setPublicTab,
   } = useApp();
 
+  // Active Project being viewed in full screen inside the Projects tab (null = catalog list)
+  const [activeViewingProjectId, setActiveViewingProjectId] = useState<string | null>(null);
+
+  // Navigation History Stack: tracks visited states for [←] back button
+  const [navHistory, setNavHistory] = useState<Array<{ tab: PublicTab; projectId?: string | null }>>([
+    { tab: publicTab || 'home', projectId: null },
+  ]);
+
   // Modals state
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
   const [isCabBookingOpen, setIsCabBookingOpen] = useState(false);
   const [isDroneVideoOpen, setIsDroneVideoOpen] = useState(false);
   const [prefillPlot, setPrefillPlot] = useState<Property | null>(null);
   const [prefillPlotNumbers, setPrefillPlotNumbers] = useState<string | undefined>(undefined);
+
+  const navigateTo = (tab: PublicTab, projectId: string | null = null) => {
+    setNavHistory((prev) => {
+      const top = prev[prev.length - 1];
+      if (top && top.tab === tab && top.projectId === projectId) {
+        return prev;
+      }
+      return [...prev, { tab, projectId }];
+    });
+    setPublicTab(tab);
+    setActiveViewingProjectId(projectId);
+
+    // Push browser history state for hardware/browser back buttons
+    try {
+      window.history.pushState({ tab, projectId }, '');
+    } catch {
+      // Ignore in non-browser or sandbox environments
+    }
+  };
+
+  const handleBackNavigation = () => {
+    // 1. Close any open modal first
+    if (isConsultationOpen) {
+      setIsConsultationOpen(false);
+      return;
+    }
+    if (isCabBookingOpen) {
+      setIsCabBookingOpen(false);
+      return;
+    }
+    if (isDroneVideoOpen) {
+      setIsDroneVideoOpen(false);
+      return;
+    }
+
+    // 2. If viewing a specific project detail, back takes them to the catalog or previous tab
+    if (activeViewingProjectId) {
+      if (navHistory.length > 1) {
+        const next = [...navHistory];
+        next.pop(); // remove current project view
+        const target = next[next.length - 1];
+        setNavHistory(next);
+        setPublicTab(target.tab);
+        setActiveViewingProjectId(target.projectId || null);
+      } else {
+        setActiveViewingProjectId(null);
+      }
+      return;
+    }
+
+    // 3. If in catalog, saved, or contact, pop to previous tab
+    if (navHistory.length > 1) {
+      const next = [...navHistory];
+      next.pop(); // remove current tab
+      const target = next[next.length - 1];
+      setNavHistory(next);
+      setPublicTab(target.tab);
+      setActiveViewingProjectId(target.projectId || null);
+    } else {
+      if (publicTab !== 'home') {
+        setPublicTab('home');
+        setActiveViewingProjectId(null);
+        setNavHistory([{ tab: 'home', projectId: null }]);
+      }
+    }
+  };
+
+  useEffect(() => {
+    // Initialize initial browser history state once
+    try {
+      window.history.replaceState({ tab: 'home', projectId: null }, '');
+    } catch {
+      // ignore
+    }
+
+    const handlePopState = (e: PopStateEvent) => {
+      if (isConsultationOpen || isCabBookingOpen || isDroneVideoOpen) {
+        setIsConsultationOpen(false);
+        setIsCabBookingOpen(false);
+        setIsDroneVideoOpen(false);
+        return;
+      }
+
+      if (e.state && e.state.tab) {
+        setPublicTab(e.state.tab);
+        setActiveViewingProjectId(e.state.projectId || null);
+        setNavHistory((prev) => {
+          if (prev.length > 1) {
+            return prev.slice(0, prev.length - 1);
+          }
+          return [{ tab: e.state.tab, projectId: e.state.projectId || null }];
+        });
+      } else {
+        setPublicTab('home');
+        setActiveViewingProjectId(null);
+        setNavHistory([{ tab: 'home', projectId: null }]);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [isConsultationOpen, isCabBookingOpen, isDroneVideoOpen, setPublicTab]);
 
   const openConsultation = (plot?: Property) => {
     setPrefillPlot(plot || null);
@@ -44,7 +154,7 @@ export const PublicWebsite: React.FC = () => {
           ───────────────────────────────────────────────────────────── */}
       <PublicHeader
         activeTab={publicTab}
-        onTabChange={(tab) => setPublicTab(tab)}
+        onTabChange={(tab) => navigateTo(tab, null)}
         savedCount={savedPlotIds.length}
         onOpenConsultation={() => openConsultation()}
       />
@@ -55,7 +165,7 @@ export const PublicWebsite: React.FC = () => {
       <div className="flex-1 w-full pb-20 md:pb-0">
         {publicTab === 'home' && (
           <PublicHome
-            onTabChange={(tab) => setPublicTab(tab)}
+            onTabChange={(tab) => navigateTo(tab, null)}
             onOpenConsultation={openConsultation}
             onOpenCabBooking={openCabBooking}
             onOpenDroneVideo={() => setIsDroneVideoOpen(true)}
@@ -64,7 +174,16 @@ export const PublicWebsite: React.FC = () => {
 
         {publicTab === 'projects' && (
           <PublicProjects
-            onTabChange={(tab) => setPublicTab(tab)}
+            activeProjectId={activeViewingProjectId}
+            onActiveProjectChange={(id) => {
+              if (id) {
+                navigateTo('projects', id);
+              } else {
+                setActiveViewingProjectId(null);
+              }
+            }}
+            onBack={handleBackNavigation}
+            onTabChange={(tab) => navigateTo(tab, null)}
             onOpenConsultation={openConsultation}
             onOpenCabBooking={openCabBooking}
           />
@@ -72,17 +191,20 @@ export const PublicWebsite: React.FC = () => {
 
         {publicTab === 'saved' && (
           <PublicSaved
-            onTabChange={(tab) => setPublicTab(tab)}
+            onTabChange={(tab) => navigateTo(tab, null)}
             onOpenConsultation={openConsultation}
             onOpenCabBooking={openCabBooking}
+            onInspectPlotInProject={(plot) => navigateTo('projects', plot.projectId)}
+            onBack={handleBackNavigation}
           />
         )}
 
         {publicTab === 'contact' && (
           <PublicContact
-            onTabChange={(tab) => setPublicTab(tab)}
+            onTabChange={(tab) => navigateTo(tab, null)}
             onOpenConsultation={openConsultation}
             onOpenCabBooking={openCabBooking}
+            onBack={handleBackNavigation}
           />
         )}
       </div>
@@ -93,7 +215,7 @@ export const PublicWebsite: React.FC = () => {
       <PublicQuickActions
         onOpenConsultation={() => openConsultation()}
         onOpenCabBooking={() => openCabBooking()}
-        onNavigateToProjects={() => setPublicTab('projects')}
+        onNavigateToProjects={() => navigateTo('projects', null)}
       />
 
       {/* ─────────────────────────────────────────────────────────────
@@ -101,7 +223,7 @@ export const PublicWebsite: React.FC = () => {
           ───────────────────────────────────────────────────────────── */}
       <PublicBottomNav
         activeTab={publicTab}
-        onTabChange={(tab) => setPublicTab(tab)}
+        onTabChange={(tab) => navigateTo(tab, null)}
         savedCount={savedPlotIds.length}
       />
 
