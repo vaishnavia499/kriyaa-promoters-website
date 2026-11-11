@@ -370,3 +370,4 @@ export const ProjectLandmarksMap: React.FC<ProjectLandmarksMapProps> = ({ projec
     </div>
   );
 };
+

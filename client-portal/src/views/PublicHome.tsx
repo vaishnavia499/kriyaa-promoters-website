@@ -6,9 +6,6 @@ import {
   Landmark,
   Handshake,
   Home,
-  FileText,
-  FileEdit,
-  Key,
   ChevronLeft,
   ChevronRight,
   Star,
@@ -16,8 +13,6 @@ import {
   Minus,
   Phone,
   MapPin,
-  CheckCircle2,
-  Car,
 } from 'lucide-react';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { PublicTab } from '../../types';
@@ -77,96 +72,6 @@ const PILLARS_DATA = [
     title: 'Dedicated Support',
     subtitle: 'Always with you, every step of the way.',
     icon: Handshake,
-  },
-];
-
-/* ─────────────────────────────────────────────────────────── */
-/* 7-STEP BUYING PROCESS DATA (Exact Match to Specification) */
-/* ─────────────────────────────────────────────────────────── */
-const BUYING_PROCESS_STEPS = [
-  {
-    step: '01',
-    title: 'Share Your Requirements',
-    summary: 'Tell us what you are looking for. We will understand your needs, preferred location, and budget.',
-    icon: FileText,
-    details: [
-      'Preferred layout locations: Cuddalore, Chidambaram, or Pondy ECR corridor.',
-      'Flexible budget & EMI investment options with up to 80% spot bank loan sanction.',
-      'Plot dimensions: 800 sq.ft, 1,200 sq.ft, 1,800 sq.ft, or custom villa extents.',
-      'Vastu-compliant facing: East, North, or Corner plots with 30ft/40ft blacktop tar roads.',
-    ],
-  },
-  {
-    step: '02',
-    title: 'Explore Available Plots',
-    summary: 'Discover suitable plots and explore their location, layout, and available details.',
-    icon: Home,
-    details: [
-      'Interactive 2D/3D master plan layout inspection with live availability status.',
-      'Sanctioned boundary stone verification and road width checks.',
-      'Immediate sub-divided patta transfer feasibility verification.',
-      'Comparison matrix across high-growth corridors for maximum capital appreciation.',
-    ],
-  },
-  {
-    step: '03',
-    title: 'Schedule a Site Visit',
-    summary: 'Experience the location in person with our complimentary doorstep cab service and promoter accompaniment.',
-    icon: Car,
-    details: [
-      '100% free doorstep pickup and drop cab service across Cuddalore and Pondicherry.',
-      'Sweet potable drinking ground water testing and neighborhood infrastructure check.',
-      'Physical demarcation stone confirmation matching the sanctioned blueprint.',
-      'Direct on-site walkthrough with Managing Director Rajesh RTR.',
-    ],
-  },
-  {
-    step: '04',
-    title: 'Verify Property Documents',
-    summary: 'Complete peace of mind with 100% transparent legal scrutiny by senior high court advocates.',
-    icon: ShieldCheck,
-    details: [
-      'Parent deed continuity verification dating back 30+ years without gaps.',
-      'Nil-Encumbrance Certificate (EC) up to current date provided for inspection.',
-      'DTCP Sanctioned Layout Order copy and government approval seals.',
-      'Pre-vetted legal documentation folder ready for immediate bank loan submission.',
-    ],
-  },
-  {
-    step: '05',
-    title: 'Choose & Book Your Plot',
-    summary: 'Confirm your dream plot selection with transparent pricing, zero hidden charges, and instant receipt.',
-    icon: CheckCircle2,
-    details: [
-      'Nominal token advance with immediate printed booking confirmation & plot reservation.',
-      'Transparent square-foot pricing with zero broker commission or hidden charges.',
-      'Spot loan sanction assistance with SBI, HDFC, Canara, and Indian Bank.',
-      'Plot lock-in protection with immediate removal from public sale inventory.',
-    ],
-  },
-  {
-    step: '06',
-    title: 'Complete Registration',
-    summary: 'Hassle-free sub-registrar execution managed end-to-end by our dedicated legal documentation desk.',
-    icon: FileEdit,
-    details: [
-      'Draft sale deed preparation and customer review prior to stamp duty purchase.',
-      'Sub-registrar office appointment booking with dedicated promoter desk assistance.',
-      'Guidance and presence of Rajesh RTR during biometric execution.',
-      'All government registration formalities handled cleanly within 2 hours.',
-    ],
-  },
-  {
-    step: '07',
-    title: 'Welcome to Ownership!',
-    summary: 'Receive your registered sale deed, original individual Patta, and begin building your future.',
-    icon: Key,
-    details: [
-      'Original registered sale deed delivered securely with laminated documents.',
-      'Immediate individual sub-divided Patta transferred into your name.',
-      'Architectural house-building guidance and borewell clearance assistance.',
-      'Lifetime customer support and appreciation tracking from Kriyaa Promoters.',
-    ],
   },
 ];
 
@@ -253,41 +158,6 @@ export const PublicHome: React.FC<PublicHomeProps> = ({
     }, 3000);
     return () => clearInterval(timer);
   }, [isAdPaused]);
-
-  // Timeline Expandable Accordion State
-  const [openStepIndex, setOpenStepIndex] = useState<number | null>(null);
-
-  const toggleStepDetails = (idx: number) => {
-    setOpenStepIndex((prev) => (prev === idx ? null : idx));
-  };
-
-  // Scroll Progress Tracking for Timeline Central Trail
-  const timelineRef = useRef<HTMLDivElement>(null);
-  const [timelineProgress, setTimelineProgress] = useState(0.2);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!timelineRef.current) return;
-      const rect = timelineRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      const totalHeight = rect.height;
-      const topOffset = rect.top;
-
-      if (topOffset > windowHeight) {
-        setTimelineProgress(0);
-      } else if (topOffset + totalHeight < 0) {
-        setTimelineProgress(1);
-      } else {
-        const scrolled = windowHeight - topOffset;
-        const progress = Math.min(Math.max(scrolled / (totalHeight + windowHeight * 0.4), 0), 1);
-        setTimelineProgress(progress);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   // Draggable Plot-to-Home Transformation Slider State (0 to 100)
   const [sliderPosition, setSliderPosition] = useState(50);
@@ -550,142 +420,30 @@ export const PublicHome: React.FC<PublicHomeProps> = ({
       </section>
 
       {/* =========================================================================
-          5. 7-STEP PROPERTY BUYING JOURNEY PROCESS TIMELINE (Exact Specification)
+          5. PROCESS OF BUYING PLOTS CALLOUT (Navigates to Dedicated Process Page)
           ========================================================================= */}
-      <section
-        id="process"
-        ref={timelineRef}
-        className="py-12 sm:py-16 px-4 sm:px-6 max-w-5xl mx-auto relative"
-      >
-        {/* Section Heading */}
-        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
-          <div className="flex items-center justify-center gap-2.5 mb-2">
-            <span className="w-8 sm:w-14 h-0.5 bg-[#E5A91E]" />
-            <h3 className="text-2xl sm:text-4xl font-extrabold text-[#0B3828] tracking-tight">
-              Your Property Buying Journey
+      <section className="py-8 sm:py-12 px-4 sm:px-6 max-w-5xl mx-auto">
+        <div className="bg-gradient-to-r from-[#0B3B24] to-[#14563D] rounded-3xl p-6 sm:p-10 text-white shadow-xl border border-emerald-700/80 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="space-y-2 text-center md:text-left max-w-xl">
+            <span className="inline-block px-3 py-1 rounded-full bg-white/10 text-[#E5A91E] text-xs font-black uppercase tracking-wider">
+              Transparent 7-Step Guide
+            </span>
+            <h3 className="text-xl sm:text-3xl font-black text-white tracking-tight">
+              Process of Buying DTCP Plots
             </h3>
-            <span className="w-8 sm:w-14 h-0.5 bg-[#E5A91E]" />
+            <p className="text-xs sm:text-sm text-emerald-100 leading-relaxed font-medium">
+              From requirement sharing and free doorstep cab visits to legal document verification and sub-registrar registration &mdash; see our full step-by-step roadmap.
+            </p>
           </div>
-          <p className="text-slate-600 text-xs sm:text-sm font-medium">
-            From enquiry to ownership &mdash; we are with you at every step.
-          </p>
-        </div>
 
-        {/* Central Vertical Trail Container */}
-        <div className="relative">
-          {/* Base Underlying Light Line (#E6EEE8) */}
-          <div
-            className="absolute top-0 bottom-0 w-1 bg-[#E6EEE8] rounded-full
-                       left-6 md:left-1/2 -translate-x-1/2 pointer-events-none"
-          />
-
-          {/* Overlaid Animated Scroll-Driven Progress Line (Gradient from #E5A91E to #14563D) */}
-          <div
-            className="absolute top-0 w-1 rounded-full origin-top transition-all duration-300 ease-out
-                       left-6 md:left-1/2 -translate-x-1/2 pointer-events-none"
-            style={{
-              height: '100%',
-              transform: `scaleY(${timelineProgress})`,
-              background: 'linear-gradient(to bottom, #E5A91E 0%, #14563D 100%)',
-              boxShadow: '0 0 10px rgba(229, 169, 30, 0.6)',
-            }}
-          />
-
-          {/* 7 Timeline Milestones */}
-          <div className="space-y-8 sm:space-y-12">
-            {BUYING_PROCESS_STEPS.map((stepItem, idx) => {
-              const isEven = idx % 2 === 1; // 0: left, 1: right, 2: left...
-              const StepIcon = stepItem.icon;
-              const isExpanded = openStepIndex === idx;
-
-              return (
-                <motion.article
-                  key={stepItem.step}
-                  initial={{ opacity: 0, y: 35 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                  className={`relative flex flex-col md:flex-row items-start md:items-center ${
-                    isEven ? 'md:flex-row-reverse' : ''
-                  }`}
-                >
-                  {/* Content Card (Desktop: 45% width, Mobile: pl-14 full width) */}
-                  <div
-                    className={`w-full md:w-[45%] pl-14 md:pl-0 ${
-                      isEven ? 'md:pl-8 text-left' : 'md:pr-8 md:text-left'
-                    }`}
-                  >
-                    <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#E6EEE8] shadow-sm hover:shadow-md transition-shadow relative">
-                      {/* Step Icon in soft light green square */}
-                      <div className="w-11 h-11 rounded-xl bg-[#EFF6F0] text-[#0B3828] border border-[#0B3828]/10 flex items-center justify-center mb-3">
-                        <StepIcon className="w-5 h-5 stroke-[2.2]" />
-                      </div>
-
-                      {/* Step Badge */}
-                      <span className="text-[11px] font-black uppercase tracking-wider text-[#E5A91E] block mb-1">
-                        STEP {stepItem.step}
-                      </span>
-
-                      {/* Title */}
-                      <h4 className="text-base sm:text-lg font-black text-[#0B3828] leading-tight mb-2">
-                        {stepItem.title}
-                      </h4>
-
-                      {/* Summary */}
-                      <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mb-3">
-                        {stepItem.summary}
-                      </p>
-
-                      {/* Expandable Accordion "Know More +" Button */}
-                      <button
-                        type="button"
-                        onClick={() => toggleStepDetails(idx)}
-                        className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0B3828] hover:text-[#E5A91E] transition-colors cursor-pointer group"
-                      >
-                        <span>{isExpanded ? 'Show Less -' : 'Know More +'}</span>
-                        <ArrowRight className="w-3.5 h-3.5 text-[#E5A91E] group-hover:translate-x-0.5 transition-transform" />
-                      </button>
-
-                      {/* Expandable Inner Details Drawer */}
-                      <AnimatePresence>
-                        {isExpanded && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.35, ease: 'easeInOut' }}
-                            className="overflow-hidden border-t border-slate-100 mt-3 pt-3"
-                          >
-                            <ul className="space-y-1.5 text-xs text-slate-600">
-                              {stepItem.details.map((bullet, bIdx) => (
-                                <li key={bIdx} className="flex items-start gap-2">
-                                  <span className="text-[#E5A91E] font-bold text-sm leading-none mt-0.5">✓</span>
-                                  <span>{bullet}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  </div>
-
-                  {/* Central Indicator Circle with Number (01, 02.. Exact as Attachment 1) */}
-                  <div
-                    className="absolute left-6 md:left-1/2 -translate-x-1/2 z-20 top-6 md:top-auto
-                               w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#E5A91E] text-[#0B3828]
-                               font-black text-xs sm:text-sm flex items-center justify-center
-                               border-2 border-white shadow-[0_0_14px_rgba(229,169,30,0.5)] transition-all"
-                  >
-                    <span>{stepItem.step}</span>
-                  </div>
-
-                  {/* Desktop Opposite Space Balancer (45% width) */}
-                  <div className="hidden md:block w-[45%]" />
-                </motion.article>
-              );
-            })}
-          </div>
+          <button
+            type="button"
+            onClick={() => onTabChange('process')}
+            className="px-6 py-3.5 rounded-full bg-[#E5A91E] hover:bg-[#CA8A04] text-[#0B2516] font-black text-xs sm:text-sm inline-flex items-center gap-2 shadow-lg transition cursor-pointer active:scale-95 shrink-0"
+          >
+            <span>View Full 7-Step Process</span>
+            <ArrowRight className="w-4 h-4 stroke-[3]" />
+          </button>
         </div>
       </section>
 

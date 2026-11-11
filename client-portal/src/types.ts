@@ -97,7 +97,7 @@ export interface BusinessSettings {
   logoUrl?: string;
 }
 
-export type PublicTab = 'home' | 'projects' | 'saved' | 'contact';
+export type PublicTab = 'home' | 'projects' | 'process' | 'saved' | 'contact';
 
 export type LayoutDisplayMode = 'blueprint' | 'topdown' | 'isometric' | 'satellite';
 

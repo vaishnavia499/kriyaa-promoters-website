@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, ListOrdered, ArrowRight } from 'lucide-react';
 import { KriyaaLogo } from '../KriyaaLogo';
 import { PublicTab } from '../../types';
 
@@ -53,10 +53,10 @@ export const PublicFooter: React.FC<PublicFooterProps> = ({ onTabChange }) => {
               <span>·</span>
               <button
                 type="button"
-                onClick={() => onTabChange('saved')}
+                onClick={() => onTabChange('process')}
                 className="hover:text-[#EAB308] transition-colors cursor-pointer"
               >
-                My Plots
+                Buying Process
               </button>
               <span>·</span>
               <button
@@ -69,6 +69,38 @@ export const PublicFooter: React.FC<PublicFooterProps> = ({ onTabChange }) => {
             </div>
           )}
         </div>
+
+        {/* Dedicated "Process of Buying Plots" Section in Footer */}
+        {onTabChange && (
+          <button
+            type="button"
+            onClick={() => {
+              onTabChange('process');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className="w-full mt-5 bg-gradient-to-r from-[#0B3B24] to-[#14563D] border border-emerald-600/60 hover:border-[#EAB308]/70 rounded-2xl p-4 flex items-center justify-between gap-3 text-left shadow-lg cursor-pointer transition-all group"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center text-[#EAB308] shrink-0 group-hover:scale-105 transition-transform">
+                <ListOrdered className="w-5 h-5" />
+              </div>
+              <div>
+                <span className="text-[10px] font-black text-[#EAB308] tracking-wider uppercase block">
+                  Step-by-Step Guide
+                </span>
+                <h4 className="text-sm font-black text-white leading-tight">
+                  Process of Buying Plots
+                </h4>
+                <p className="text-[11px] text-emerald-100/80 mt-0.5">
+                  View our animated 7-step buying &amp; registration journey
+                </p>
+              </div>
+            </div>
+            <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-[#EAB308] shrink-0 group-hover:translate-x-1 transition-transform">
+              <ArrowRight className="w-4 h-4" />
+            </div>
+          </button>
+        )}
 
         {/* 3. Four Contact Info Cards */}
         <div className="w-full space-y-3 mt-6">

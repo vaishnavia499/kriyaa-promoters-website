@@ -6,6 +6,7 @@ import { PublicBottomNav } from '../../components/public/PublicBottomNav';
 import { PublicQuickActions } from '../../components/public/PublicQuickActions';
 import { PublicHome } from './PublicHome';
 import { PublicProjects } from './PublicProjects';
+import { PublicProcess } from './PublicProcess';
 import { PublicSaved } from './PublicSaved';
 import { PublicContact } from './PublicContact';
 import { FreeConsultationModal } from '../../components/public/FreeConsultationModal';
@@ -17,6 +18,7 @@ const getHashForState = (tab: PublicTab, projectId: string | null): string => {
   if (tab === 'projects') {
     return projectId ? `#project-${projectId}` : '#projects';
   }
+  if (tab === 'process') return '#process';
   if (tab === 'saved') return '#saved';
   if (tab === 'contact') return '#contact';
   return '#home';
@@ -37,6 +39,9 @@ const parseHash = (hashStr?: string, state?: any): { tab: PublicTab; projectId: 
   if (h.startsWith('project-') || h.startsWith('projects/')) {
     const id = h.replace(/^(project-|projects\/)/, '').trim();
     return { tab: 'projects', projectId: id || null };
+  }
+  if (h === 'process' || h === 'buying-process') {
+    return { tab: 'process', projectId: null };
   }
   if (h === 'saved' || h === 'my-plots') {
     return { tab: 'saved', projectId: null };
@@ -183,6 +188,14 @@ export const PublicWebsite: React.FC = () => {
                 navigateTo('projects', null);
               }
             }}
+            onTabChange={(tab) => navigateTo(tab, null)}
+            onOpenConsultation={openConsultation}
+            onOpenCabBooking={openCabBooking}
+          />
+        )}
+
+        {publicTab === 'process' && (
+          <PublicProcess
             onTabChange={(tab) => navigateTo(tab, null)}
             onOpenConsultation={openConsultation}
             onOpenCabBooking={openCabBooking}

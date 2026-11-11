@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import {
   Menu,
   X,
-  BookmarkCheck,
+  ListOrdered,
   Phone,
   MessageCircle,
   ChevronRight,
@@ -28,7 +28,7 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({
   const navLinks: { id: PublicTab; label: string }[] = [
     { id: 'home', label: 'Home' },
     { id: 'projects', label: 'Projects & Master Plan' },
-    { id: 'saved', label: 'My Plots' },
+    { id: 'process', label: 'Buying Process' },
     { id: 'contact', label: 'About Us' },
   ];
 
@@ -92,23 +92,10 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({
                         : 'text-emerald-100/80 hover:text-white hover:bg-[#164329]'
                     }`}
                   >
-                    {link.id === 'saved' && (
-                      <div className="relative">
-                        <BookmarkCheck
-                          className={`w-4 h-4 ${
-                            savedCount > 0 ? 'text-[#EAB308]' : 'text-emerald-200'
-                          }`}
-                        />
-                        {savedCount > 0 && (
-                          <span className="absolute -top-1.5 -right-2 bg-[#991B1B] text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center border border-white/40 shadow-xs">
-                            {savedCount}
-                          </span>
-                        )}
-                      </div>
+                    {link.id === 'process' && (
+                      <ListOrdered className="w-4 h-4 text-[#EAB308]" />
                     )}
-                    <span>
-                      {link.id === 'saved' && savedCount > 0 ? `My Plots (${savedCount})` : link.label}
-                    </span>
+                    <span>{link.label}</span>
                     {isActive && (
                       <motion.div
                         layoutId="publicNavActive"
@@ -222,21 +209,11 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({
                         }`}
                       >
                         <span className="flex items-center gap-2.5">
-                          {link.id === 'saved' && (
-                            <BookmarkCheck
-                              className={`w-4 h-4 ${
-                                savedCount > 0 ? 'text-[#EAB308]' : ''
-                              }`}
-                            />
+                          {link.id === 'process' && (
+                            <ListOrdered className="w-4 h-4 text-[#EAB308]" />
                           )}
                           <span>{link.label}</span>
                         </span>
-
-                        {link.id === 'saved' && savedCount > 0 && (
-                          <span className="px-2 py-0.5 rounded-full bg-[#991B1B] text-white text-xs font-black">
-                            {savedCount}
-                          </span>
-                        )}
                         <ChevronRight className="w-4 h-4 opacity-50" />
                       </button>
                     );

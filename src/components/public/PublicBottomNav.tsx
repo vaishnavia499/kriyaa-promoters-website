@@ -1,18 +1,17 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Home, MapPin, BookmarkCheck, Info } from 'lucide-react';
+import { Home, MapPin, ListOrdered, Info } from 'lucide-react';
 import { PublicTab } from '../../types';
 
 interface PublicBottomNavProps {
   activeTab: PublicTab;
   onTabChange: (tab: PublicTab) => void;
-  savedCount: number;
+  savedCount?: number;
 }
 
 export const PublicBottomNav: React.FC<PublicBottomNavProps> = ({
   activeTab,
   onTabChange,
-  savedCount,
 }) => {
   const tabs: {
     id: PublicTab;
@@ -21,7 +20,7 @@ export const PublicBottomNav: React.FC<PublicBottomNavProps> = ({
   }[] = [
     { id: 'home', label: 'Home', icon: Home },
     { id: 'projects', label: 'Projects', icon: MapPin },
-    { id: 'saved', label: 'My Plots', icon: BookmarkCheck },
+    { id: 'process', label: 'Buying Process', icon: ListOrdered },
     { id: 'contact', label: 'About Us', icon: Info },
   ];
 
@@ -55,30 +54,24 @@ export const PublicBottomNav: React.FC<PublicBottomNavProps> = ({
                 />
               )}
 
-              {/* Icon Container with Badge */}
+              {/* Icon Container */}
               <div className="relative">
                 <Icon
                   className={`w-5 h-5 transition-transform ${
                     isActive
                       ? 'text-[#EAB308] scale-110'
                       : 'text-emerald-200/70 hover:text-white'
-                  } ${tab.id === 'saved' && savedCount > 0 && isActive ? 'fill-[#EAB308]' : ''}`}
+                  }`}
                 />
-
-                {tab.id === 'saved' && savedCount > 0 && (
-                  <span className="absolute -top-1.5 -right-2.5 bg-[#991B1B] text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center border border-white/40 shadow-xs">
-                    {savedCount}
-                  </span>
-                )}
               </div>
 
               {/* Label */}
               <span
-                className={`text-[10px] mt-1 font-bold tracking-tight ${
+                className={`text-[9.5px] sm:text-[10px] mt-1 font-bold tracking-tight whitespace-nowrap ${
                   isActive ? 'text-[#EAB308]' : 'text-emerald-200/70'
                 }`}
               >
-                {tab.id === 'saved' && savedCount > 0 ? `My Plots (${savedCount})` : tab.label}
+                {tab.label}
               </span>
             </button>
           );
