@@ -11,7 +11,6 @@ import {
   Sparkles,
   ShieldCheck,
   CheckCircle2,
-  ArrowLeft,
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { KriyaaLogo } from '../../components/KriyaaLogo';
@@ -87,32 +86,18 @@ export const PublicContact: React.FC<PublicContactProps> = ({
   return (
     <div className="w-full min-h-screen bg-white text-[#17251E] flex flex-col justify-between select-none">
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-10 w-full space-y-8 sm:space-y-10">
-        {/* Page Title with optional Back button */}
-        <div className="flex items-center justify-between max-w-2xl mx-auto pt-2 gap-3">
-          {onBack && (
-            <button
-              type="button"
-              onClick={onBack}
-              className="min-h-[42px] min-w-[42px] rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 flex items-center justify-center transition-all cursor-pointer shadow-xs group shrink-0"
-              title="Back to Previous Page"
-              aria-label="Back to Previous Page"
-            >
-              <ArrowLeft className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform text-[#0B3B24]" />
-            </button>
-          )}
-          <div className="text-center flex-1 space-y-2">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-[#113B24] text-xs font-black uppercase tracking-wider">
-              <Mail className="w-3.5 h-3.5 text-[#CA8A04]" />
-              <span>Connect Directly with Promoter</span>
-            </div>
-            <h1 className="text-2xl sm:text-4xl font-black text-slate-900">
-              Contact Kriyaa Promoters
-            </h1>
-            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-              Reach out directly to Managing Director <span className="font-bold text-slate-900">Rajesh RTR</span>. Whether you wish to review DTCP documents or schedule an on-site consultation, we are here to help.
-            </p>
+        {/* Page Title */}
+        <div className="text-center max-w-2xl mx-auto space-y-2">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-[#113B24] text-xs font-black uppercase tracking-wider">
+            <Mail className="w-3.5 h-3.5 text-[#CA8A04]" />
+            <span>Connect Directly with Promoter</span>
           </div>
-          {onBack && <div className="w-[42px] shrink-0 hidden sm:block" />}
+          <h1 className="text-2xl sm:text-4xl font-black text-slate-900">
+            Contact Kriyaa Promoters
+          </h1>
+          <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            Reach out directly to Managing Director <span className="font-bold text-slate-900">Rajesh RTR</span>. Whether you wish to review DTCP documents or schedule an on-site consultation, we are here to help.
+          </p>
         </div>
 
         {/* 2-Column Grid: Contact Info vs Automated Email Form */}

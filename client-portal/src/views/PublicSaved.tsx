@@ -6,7 +6,6 @@ import {
   Car,
   Compass,
   ArrowRight,
-  ArrowLeft,
   Building2,
   Trash2,
   Eye,
@@ -156,29 +155,15 @@ Generated on ${new Date().toLocaleDateString('en-IN')} via Kriyaa Promoters Port
     <div className="w-full min-h-screen bg-white text-slate-900 flex flex-col justify-between select-none">
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-10 w-full space-y-6 sm:space-y-8">
         {/* ─────────────────────────────────────────────────────────────
-            1. TOP TITLE WITH BACK BUTTON
+            1. TOP TITLE
             ───────────────────────────────────────────────────────────── */}
-        <div className="flex items-center justify-between max-w-3xl mx-auto py-2 gap-3">
-          {onBack && (
-            <button
-              type="button"
-              onClick={onBack}
-              className="min-h-[42px] min-w-[42px] rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 flex items-center justify-center transition-all cursor-pointer shadow-xs group shrink-0"
-              title="Back to Previous Page"
-              aria-label="Back to Previous Page"
-            >
-              <ArrowLeft className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform text-[#0B3B24]" />
-            </button>
-          )}
-          <div className="flex-1 text-center">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
-              My Favourite plots
-            </h1>
-            <p className="text-xs sm:text-sm text-slate-500 mt-1 font-medium">
-              Review your shortlisted DTCP plots, download official specification sheets, or contact Rajesh RTR directly.
-            </p>
-          </div>
-          {onBack && <div className="w-[42px] shrink-0 hidden sm:block" />}
+        <div className="text-center max-w-2xl mx-auto py-2">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
+            My Favourite plots
+          </h1>
+          <p className="text-xs sm:text-sm text-slate-500 mt-1 font-medium">
+            Review your shortlisted DTCP plots, download official specification sheets, or contact Rajesh RTR directly.
+          </p>
         </div>
 
         {/* ─────────────────────────────────────────────────────────────
