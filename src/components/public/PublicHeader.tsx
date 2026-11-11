@@ -22,7 +22,6 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({
   activeTab,
   onTabChange,
   savedCount,
-  onOpenConsultation,
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -41,92 +40,119 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full bg-[#113B24] border-b border-[#1E5D32] text-white shadow-lg transition-colors select-none">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-18 flex items-center justify-between gap-4">
+      {/* ─────────────────────────────────────────────────────────────
+          STICKY HEADER: Stays fixed at the top on scroll
+          Deep Forest Green (#113B24) with Gold accent border
+          ───────────────────────────────────────────────────────────── */}
+      <header className="sticky top-0 z-50 w-full bg-[#113B24] border-b border-[#1E5D32] text-white shadow-lg select-none">
+        <div className="max-w-7xl mx-auto px-2.5 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-2 sm:gap-3">
           {/* ─────────────────────────────────────────────────────────────
               LEFT BRAND IDENTITY:
-              Logo + "KRIYAA PROMOTERS" in white + "Your dream, our priority" in gold
+              Circular Logo Frame + "KRIYAA PROMOTERS" + Gold Tagline
               ───────────────────────────────────────────────────────────── */}
           <div
             onClick={() => handleTabClick('home')}
-            className="flex items-center gap-3 cursor-pointer group shrink-0"
+            className="flex items-center gap-2 sm:gap-3 cursor-pointer group min-w-0"
           >
-            {/* Geometric Logo Box */}
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#0B2516] border border-[#EAB308]/60 p-1.5 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
-              <KriyaaLogo className="w-full h-full" />
+            {/* Circle Framed Logo: clean white background, gold border, sharp display */}
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white border-2 border-[#EAB308] p-1 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform overflow-hidden shrink-0">
+              <KriyaaLogo className="w-full h-full object-contain" />
             </div>
 
-            <div className="flex flex-col">
-              <div className="flex items-center gap-1.5">
-                <span className="text-sm sm:text-base font-black tracking-wider text-white uppercase drop-shadow-xs">
+            <div className="flex flex-col min-w-0">
+              <div className="flex items-center gap-1">
+                <span className="text-xs sm:text-base font-black tracking-wider text-white uppercase truncate">
                   KRIYAA PROMOTERS
                 </span>
                 <span className="hidden lg:inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-bold bg-[#15803D] text-emerald-100 border border-emerald-500/30">
                   DTCP
                 </span>
               </div>
-              <span className="text-[11px] sm:text-xs italic font-bold text-[#EAB308] tracking-wide">
+              <span className="text-[10px] sm:text-xs italic font-bold text-[#EAB308] tracking-wide truncate">
                 Your dream, our priority
               </span>
             </div>
           </div>
 
           {/* ─────────────────────────────────────────────────────────────
-              DESKTOP NAVIGATION LINKS
+              DESKTOP RIGHT CLUSTER: NAVIGATION LINKS + CALL NOW
               ───────────────────────────────────────────────────────────── */}
-          <nav className="hidden md:flex items-center gap-1 lg:gap-2" aria-label="Main Navigation">
-            {navLinks.map((link) => {
-              const isActive = activeTab === link.id;
-              return (
-                <button
-                  key={link.id}
-                  type="button"
-                  onClick={() => handleTabClick(link.id)}
-                  className={`min-h-[44px] px-3.5 py-2 rounded-xl text-xs lg:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer relative ${
-                    isActive
-                      ? 'bg-[#15803D] text-white shadow-sm'
-                      : 'text-emerald-100/80 hover:text-white hover:bg-[#164329]'
-                  }`}
-                >
-                  {link.id === 'saved' && (
-                    <div className="relative">
-                      <BookmarkCheck
-                        className={`w-4 h-4 ${
-                          savedCount > 0 ? 'text-[#EAB308]' : 'text-emerald-200'
-                        }`}
+          <div className="hidden md:flex items-center gap-2 lg:gap-3 shrink-0">
+            <nav className="flex items-center gap-1 lg:gap-2" aria-label="Main Navigation">
+              {navLinks.map((link) => {
+                const isActive = activeTab === link.id;
+                return (
+                  <button
+                    key={link.id}
+                    type="button"
+                    onClick={() => handleTabClick(link.id)}
+                    className={`min-h-[44px] px-3.5 py-2 rounded-xl text-xs lg:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer relative ${
+                      isActive
+                        ? 'bg-[#15803D] text-white shadow-sm'
+                        : 'text-emerald-100/80 hover:text-white hover:bg-[#164329]'
+                    }`}
+                  >
+                    {link.id === 'saved' && (
+                      <div className="relative">
+                        <BookmarkCheck
+                          className={`w-4 h-4 ${
+                            savedCount > 0 ? 'text-[#EAB308]' : 'text-emerald-200'
+                          }`}
+                        />
+                        {savedCount > 0 && (
+                          <span className="absolute -top-1.5 -right-2 bg-[#991B1B] text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center border border-white/40 shadow-xs">
+                            {savedCount}
+                          </span>
+                        )}
+                      </div>
+                    )}
+                    <span>
+                      {link.id === 'saved' && savedCount > 0 ? `My Plots (${savedCount})` : link.label}
+                    </span>
+                    {isActive && (
+                      <motion.div
+                        layoutId="publicNavActive"
+                        className="absolute bottom-1 left-3 right-3 h-0.5 bg-[#EAB308] rounded-full"
                       />
-                      {savedCount > 0 && (
-                        <span className="absolute -top-1.5 -right-2 bg-[#991B1B] text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center border border-white/40 shadow-xs">
-                          {savedCount}
-                        </span>
-                      )}
-                    </div>
-                  )}
-                  <span>
-                    {link.id === 'saved' && savedCount > 0 ? `My Plots (${savedCount})` : link.label}
-                  </span>
-                  {isActive && (
-                    <motion.div
-                      layoutId="publicNavActive"
-                      className="absolute bottom-1 left-3 right-3 h-0.5 bg-[#EAB308] rounded-full"
-                    />
-                  )}
-                </button>
-              );
-            })}
-          </nav>
+                    )}
+                  </button>
+                );
+              })}
+            </nav>
+
+            {/* Desktop Call Now Button on Right Corner Near Menu */}
+            <a
+              href="tel:+919443278899"
+              className="min-h-[42px] px-4 py-2 rounded-xl bg-gradient-to-r from-[#EAB308] to-[#CA8A04] hover:brightness-110 text-slate-950 text-xs sm:text-sm font-black flex items-center gap-2 shadow-md hover:shadow-lg transition-all active:scale-95 cursor-pointer shrink-0"
+              title="Call Rajesh RTR: +91 94432 78899"
+            >
+              <Phone className="w-4 h-4 fill-current text-slate-950" />
+              <span>Call Now</span>
+            </a>
+          </div>
 
           {/* ─────────────────────────────────────────────────────────────
-              MOBILE HAMBURGER TOGGLE (<768px)
+              MOBILE RIGHT CLUSTER: CALL NOW BUTTON + HAMBURGER MENU (<768px)
+              Properly visible, balanced, non-cramped spacing
               ───────────────────────────────────────────────────────────── */}
-          <div className="flex items-center md:hidden">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0 md:hidden">
+            {/* Call Now button on right corner near menu */}
+            <a
+              href="tel:+919443278899"
+              className="h-9 px-2.5 py-1 rounded-xl bg-gradient-to-r from-[#EAB308] to-[#CA8A04] hover:brightness-110 active:scale-95 text-slate-950 text-xs font-black flex items-center gap-1.5 shadow-md cursor-pointer shrink-0"
+              title="Call Rajesh RTR: +91 94432 78899"
+            >
+              <Phone className="w-3.5 h-3.5 fill-current text-slate-950" />
+              <span>Call Now</span>
+            </a>
+
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="min-h-[44px] min-w-[44px] rounded-xl bg-white/10 hover:bg-white/15 text-white flex items-center justify-center transition-colors cursor-pointer"
+              className="h-9 w-9 rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 text-white flex items-center justify-center transition-colors cursor-pointer shrink-0"
               aria-label="Toggle Navigation Drawer"
             >
-              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
@@ -134,7 +160,6 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({
 
       {/* ─────────────────────────────────────────────────────────────
           MOBILE SLIDE-OVER DRAWER
-          Smooth drawer for fast section jumps & quick dialers
           ───────────────────────────────────────────────────────────── */}
       <AnimatePresence>
         {isMobileMenuOpen && (
@@ -157,11 +182,11 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({
               className="fixed top-0 right-0 bottom-0 w-[82vw] max-w-sm bg-[#113B24] border-l border-[#1E5D32] z-50 md:hidden flex flex-col justify-between p-6 text-white shadow-2xl"
             >
               <div className="space-y-6">
-                {/* Drawer Header */}
+                {/* Drawer Header with Circle Framed Logo */}
                 <div className="flex items-center justify-between pb-4 border-b border-[#1E5D32]">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-9 h-9 rounded-xl bg-[#0B2516] border border-[#EAB308]/60 p-1 flex items-center justify-center">
-                      <KriyaaLogo className="w-full h-full" />
+                    <div className="w-10 h-10 rounded-full bg-white border-2 border-[#EAB308] p-1 flex items-center justify-center overflow-hidden shrink-0">
+                      <KriyaaLogo className="w-full h-full object-contain" />
                     </div>
                     <div>
                       <h4 className="text-sm font-black text-white">KRIYAA PROMOTERS</h4>
@@ -219,7 +244,7 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({
                 </nav>
               </div>
 
-              {/* Drawer Bottom: Direct Contact & Office Details */}
+              {/* Drawer Bottom: Direct Contact & Call Desk */}
               <div className="pt-6 border-t border-[#1E5D32] space-y-3">
                 <div className="space-y-1 text-xs text-emerald-200/80">
                   <p className="font-bold text-white">Promoter Desk · Rajesh RTR</p>
@@ -229,10 +254,10 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({
                 <div className="grid grid-cols-2 gap-2">
                   <a
                     href="tel:+919443278899"
-                    className="min-h-[44px] flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-white/10 text-white text-xs font-bold hover:bg-white/15"
+                    className="min-h-[44px] flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-[#EAB308] to-[#CA8A04] text-slate-950 text-xs font-black shadow-md hover:brightness-110"
                   >
-                    <Phone className="w-3.5 h-3.5 text-[#EAB308]" />
-                    <span>Call Us</span>
+                    <Phone className="w-3.5 h-3.5 fill-current" />
+                    <span>Call Now</span>
                   </a>
                   <a
                     href="https://wa.me/919443278899?text=Hello%20Rajesh%20RTR,%20I%20am%20interested%20in%20Kriyaa%20Promoters%20plots."

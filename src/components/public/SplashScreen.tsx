@@ -50,13 +50,19 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
           {/* Subtle Outer Card Glow */}
           <div className="absolute -inset-2 bg-[#EAB308]/30 rounded-[32px] blur-xl opacity-75" />
 
-          {/* White Card matching user screenshot */}
-          <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-[28px] bg-white shadow-[0_20px_50px_rgba(0,0,0,0.8)] border-2 border-white/80 p-3 sm:p-4 flex items-center justify-center overflow-hidden">
+          {/* Circle Logo Frame */}
+          <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-white shadow-[0_20px_50px_rgba(0,0,0,0.8)] border-4 border-[#EAB308] p-3 sm:p-4 flex items-center justify-center overflow-hidden shrink-0">
             <motion.img
               initial={{ scale: 0.85 }}
               animate={{ scale: 1 }}
               transition={{ duration: 0.8, ease: 'easeOut' }}
-              src="/kriyaa-logo.jpg"
+              src="/kriyaa-logo.png"
+              onError={(e) => {
+                const target = e.currentTarget;
+                if (!target.src.endsWith('/kriyaa-logo.jpg')) {
+                  target.src = '/kriyaa-logo.jpg';
+                }
+              }}
               alt="Kriyaa Promoters Logo"
               className="w-full h-full object-contain"
               draggable={false}

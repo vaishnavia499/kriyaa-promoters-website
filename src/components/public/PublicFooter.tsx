@@ -12,8 +12,8 @@ export const PublicFooter: React.FC<PublicFooterProps> = () => {
   return (
     <footer className="w-full bg-[#06180D] border-t border-emerald-950/80 text-slate-200 select-none pt-10 pb-16 px-4">
       <div className="max-w-md mx-auto flex flex-col items-center">
-        {/* 1. Official Kriyaa Triangle Logo */}
-        <div className="w-16 h-16 rounded-2xl bg-white border-2 border-[#EAB308] p-2 flex items-center justify-center shadow-xl shadow-black/40 overflow-hidden">
+        {/* 1. Official Kriyaa Logo in Circle Frame */}
+        <div className="w-16 h-16 rounded-full bg-white border-2 border-[#EAB308] p-2 flex items-center justify-center shadow-xl shadow-black/40 overflow-hidden shrink-0">
           <KriyaaLogo className="w-full h-full object-contain" />
         </div>
 

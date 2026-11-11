@@ -4,6 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "dev:client": "npm --prefix client-portal run dev",
+    "dev:admin": "npm --prefix admin-portal run dev",
+    "build:client": "npm --prefix client-portal run build",
+    "build:admin": "npm --prefix admin-portal run build",
     "dev": "vite --port 3000 --host 0.0.0.0",
     "build": "vite build",
     "preview": "vite preview",

@@ -24,6 +24,7 @@ import {
   Box,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
   Camera,
   FileText,
   Download,
@@ -765,7 +766,7 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
               ───────────────────────────────────────────────────────────── */}
           {projectSubTab === 'layout' && (
             <div
-              className="relative w-screen h-[calc(100vh-125px)] min-h-[85vh] overflow-hidden -my-6"
+              className="relative w-screen h-[calc(100vh-124px)] min-h-[85vh] overflow-hidden -my-6"
               style={{
                 width: '100vw',
                 marginLeft: 'calc(-50vw + 50%)',
@@ -1022,54 +1023,54 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
             )}
           </div>
 
-          {/* Filter Rows: Location Pills & Status Pills (Mobile-first with horizontal scroll & 44px tap targets) */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pt-1">
-            {/* Location Filter Pills */}
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 no-scrollbar touch-pan-x">
-              <span className="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider shrink-0 mr-1 hidden sm:inline">
-                Location:
-              </span>
-              {['All Locations', 'Cuddalore', 'Chidambaram', 'Pondy / ECR'].map((loc) => {
-                const isActive = projectLocationFilter === loc;
-                return (
-                  <button
-                    key={loc}
-                    type="button"
-                    onClick={() => setProjectLocationFilter(loc)}
-                    className={`min-h-[44px] px-4 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap shrink-0 flex items-center justify-center border active:scale-95 ${
-                      isActive
-                        ? 'bg-[#113B24] dark:bg-[#15803D] text-[#EAB308] dark:text-white border-[#EAB308]/60 dark:border-emerald-500 shadow-sm'
-                        : 'bg-white dark:bg-[#0B2516] text-slate-600 dark:text-slate-300 border-slate-200 dark:border-[#1E5D32] hover:bg-slate-50 dark:hover:bg-[#133A23]'
-                    }`}
-                  >
-                    <span>{loc}</span>
-                  </button>
-                );
-              })}
+          {/* Dropdown Filters in the SAME ROW on all viewports */}
+          <div className="grid grid-cols-2 gap-2 sm:gap-3 pt-1">
+            {/* Location Dropdown */}
+            <div className="relative min-w-0">
+              <div className="relative flex items-center">
+                <div className="absolute inset-y-0 left-0 pl-2.5 sm:pl-3.5 flex items-center pointer-events-none text-[#113B24]">
+                  <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#15803D]" />
+                </div>
+                <select
+                  id="project-location-select"
+                  value={projectLocationFilter}
+                  onChange={(e) => setProjectLocationFilter(e.target.value)}
+                  className="w-full min-h-[42px] sm:min-h-[46px] pl-8 sm:pl-10 pr-6 sm:pr-9 py-2 text-[11px] sm:text-xs md:text-sm font-bold bg-white text-slate-900 border border-slate-300 hover:border-[#15803D] focus:border-[#15803D] focus:ring-2 focus:ring-emerald-500/20 shadow-xs appearance-none transition-all cursor-pointer truncate rounded-xl"
+                  aria-label="Filter by Location"
+                >
+                  <option value="All Locations">All Locations</option>
+                  <option value="Cuddalore">Cuddalore</option>
+                  <option value="Chidambaram">Chidambaram</option>
+                  <option value="Pondy / ECR">Pondy / ECR</option>
+                </select>
+                <div className="absolute inset-y-0 right-0 pr-2 sm:pr-3 flex items-center pointer-events-none text-slate-400">
+                  <ChevronDown className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                </div>
+              </div>
             </div>
 
-            {/* Status Filter Pills */}
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 no-scrollbar touch-pan-x">
-              <span className="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider shrink-0 mr-1 hidden sm:inline">
-                Status:
-              </span>
-              {['All', 'Active', 'Upcoming', 'Completed'].map((st) => {
-                const isActive = projectStatusFilter === st;
-                return (
-                  <button
-                    key={st}
-                    type="button"
-                    onClick={() => setProjectStatusFilter(st)}
-                    className={`min-h-[44px] px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap shrink-0 flex items-center justify-center border active:scale-95 ${
-                      isActive
-                        ? 'bg-[#EAB308] text-slate-950 border-[#CA8A04] shadow-sm font-black'
-                        : 'bg-white dark:bg-[#0B2516] text-slate-600 dark:text-slate-300 border-slate-200 dark:border-[#1E5D32] hover:bg-slate-50 dark:hover:bg-[#133A23]'
-                    }`}
-                  >
-                    <span>{st}</span>
-                  </button>
-                );
-              })}
+            {/* Status Dropdown */}
+            <div className="relative min-w-0">
+              <div className="relative flex items-center">
+                <div className="absolute inset-y-0 left-0 pl-2.5 sm:pl-3.5 flex items-center pointer-events-none text-[#113B24]">
+                  <Filter className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#CA8A04]" />
+                </div>
+                <select
+                  id="project-status-select"
+                  value={projectStatusFilter}
+                  onChange={(e) => setProjectStatusFilter(e.target.value)}
+                  className="w-full min-h-[42px] sm:min-h-[46px] pl-8 sm:pl-10 pr-6 sm:pr-9 py-2 text-[11px] sm:text-xs md:text-sm font-bold bg-white text-slate-900 border border-slate-300 hover:border-[#15803D] focus:border-[#15803D] focus:ring-2 focus:ring-emerald-500/20 shadow-xs appearance-none transition-all cursor-pointer truncate rounded-xl"
+                  aria-label="Filter by Status"
+                >
+                  <option value="All">All Statuses</option>
+                  <option value="Active">Active</option>
+                  <option value="Upcoming">Upcoming</option>
+                  <option value="Completed">Completed</option>
+                </select>
+                <div className="absolute inset-y-0 right-0 pr-2 sm:pr-3 flex items-center pointer-events-none text-slate-400">
+                  <ChevronDown className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                </div>
+              </div>
             </div>
           </div>
         </div>

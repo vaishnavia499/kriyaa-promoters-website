@@ -157,87 +157,15 @@ Generated on ${new Date().toLocaleDateString('en-IN')} via Kriyaa Promoters Port
             ───────────────────────────────────────────────────────────── */}
         <div className="text-center max-w-3xl mx-auto py-2">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
-            My Favourite plot
+            My Favourite plots
           </h1>
+          <p className="text-xs sm:text-sm text-slate-500 mt-1 font-medium">
+            Review your shortlisted DTCP plots, download official specification sheets, or contact Rajesh RTR directly.
+          </p>
         </div>
 
         {/* ─────────────────────────────────────────────────────────────
-            2. ACTION-DRIVEN SUMMARY CARD (When plots > 0)
-            ───────────────────────────────────────────────────────────── */}
-        {savedPlots.length > 0 && (
-          <div className="w-full max-w-md mx-auto rounded-[28px] bg-gradient-to-b from-[#092615] via-[#061F11] to-[#04140B] border border-emerald-900/60 p-5 sm:p-6 shadow-2xl text-left space-y-4 text-white">
-            {/* Top Indicator */}
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#EAB308] shadow-[0_0_8px_#EAB308]" />
-              <span className="text-xs font-black text-[#34D399] tracking-wider uppercase">
-                DIRECT SITE INSPECTION
-              </span>
-            </div>
-
-            {/* Shortlisted Pill */}
-            <div>
-              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#072413] border border-[#EAB308]/60 text-[#EAB308] text-[11px] font-black shadow-xs">
-                <span>★</span>
-                <span>{savedPlots.length} PLOT{savedPlots.length > 1 ? 'S' : ''} SHORTLISTED</span>
-              </span>
-            </div>
-
-            {/* Total Estimated Investment */}
-            <div className="pt-1">
-              <span className="text-[11px] font-black text-[#34D399] tracking-wider uppercase block">
-                TOTAL ESTIMATED INVESTMENT
-              </span>
-              <div className="text-3xl sm:text-4xl font-black text-[#FACC15] tracking-tight mt-1">
-                ₹{(totalSelectedPrice / 100000).toFixed(2)} Lakhs
-              </div>
-              <div className="mt-2">
-                <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#052112] border border-emerald-700/60 text-[#34D399] text-xs font-bold shadow-xs">
-                  <span>●</span>
-                  <span>{totalSelectedSqFt.toLocaleString('en-IN')} Sq.Ft Total Extent</span>
-                </span>
-              </div>
-            </div>
-
-            {/* VIP Doorstep Site Visit Concierge Box */}
-            <div className="bg-[#03130A] border border-emerald-900/80 rounded-2xl p-4 flex items-center gap-3.5 shadow-md">
-              <div className="w-12 h-12 rounded-2xl bg-[#061A0E] border border-[#EAB308] flex items-center justify-center text-[#EAB308] shrink-0 shadow-sm">
-                <Car className="w-5 h-5" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-1.5">
-                  <span className="text-xs font-black text-[#EAB308] uppercase tracking-wide">
-                    VIP SITE VISIT CONCIERGE
-                  </span>
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#34D399]" />
-                </div>
-                <p className="text-xs text-slate-300 leading-relaxed mt-1">
-                  Complimentary guided site inspection across{' '}
-                  <strong className="text-[#EAB308] font-bold">Cuddalore &amp; Pondicherry</strong>{' '}
-                  personally arranged by <strong className="text-white font-bold">MD Rajesh RTR</strong>.
-                </p>
-              </div>
-            </div>
-
-            {/* Proceed to Free Site Visit Button */}
-            <button
-              type="button"
-              id="btn-proceed-site-visit"
-              onClick={() => onOpenCabBooking(savedPlots[0], plotNumbersSummary)}
-              className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-[#D97706] via-[#EAB308] to-[#CA8A04] hover:brightness-105 active:scale-95 text-slate-950 font-black shadow-xl shadow-amber-500/10 transition-all cursor-pointer flex items-center justify-center gap-3"
-            >
-              <Car className="w-5 h-5 text-slate-950 shrink-0" />
-              <div className="flex flex-col items-center">
-                <span className="text-xs sm:text-sm font-black tracking-wider uppercase">
-                  PROCEED TO FREE SITE VISIT ({savedPlots.length} PLOT{savedPlots.length > 1 ? 'S' : ''})
-                </span>
-                <span className="text-sm font-black leading-none mt-0.5">→</span>
-              </div>
-            </button>
-          </div>
-        )}
-
-        {/* ─────────────────────────────────────────────────────────────
-            3. SELECTED PLOTS GRID OR EMPTY STATE
+            2. SELECTED PLOTS GRID OR EMPTY STATE
             ───────────────────────────────────────────────────────────── */}
         {savedPlots.length === 0 ? (
           <div className="max-w-md mx-auto text-center py-16 px-6 bg-white dark:bg-[#0B2516] rounded-3xl border border-slate-200 dark:border-[#1E5D32] shadow-sm space-y-4">
@@ -340,46 +268,52 @@ Generated on ${new Date().toLocaleDateString('en-IN')} via Kriyaa Promoters Port
                       </div>
                     </div>
 
-                    {/* Price Banner */}
-                    <div className="p-3 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 flex items-center justify-between">
+                    {/* Price Banner (Exact as Attachment 4) */}
+                    <div className="p-3.5 rounded-2xl bg-[#EBF8F2] border border-[#A7E3C7] flex items-center justify-between">
                       <div>
-                        <span className="text-[10px] font-bold text-[#15803D] dark:text-emerald-400 uppercase block">Total Price</span>
-                        <span className="text-base font-black text-[#15803D] dark:text-emerald-300">
+                        <span className="text-[11px] font-bold text-[#0B3B24] uppercase block">Total Price</span>
+                        <span className="text-lg font-black text-[#0B3B24]">
                           ₹{(plot.totalPrice / 100000).toFixed(2)} Lakhs
                         </span>
                       </div>
-                      <span className="text-xs font-mono text-slate-500 dark:text-slate-400">
+                      <span className="text-xs font-bold text-[#0B3B24] bg-white/90 border border-[#A7E3C7] rounded-full px-3 py-1 shadow-2xs">
                         ₹{plot.pricePerSqFt}/sq.ft
                       </span>
                     </div>
 
-                    {/* Card Actions */}
-                    <div className="pt-2 flex flex-col gap-2">
+                    {/* Card Actions (Exact 3-Button Pill Stack from Attachment 4) */}
+                    <div className="pt-2 flex flex-col gap-2.5">
+                      {/* Button 1: Solid Dark Forest Green Pill */}
                       <button
                         type="button"
                         onClick={() => handleDownloadBrochure(plot)}
-                        className="w-full min-h-[42px] rounded-xl bg-gradient-to-r from-[#15803D] to-[#113B24] hover:brightness-110 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer active:scale-95 border border-emerald-600/40"
+                        className="w-full min-h-[46px] rounded-full bg-gradient-to-r from-[#14563D] to-[#0B3B24] hover:brightness-110 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer active:scale-95"
                       >
-                        <Download className="w-4 h-4 text-[#EAB308]" />
+                        <Download className="w-4 h-4 text-white" />
                         <span>Download Brochure</span>
                       </button>
 
+                      {/* Button 2: White Pill with Green Border & Authentic WhatsApp Icon */}
                       <button
                         type="button"
                         onClick={() => handleIndividualWhatsApp(plot)}
-                        className="w-full min-h-[44px] rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer active:scale-95"
+                        className="w-full min-h-[46px] rounded-full bg-white border-2 border-[#0B3B24] hover:bg-[#0B3B24]/5 text-[#0B3B24] font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer active:scale-95"
                       >
-                        <MessageCircle className="w-4 h-4 fill-white" />
-                        <span>1-Tap WhatsApp Consultation</span>
+                        <svg className="w-4 h-4 fill-[#25D366] shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M12.031 2C6.495 2 2 6.494 2 12.029c0 1.767.46 3.491 1.332 5.006L2 22l5.127-1.344a10.01 10.01 0 0 0 4.904 1.282h.004c5.534 0 10.03-4.494 10.03-10.03 0-2.679-1.043-5.198-2.937-7.093A9.972 9.972 0 0 0 12.031 2zm0 18.358h-.003a8.318 8.318 0 0 1-4.238-1.163l-.304-.18-3.146.825.84-3.067-.198-.314a8.324 8.324 0 0 1-1.275-4.43c0-4.6 3.743-8.343 8.346-8.343 2.228 0 4.322.868 5.897 2.443a8.293 8.293 0 0 1 2.443 5.898c0 4.603-3.744 8.351-8.36 8.351zm4.573-6.246c-.25-.125-1.482-.731-1.712-.815-.23-.083-.397-.125-.564.125-.167.25-.646.815-.792.982-.146.167-.292.188-.542.063s-1.056-.39-2.012-1.242c-.744-.664-1.246-1.484-1.392-1.734-.146-.25-.016-.386.109-.51.112-.112.25-.292.375-.438.125-.146.167-.25.25-.417.083-.167.042-.313-.021-.438-.063-.125-.564-1.359-.772-1.862-.203-.49-.408-.423-.564-.431l-.48-.008c-.167 0-.438.063-.667.313-.23.25-.875.855-.875 2.085 0 1.23.896 2.418 1.021 2.585.125.167 1.762 2.69 4.269 3.773.596.258 1.062.412 1.425.527.6.19 1.145.163 1.576.099.48-.072 1.482-.605 1.69-1.189.209-.584.209-1.085.146-1.189-.062-.104-.229-.167-.479-.292z" />
+                        </svg>
+                        <span>Tap WhatsApp Consultant</span>
                       </button>
 
+                      {/* Button 3: Styled Pill Button with Outline */}
                       <button
                         type="button"
                         onClick={() => setModalPlot(plot)}
-                        className="w-full min-h-[40px] rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-[#112F1C] dark:hover:bg-[#184428] text-slate-700 dark:text-slate-200 text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                        className="w-full min-h-[44px] rounded-full bg-white border border-slate-300 hover:border-[#0B3B24] hover:bg-slate-50 text-[#0B3B24] text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer active:scale-95"
                       >
-                        <Eye className="w-3.5 h-3.5 text-emerald-600" />
-                        <span>View Plot Details & Specs</span>
+                        <Eye className="w-4 h-4 text-[#0B3B24]" />
+                        <span>View Plot Details &amp; Specs</span>
+                        <ArrowRight className="w-3.5 h-3.5 text-[#0B3B24]" />
                       </button>
                     </div>
                   </div>

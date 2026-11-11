@@ -1,558 +1,938 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
-  ShieldCheck,
-  Building2,
-  FileCheck2,
-  Landmark,
-  Award,
-  Star,
   ArrowRight,
+  ShieldCheck,
+  Landmark,
+  Handshake,
+  Home,
+  FileText,
+  FileEdit,
+  Key,
   ChevronLeft,
   ChevronRight,
-  Play,
-  Maximize2,
-  X,
-  ChevronDown,
-  Box,
+  Star,
+  Plus,
+  Minus,
+  Phone,
+  MapPin,
+  CheckCircle2,
+  Car,
 } from 'lucide-react';
 import { PublicFooter } from '../../components/public/PublicFooter';
-import { PUBLIC_GALLERY } from '../../data/publicData';
 import { PublicTab } from '../../types';
 
-/* ─────────────────────────────────────────────────────────── */
-/* 4 PILLARS DATA */
-/* ─────────────────────────────────────────────────────────── */
-const TRUST_PILLARS = [
-  {
-    id: 'pillar-title',
-    badge: '100% BANKABLE',
-    badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-300',
-    title: '100% Clear Title & Individual Patta',
-    subTag: 'VERIFIED BY TOP LEGAL EXPERTS',
-    desc: '30-year parent document scrutiny and clear sub-divided individual Patta registered directly to your name upon registration.',
-    icon: 'ShieldCheck',
-  },
-  {
-    id: 'pillar-dtcp',
-    badge: 'GOVT APPROVED',
-    badgeColor: 'bg-amber-100 text-amber-800 border-amber-300',
-    title: 'DTCP Sanctioned Layouts',
-    subTag: null,
-    desc: 'Legally sanctioned by Directorate of Town & Country Planning (DTCP No. 182/2023). Complete compliance with road width and public OSR park reserves.',
-    icon: 'FileCheck2',
-  },
-  {
-    id: 'pillar-bank',
-    badge: '5+ TOP BANKS',
-    badgeColor: 'bg-sky-100 text-sky-800 border-sky-300',
-    title: 'Up to 80% Bank Loan Approved',
-    subTag: null,
-    desc: 'Pre-sanctioned tie-ups with SBI, HDFC Bank, Indian Bank, and Canara Bank ensuring seamless processing, zero processing delays, and lowest home loan interest rates.',
-    icon: 'Landmark',
-  },
-  {
-    id: 'pillar-trust',
-    badge: 'VERIFIED',
-    badgeColor: 'bg-purple-100 text-purple-800 border-purple-300',
-    title: '12+ Years of Solid Trust & 1,200+ Families',
-    subTag: null,
-    desc: 'Managed personally by Rajesh RTR with zero broker middlemen. Consistent on-time infrastructure handover and rapid security demarcation on every plot.',
-    icon: 'Award',
-  },
-];
-
-/* ─────────────────────────────────────────────────────────── */
-/* VERIFIED TESTIMONIALS DATA */
-/* ─────────────────────────────────────────────────────────── */
-const TESTIMONIALS = [
-  {
-    id: 'rev-1',
-    name: 'Dr. K. Venkatraman',
-    role: 'Senior Physician, Cuddalore GH',
-    plotBadge: 'PLOT #42 & #43',
-    initials: 'KV',
-    quote:
-      'We booked our villa plot in Golden City within 24 hours. DTCP documentation was crystal clear with individual Patta. Bank loan sanction within 4 days. Rajesh RTR personally ensured our registration went smooth.',
-  },
-  {
-    id: 'rev-2',
-    name: 'Anitha Ramakrishnan',
-    role: 'IT Architect, Pondicherry',
-    plotBadge: 'PLOT #18 · GOLDEN CITY',
-    initials: 'AR',
-    quote:
-      'The 40ft wide roads and individual EB line were ready on day one. Clean legal scrutiny. Rajesh RTR walked us through the site and helped us register without any broker fees.',
-  },
-  {
-    id: 'rev-3',
-    name: 'S. Balasubramaniam',
-    role: 'Retired High School Headmaster, Chidambaram',
-    plotBadge: 'PLOT #07 · GOLDEN CITY',
-    initials: 'SB',
-    quote:
-      'Rajesh RTR provided all parent deeds going back 32 years for our advocate verification without hesitation. Sweet potable ground water and peaceful residential surroundings.',
-  },
-];
-
-/* ─────────────────────────────────────────────────────────── */
-/* STANDALONE MEDIA & DRONE VIDEO CARD */
-/* ─────────────────────────────────────────────────────────── */
-interface HeroMediaCardProps {
-  onOpenDroneVideo: () => void;
-  onTabChange: (tab: PublicTab) => void;
-}
-
-const HeroMediaCard: React.FC<HeroMediaCardProps> = ({ onOpenDroneVideo, onTabChange }) => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  const total = PUBLIC_GALLERY.length;
-  const current = PUBLIC_GALLERY[activeIndex];
-
-  const handlePrev = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setActiveIndex((p) => (p - 1 + total) % total);
-  };
-
-  const handleNext = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setActiveIndex((p) => (p + 1) % total);
-  };
-
-  return (
-    <>
-      <div className="w-full h-full flex flex-col bg-[#071A0F] rounded-[26px] border border-emerald-800/50 shadow-2xl overflow-hidden select-none relative group">
-        {/* Media Viewport */}
-        <div className="relative aspect-[16/10] sm:aspect-video md:aspect-auto md:flex-1 w-full overflow-hidden bg-slate-950 min-h-[260px] md:min-h-[340px]">
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={current.id}
-              src={current.imageUrl}
-              alt={current.title}
-              initial={{ opacity: 0, scale: 1.04 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.35 }}
-              className="w-full h-full object-cover select-none"
-              draggable={false}
-            />
-          </AnimatePresence>
-
-          {/* Top-left Badges */}
-          <div className="absolute top-3 left-3 z-10 flex flex-col items-start gap-1 max-w-[70%]">
-            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#071A0F]/90 backdrop-blur-sm text-[#EAB308] border border-[#EAB308]/60 text-[9px] font-black tracking-wide">
-              • DTCP SANCTIONED • 40FT BLACKTOP ROADS •
-            </span>
-            <div className="bg-[#071A0F]/85 backdrop-blur-sm px-2.5 py-1 rounded-lg border border-emerald-800/40">
-              <h4 className="text-xs font-black text-white leading-tight">GOLDEN CITY – CUDDALORE</h4>
-              <p className="text-[9px] text-[#EAB308] font-bold">DTCP No. 182/2023 · RERA Registered</p>
-            </div>
-          </div>
-
-          {/* Top-right Slide Counter & Fullscreen */}
-          <div className="absolute top-3 right-3 z-10 flex items-center gap-1.5">
-            <span className="px-2 py-0.5 rounded-full bg-black/70 backdrop-blur-sm text-white text-[10px] font-mono border border-white/10">
-              {activeIndex + 1} / {total}
-            </span>
-            <button
-              type="button"
-              onClick={() => setIsFullscreen(true)}
-              className="w-7 h-7 rounded-lg bg-black/70 hover:bg-black/90 text-white flex items-center justify-center backdrop-blur-sm border border-white/10 transition cursor-pointer"
-              title="Fullscreen"
-            >
-              <Maximize2 className="w-3.5 h-3.5" />
-            </button>
-          </div>
-
-          {/* Left Arrow */}
-          <button
-            type="button"
-            onClick={handlePrev}
-            className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-black/55 hover:bg-black/80 text-white border border-white/20 flex items-center justify-center transition active:scale-90 cursor-pointer backdrop-blur-xs"
-            aria-label="Previous"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </button>
-
-          {/* Right Arrow */}
-          <button
-            type="button"
-            onClick={handleNext}
-            className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-black/55 hover:bg-black/80 text-white border border-white/20 flex items-center justify-center transition active:scale-90 cursor-pointer backdrop-blur-xs"
-            aria-label="Next"
-          >
-            <ChevronRight className="w-4 h-4" />
-          </button>
-
-          {/* Centered Pulse Play Video Button */}
-          <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
-            <button
-              type="button"
-              onClick={onOpenDroneVideo}
-              className="pointer-events-auto w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-white/20 hover:bg-white/30 border-2 border-white flex items-center justify-center backdrop-blur-xs shadow-2xl transition active:scale-90 cursor-pointer group/play"
-              title="Watch 4K Drone Tour"
-            >
-              <span className="absolute w-13 h-13 sm:w-14 sm:h-14 rounded-full border-2 border-white/40 animate-ping opacity-60" />
-              <Play className="w-5 h-5 sm:w-6 sm:h-6 text-white fill-white ml-0.5 group-hover/play:scale-110 transition-transform" />
-            </button>
-          </div>
-
-          {/* Bottom Overlay Bar */}
-          <div className="absolute bottom-0 inset-x-0 z-10 bg-gradient-to-t from-black/95 via-black/75 to-transparent pt-10 pb-3 px-3.5 flex items-end justify-between gap-2">
-            <div className="min-w-0">
-              <h3 className="text-sm sm:text-base font-black text-white leading-tight">
-                Golden City –<br />Cuddalore
-              </h3>
-              <p className="text-[10px] text-[#EAB308] font-bold mt-0.5">DTCP No. 182/2023 · RERA Registered</p>
-              <p className="text-[9.5px] text-slate-300">100% Clear Parent Documents</p>
-              <p className="text-xs text-[#EAB308] font-black mt-0.5">₹2,100 / sq.ft</p>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => onTabChange('projects')}
-              className="shrink-0 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white hover:bg-slate-100 text-slate-950 font-black text-xs flex items-center gap-1 shadow-xl active:scale-95 cursor-pointer whitespace-nowrap"
-            >
-              <span>View Layout</span>
-              <ArrowRight className="w-3 h-3" />
-            </button>
-          </div>
-        </div>
-
-        {/* Dot Indicators */}
-        <div className="px-4 py-2.5 flex items-center justify-center gap-1.5 bg-[#071A0F]">
-          {PUBLIC_GALLERY.map((_, idx) => (
-            <button
-              key={idx}
-              type="button"
-              onClick={() => setActiveIndex(idx)}
-              className={`h-1.5 rounded-full transition-all cursor-pointer ${
-                idx === activeIndex ? 'w-5 bg-[#EAB308]' : 'w-1.5 bg-emerald-950 border border-emerald-800'
-              }`}
-              aria-label={`Slide ${idx + 1}`}
-            />
-          ))}
-        </div>
-      </div>
-
-      {/* Fullscreen Overlay */}
-      <AnimatePresence>
-        {isFullscreen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[70] bg-black/97 flex flex-col items-center justify-between p-4"
-          >
-            <div className="w-full max-w-5xl flex items-center justify-between text-white pb-3">
-              <h4 className="text-sm font-bold">{current.title}</h4>
-              <button
-                type="button"
-                onClick={() => setIsFullscreen(false)}
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center cursor-pointer"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            <div className="max-w-5xl w-full flex-1 flex items-center justify-center">
-              <img
-                src={current.imageUrl}
-                alt={current.title}
-                className="max-h-[78vh] w-auto max-w-full object-contain rounded-2xl shadow-2xl"
-              />
-            </div>
-            <div className="flex items-center gap-4 pt-4">
-              <button
-                onClick={handlePrev}
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white cursor-pointer hover:bg-white/20"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <span className="text-white/60 text-xs font-mono">
-                {activeIndex + 1} / {total}
-              </span>
-              <button
-                onClick={handleNext}
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white cursor-pointer hover:bg-white/20"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
-  );
-};
-
-/* ─────────────────────────────────────────────────────────── */
-/* MAIN PUBLIC HOME VIEW COMPONENT */
-/* ─────────────────────────────────────────────────────────── */
 interface PublicHomeProps {
   onTabChange: (tab: PublicTab) => void;
   onOpenConsultation: () => void;
   onOpenCabBooking: () => void;
-  onOpenDroneVideo: () => void;
+  onOpenDroneVideo?: () => void;
 }
+
+/* ─────────────────────────────────────────────────────────── */
+/* 3 PROMOTIONAL ADS (Exact Images from User) */
+/* ─────────────────────────────────────────────────────────── */
+const PROMOTIONAL_ADS = [
+  {
+    id: 'ad-1',
+    src: '/ads/ad-1.png',
+    alt: 'Find Your Perfect Place to Build Your Future - Premium Residential Plots in Cuddalore & Pondicherry',
+  },
+  {
+    id: 'ad-2',
+    src: '/ads/ad-2.png',
+    alt: 'Invest in a Better Tomorrow with Kriyaa Promoters - DTCP Approved, Clear Documentation, Prime Locations',
+  },
+  {
+    id: 'ad-3',
+    src: '/ads/ad-3.png',
+    alt: 'Build Your Dreams with Confidence - Spacious Plots, Peaceful Surroundings, Lasting Value',
+  },
+];
+
+/* ─────────────────────────────────────────────────────────── */
+/* FOUR PILLARS DATA */
+/* ─────────────────────────────────────────────────────────── */
+const PILLARS_DATA = [
+  {
+    id: 'pillar-1',
+    title: 'Clear Documentation',
+    subtitle: 'Transparent & hassle-free process.',
+    icon: ShieldCheck,
+  },
+  {
+    id: 'pillar-2',
+    title: 'Loan Assistance',
+    subtitle: 'Guidance for your dream home.',
+    icon: Landmark,
+  },
+  {
+    id: 'pillar-3',
+    title: 'Prime Locations',
+    subtitle: '100% DTCP Approved Layouts.',
+    icon: MapPin,
+  },
+  {
+    id: 'pillar-4',
+    title: 'Dedicated Support',
+    subtitle: 'Always with you, every step of the way.',
+    icon: Handshake,
+  },
+];
+
+/* ─────────────────────────────────────────────────────────── */
+/* 7-STEP BUYING PROCESS DATA (Exact Match to Specification) */
+/* ─────────────────────────────────────────────────────────── */
+const BUYING_PROCESS_STEPS = [
+  {
+    step: '01',
+    title: 'Share Your Requirements',
+    summary: 'Tell us what you are looking for. We will understand your needs, preferred location, and budget.',
+    icon: FileText,
+    details: [
+      'Preferred layout locations: Cuddalore, Chidambaram, or Pondy ECR corridor.',
+      'Flexible budget & EMI investment options with up to 80% spot bank loan sanction.',
+      'Plot dimensions: 800 sq.ft, 1,200 sq.ft, 1,800 sq.ft, or custom villa extents.',
+      'Vastu-compliant facing: East, North, or Corner plots with 30ft/40ft blacktop tar roads.',
+    ],
+  },
+  {
+    step: '02',
+    title: 'Explore Available Plots',
+    summary: 'Discover suitable plots and explore their location, layout, and available details.',
+    icon: Home,
+    details: [
+      'Interactive 2D/3D master plan layout inspection with live availability status.',
+      'Sanctioned boundary stone verification and road width checks.',
+      'Immediate sub-divided patta transfer feasibility verification.',
+      'Comparison matrix across high-growth corridors for maximum capital appreciation.',
+    ],
+  },
+  {
+    step: '03',
+    title: 'Schedule a Site Visit',
+    summary: 'Experience the location in person with our complimentary doorstep cab service and promoter accompaniment.',
+    icon: Car,
+    details: [
+      '100% free doorstep pickup and drop cab service across Cuddalore and Pondicherry.',
+      'Sweet potable drinking ground water testing and neighborhood infrastructure check.',
+      'Physical demarcation stone confirmation matching the sanctioned blueprint.',
+      'Direct on-site walkthrough with Managing Director Rajesh RTR.',
+    ],
+  },
+  {
+    step: '04',
+    title: 'Verify Property Documents',
+    summary: 'Complete peace of mind with 100% transparent legal scrutiny by senior high court advocates.',
+    icon: ShieldCheck,
+    details: [
+      'Parent deed continuity verification dating back 30+ years without gaps.',
+      'Nil-Encumbrance Certificate (EC) up to current date provided for inspection.',
+      'DTCP Sanctioned Layout Order copy and government approval seals.',
+      'Pre-vetted legal documentation folder ready for immediate bank loan submission.',
+    ],
+  },
+  {
+    step: '05',
+    title: 'Choose & Book Your Plot',
+    summary: 'Confirm your dream plot selection with transparent pricing, zero hidden charges, and instant receipt.',
+    icon: CheckCircle2,
+    details: [
+      'Nominal token advance with immediate printed booking confirmation & plot reservation.',
+      'Transparent square-foot pricing with zero broker commission or hidden charges.',
+      'Spot loan sanction assistance with SBI, HDFC, Canara, and Indian Bank.',
+      'Plot lock-in protection with immediate removal from public sale inventory.',
+    ],
+  },
+  {
+    step: '06',
+    title: 'Complete Registration',
+    summary: 'Hassle-free sub-registrar execution managed end-to-end by our dedicated legal documentation desk.',
+    icon: FileEdit,
+    details: [
+      'Draft sale deed preparation and customer review prior to stamp duty purchase.',
+      'Sub-registrar office appointment booking with dedicated promoter desk assistance.',
+      'Guidance and presence of Rajesh RTR during biometric execution.',
+      'All government registration formalities handled cleanly within 2 hours.',
+    ],
+  },
+  {
+    step: '07',
+    title: 'Welcome to Ownership!',
+    summary: 'Receive your registered sale deed, original individual Patta, and begin building your future.',
+    icon: Key,
+    details: [
+      'Original registered sale deed delivered securely with laminated documents.',
+      'Immediate individual sub-divided Patta transferred into your name.',
+      'Architectural house-building guidance and borewell clearance assistance.',
+      'Lifetime customer support and appreciation tracking from Kriyaa Promoters.',
+    ],
+  },
+];
+
+/* ─────────────────────────────────────────────────────────── */
+/* REVIEWS DATA (Auto-advancing every 3 seconds) */
+/* ─────────────────────────────────────────────────────────── */
+const REVIEWS = [
+  {
+    quote:
+      '“Kriyaa Promoters made our dream come true. Excellent service, transparent documentation, and smooth registration without any delays!”',
+    author: '— Anitha Ramakrishnan',
+    plot: 'Golden City Plot #18',
+    img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80',
+  },
+  {
+    quote:
+      '“The spot loan support from SBI was completely arranged by the Kriyaa team within 3 days. Clean patta and broad tar road connectivity!”',
+    author: '— S. Murugan',
+    plot: 'Golden City Corner Plot #05',
+    img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80',
+  },
+  {
+    quote:
+      '“Very high quality development. Clear demarcation stones and immediate individual patta handed over on registration day.”',
+    author: '— Dr. R. Kanimozhi',
+    plot: 'Golden City Plot #24',
+    img: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=300&q=80',
+  },
+  {
+    quote:
+      '“Transparent parent deed verification and zero broker interference. Rajesh RTR personally walked us through the site and handled registration.”',
+    author: '— S. Balasubramaniam',
+    plot: 'Golden City Plot #07',
+    img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80',
+  },
+];
+
+/* ─────────────────────────────────────────────────────────── */
+/* FAQS DATA */
+/* ─────────────────────────────────────────────────────────── */
+const FAQS = [
+  {
+    question: 'What is DTCP approval?',
+    answer:
+      'DTCP (Directorate of Town and Country Planning) approval certifies that the layout meets strict government benchmarks: minimum 30ft/40ft road widths, dedicated public park (OSR) reservations, potable water clearance, and clear zoning for residential construction.',
+  },
+  {
+    question: 'Is bank loan available?',
+    answer:
+      'Yes! Up to 80% bank loan is pre-sanctioned on all Kriyaa Promoters layouts through leading nationalized and private banks including SBI, HDFC, Canara Bank, and Indian Bank with expedited approvals.',
+  },
+  {
+    question: 'What documents are required?',
+    answer:
+      'To book and register, you only need basic KYC documents (Aadhaar & PAN card), passport-size photographs, and bank statements if availing loan financing. All parent documents, legal scrutinies, and patta transfers are handled directly by our promoter desk.',
+  },
+];
 
 export const PublicHome: React.FC<PublicHomeProps> = ({
   onTabChange,
   onOpenConsultation,
-  onOpenDroneVideo,
+  onOpenCabBooking,
 }) => {
-  const [showAllReviews, setShowAllReviews] = useState(false);
-  const visibleReviews = showAllReviews ? TESTIMONIALS : TESTIMONIALS.slice(0, 2);
+  // Review Carousel State (3-second auto-cycle)
+  const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
+  const [isReviewsPaused, setIsReviewsPaused] = useState(false);
+
+  useEffect(() => {
+    if (isReviewsPaused) return;
+    const timer = setInterval(() => {
+      setCurrentReviewIndex((prev) => (prev + 1) % REVIEWS.length);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, [isReviewsPaused]);
+
+  // 3-Second Promotional Ad Carousel State (3 Ads from User)
+  const [currentAdIndex, setCurrentAdIndex] = useState(0);
+  const [isAdPaused, setIsAdPaused] = useState(false);
+
+  useEffect(() => {
+    if (isAdPaused) return;
+    const timer = setInterval(() => {
+      setCurrentAdIndex((prev) => (prev + 1) % PROMOTIONAL_ADS.length);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, [isAdPaused]);
+
+  // Timeline Expandable Accordion State
+  const [openStepIndex, setOpenStepIndex] = useState<number | null>(null);
+
+  const toggleStepDetails = (idx: number) => {
+    setOpenStepIndex((prev) => (prev === idx ? null : idx));
+  };
+
+  // Scroll Progress Tracking for Timeline Central Trail
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const [timelineProgress, setTimelineProgress] = useState(0.2);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!timelineRef.current) return;
+      const rect = timelineRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const totalHeight = rect.height;
+      const topOffset = rect.top;
+
+      if (topOffset > windowHeight) {
+        setTimelineProgress(0);
+      } else if (topOffset + totalHeight < 0) {
+        setTimelineProgress(1);
+      } else {
+        const scrolled = windowHeight - topOffset;
+        const progress = Math.min(Math.max(scrolled / (totalHeight + windowHeight * 0.4), 0), 1);
+        setTimelineProgress(progress);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Draggable Plot-to-Home Transformation Slider State (0 to 100)
+  const [sliderPosition, setSliderPosition] = useState(50);
+  const sliderContainerRef = useRef<HTMLDivElement>(null);
+  const [isDraggingSlider, setIsDraggingSlider] = useState(false);
+
+  const handleSliderMove = (clientX: number) => {
+    if (!sliderContainerRef.current) return;
+    const rect = sliderContainerRef.current.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const percent = Math.min(Math.max((x / rect.width) * 100, 5), 95);
+    setSliderPosition(percent);
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDraggingSlider(true);
+    handleSliderMove(e.clientX);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDraggingSlider) return;
+    handleSliderMove(e.clientX);
+  };
+
+  const handleMouseUp = () => {
+    setIsDraggingSlider(false);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (e.touches.length > 0) {
+      handleSliderMove(e.touches[0].clientX);
+    }
+  };
+
+  // FAQ Accordion State (default first open)
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+
+  const toggleFaq = (idx: number) => {
+    setOpenFaqIndex((prev) => (prev === idx ? null : idx));
+  };
+
+  const handleNextReview = () => {
+    setCurrentReviewIndex((prev) => (prev + 1) % REVIEWS.length);
+  };
+
+  const handlePrevReview = () => {
+    setCurrentReviewIndex((prev) => (prev - 1 + REVIEWS.length) % REVIEWS.length);
+  };
+
+  const currentReview = REVIEWS[currentReviewIndex];
 
   return (
-    <div className="w-full flex flex-col min-h-screen bg-[#F1F5F9] dark:bg-[#06140B] text-slate-900 dark:text-slate-100 select-none pb-8">
-      {/* Responsive Container: Preserves exact mobile layout on < md, expands to full-width real-estate desktop experience on md/lg/xl */}
-      <div className="w-full max-w-md md:max-w-7xl mx-auto px-3 sm:px-4 md:px-8 pt-3 md:pt-6 space-y-4 md:space-y-8">
+    <div className="w-full min-h-screen bg-white text-[#17251E] select-none pb-12">
 
-        {/* ════════════════════════════════════════════════════════════
-            1 & 2. HERO + 4K DRONE MEDIA HERO (Mobile: Stacked, Desktop: 2-Column Grid)
-            ════════════════════════════════════════════════════════════ */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 lg:gap-8 items-stretch">
-          {/* Left Column: Hero Card with Value Proposition & CTA */}
-          <div className="md:col-span-7 lg:col-span-7 flex flex-col">
-            <section className="relative overflow-hidden rounded-[28px] bg-gradient-to-b from-[#092615] via-[#071F11] to-[#04140B] text-white p-6 sm:p-7 md:p-8 lg:p-10 text-center md:text-left shadow-2xl border border-emerald-900/60 flex-1 flex flex-col justify-between">
-              {/* Subtle Ambient Glow */}
-              <div className="absolute top-0 right-0 w-48 h-48 bg-[#15803D]/20 rounded-full blur-[70px] pointer-events-none" />
-              <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#EAB308]/15 rounded-full blur-[70px] pointer-events-none" />
-
-              <div className="relative z-10 flex flex-col items-center md:items-start flex-1 justify-between">
-                <div>
-                  {/* Top Green Welcome Text */}
-                  <p className="text-xs sm:text-sm font-black text-[#34D399] tracking-widest uppercase">
-                    WELCOME TO KRIYAA PROMOTERS
-                  </p>
-
-                  {/* Sub-label with bullet points */}
-                  <p className="text-[11px] sm:text-xs font-black text-[#FACC15] tracking-wider uppercase mt-1 flex items-center justify-center md:justify-start gap-1.5">
-                    <span>●</span>
-                    <span>YOUR DREAM</span>
-                    <span>●</span>
-                    <span>OUR HIGHEST PRIORITY</span>
-                  </p>
-
-                  {/* Main Title */}
-                  <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight leading-tight mt-3 md:mt-4">
-                    <span className="text-white block">Your Dream Plot,</span>
-                    <span className="text-[#FACC15] block">Our Highest Priority</span>
-                  </h1>
-
-                  {/* Subtitle description */}
-                  <p className="text-xs sm:text-[13px] md:text-sm lg:text-base text-slate-200/90 leading-relaxed max-w-sm md:max-w-xl mx-auto md:mx-0 mt-3 md:mt-4">
-                    DTCP sanctioned villa plots with 100% clear titles, 40ft blacktop roads, potable sweet water, and guaranteed bank loans across Cuddalore &amp; Pondicherry. Personally guided by{' '}
-                    <strong className="text-white font-bold">Rajesh RTR</strong>.
-                  </p>
-                </div>
-
-                <div className="w-full mt-4 md:mt-6">
-                  {/* Subtle Divider */}
-                  <div className="w-full h-px bg-emerald-900/50 mb-4" />
-
-                  {/* 3 Quick Stat Badges */}
-                  <div className="grid grid-cols-3 gap-2.5 md:gap-3.5 w-full">
-                    <div className="bg-[#04170D] border border-emerald-800/70 rounded-xl py-3 px-1 text-center shadow-xs">
-                      <div className="text-base sm:text-lg md:text-xl font-black text-[#FACC15]">100%</div>
-                      <div className="text-[10px] sm:text-xs text-white font-medium mt-0.5">Clear Title</div>
-                    </div>
-                    <div className="bg-[#04170D] border border-emerald-800/70 rounded-xl py-3 px-1 text-center shadow-xs">
-                      <div className="text-base sm:text-lg md:text-xl font-black text-[#FACC15]">DTCP</div>
-                      <div className="text-[10px] sm:text-xs text-white font-medium mt-0.5">Approved</div>
-                    </div>
-                    <div className="bg-[#04170D] border border-emerald-800/70 rounded-xl py-3 px-1 text-center shadow-xs">
-                      <div className="text-base sm:text-lg md:text-xl font-black text-[#FACC15]">Up to 80%</div>
-                      <div className="text-[10px] sm:text-xs text-white font-medium mt-0.5">Bank Loan</div>
-                    </div>
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="flex flex-col sm:flex-row w-full gap-2.5 md:gap-3.5 mt-4">
-                    <button
-                      type="button"
-                      id="btn-get-free-consultation"
-                      onClick={onOpenConsultation}
-                      className="flex-1 py-3.5 px-4 rounded-xl bg-gradient-to-r from-[#D97706] via-[#EAB308] to-[#CA8A04] hover:brightness-105 active:scale-95 text-slate-950 font-black text-xs sm:text-sm tracking-wider uppercase flex items-center justify-center gap-2 shadow-lg shadow-amber-500/10 transition cursor-pointer whitespace-nowrap"
-                    >
-                      <span>GET FREE CONSULTATION</span>
-                      <ArrowRight className="w-4 h-4 stroke-[2.5]" />
-                    </button>
-
-                    <button
-                      type="button"
-                      id="btn-explore-master-plan"
-                      onClick={() => onTabChange('projects')}
-                      className="flex-1 py-3 px-4 rounded-xl bg-[#051A0E] hover:bg-[#072414] border border-emerald-800/80 text-[#FACC15] font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition cursor-pointer whitespace-nowrap"
-                    >
-                      <Box className="w-4 h-4 text-[#FACC15]" />
-                      <span>Explore 2D / 3D Master Layout</span>
-                      <ChevronDown className="w-4 h-4 text-[#FACC15]" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </section>
+      {/* =========================================================================
+          1. WELCOME SECTION & BUTTONS (EXACT AS ATTACHMENT 2)
+          ========================================================================= */}
+      <section className="relative pt-8 sm:pt-12 pb-10 sm:pb-14 px-4 sm:px-6 max-w-3xl mx-auto text-center">
+        {/* House Outline Icon Apex with Symmetrical Gold Dividers */}
+        <div className="flex items-center justify-center gap-3 sm:gap-4 mb-2.5">
+          <span className="h-[1.5px] w-14 sm:w-20 bg-[#E5A91E]" />
+          <div className="p-1 text-[#0B3B24]">
+            <Home className="w-6 h-6 stroke-[2.2]" />
           </div>
-
-          {/* Right Column: Standalone Media & 4K Drone Tour Card */}
-          <div className="md:col-span-5 lg:col-span-5 flex flex-col">
-            <HeroMediaCard onOpenDroneVideo={onOpenDroneVideo} onTabChange={onTabChange} />
-          </div>
+          <span className="h-[1.5px] w-14 sm:w-20 bg-[#E5A91E]" />
         </div>
 
-        {/* ════════════════════════════════════════════════════════════
-            3. "4 PILLARS OF ABSOLUTE TRUST" SECTION (Responsive Grid)
-            ════════════════════════════════════════════════════════════ */}
-        <section className="bg-white dark:bg-[#0B2516] rounded-[28px] border border-slate-100 dark:border-emerald-900/40 p-5 sm:p-6 md:p-8 lg:p-10 shadow-xl space-y-4 md:space-y-6 text-center">
-          {/* Header */}
-          <div className="space-y-1.5 flex flex-col items-center">
-            <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#0B2516] border border-[#EAB308]/60 text-[#EAB308] text-[9.5px] font-black uppercase tracking-wider">
-              <Star className="w-3 h-3 fill-current" />
-              <span>STATUTORY CREDIBILITY</span>
-              <Star className="w-3 h-3 fill-current" />
-            </div>
+        {/* Small Caps Sub-header */}
+        <p className="text-xs sm:text-sm uppercase tracking-[0.28em] text-[#0B3B24] font-black mb-2">
+          W E L C O M E &nbsp; T O
+        </p>
 
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
-              4 Pillars of Absolute Trust
-            </h2>
+        {/* Monumental Centered Heading */}
+        <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-[#0B3B24] uppercase font-cinzel leading-none mb-2">
+          KRIYAA<br />PROMOTERS
+        </h1>
 
-            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-md">
-              Over 1,200+ families across Cuddalore and Pondicherry choose Rajesh RTR for their dream home plots
-            </p>
+        {/* Symmetrical Golden Arch Curve Divider */}
+        <div className="flex justify-center my-2.5">
+          <svg className="w-48 sm:w-64 h-3.5 text-[#E5A91E]" viewBox="0 0 240 14" fill="none">
+            <path
+              d="M4 10 C 80 1, 160 1, 236 10"
+              stroke="currentColor"
+              strokeWidth="3.2"
+              strokeLinecap="round"
+            />
+          </svg>
+        </div>
+
+        {/* Tagline in Italic Serif */}
+        <p className="text-base sm:text-xl font-bold text-[#E5A91E] font-serif-heading italic mb-4 sm:mb-5">
+          &ldquo;Your dream, our priority&rdquo;
+        </p>
+
+        {/* Value Headline */}
+        <h2 className="text-2xl sm:text-4xl font-extrabold text-[#0B3B24] tracking-tight leading-tight mb-2.5">
+          Find Your Perfect Place<br className="hidden sm:inline" /> to Build{' '}
+          <span className="text-[#E5A91E]">Your Future.</span>
+        </h2>
+
+        {/* Subtitle Description */}
+        <p className="text-slate-600 text-xs sm:text-sm max-w-lg mx-auto font-medium leading-relaxed mb-6 sm:mb-8">
+          Explore DTCP-approved residential plots with clear documentation and trusted guidance.
+        </p>
+
+        {/* Two Centered Action Buttons (Exact as Attachment 2) */}
+        <div className="flex items-center justify-center gap-3 sm:gap-4 max-w-md mx-auto">
+          <button
+            type="button"
+            onClick={() => onTabChange('projects')}
+            className="flex-1 sm:flex-initial px-6 sm:px-8 py-3 rounded-full bg-[#0B3B24] text-white font-bold text-xs sm:text-sm hover:bg-[#072416] transition flex items-center justify-center gap-2 shadow-md shadow-[#0B3B24]/15 cursor-pointer active:scale-95 whitespace-nowrap"
+          >
+            <span>Explore More</span>
+            <ArrowRight className="w-4 h-4 stroke-[2.5]" />
+          </button>
+
+          <button
+            type="button"
+            onClick={() => onTabChange('contact')}
+            className="flex-1 sm:flex-initial px-6 sm:px-8 py-3 rounded-full bg-white border-2 border-[#0B3B24] text-[#0B3B24] font-bold text-xs sm:text-sm hover:bg-[#0B3B24]/5 transition flex items-center justify-center gap-2 shadow-xs cursor-pointer active:scale-95 whitespace-nowrap"
+          >
+            <Phone className="w-3.5 h-3.5 fill-current text-[#0B3B24]" />
+            <span>Contact Us</span>
+          </button>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          2. ABOUT SECTION
+          ========================================================================= */}
+      <section id="about" className="py-8 sm:py-12 px-4 sm:px-8 max-w-5xl mx-auto">
+        <div className="text-center max-w-2xl mx-auto">
+          {/* Gold Bar Label */}
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <span className="w-10 h-0.5 bg-[#E5A91E]" />
+            <span className="text-xs sm:text-sm font-extrabold text-[#0B3B24] uppercase tracking-wider">
+              About Kriyaa Promoters
+            </span>
+            <span className="w-10 h-0.5 bg-[#E5A91E]" />
           </div>
 
-          {/* 4 Cards: Mobile Vertical, Desktop 4-Column Grid */}
-          <div className="space-y-3 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-4 lg:gap-5 pt-1 text-left">
-            {TRUST_PILLARS.map((pillar) => (
-              <div
-                key={pillar.id}
-                className="bg-white dark:bg-[#081B10] border border-slate-200/80 dark:border-emerald-800/50 rounded-2xl p-4 md:p-5 shadow-xs space-y-2 hover:border-[#EAB308]/50 transition-colors flex flex-col justify-between"
-              >
-                <div className="space-y-2">
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-10 h-10 rounded-xl bg-[#0B2516] border border-[#EAB308]/40 flex items-center justify-center text-[#EAB308] shrink-0 font-black">
-                        {pillar.icon === 'ShieldCheck' && <ShieldCheck className="w-5 h-5" />}
-                        {pillar.icon === 'FileCheck2' && <FileCheck2 className="w-5 h-5" />}
-                        {pillar.icon === 'Landmark' && <Landmark className="w-5 h-5" />}
-                        {pillar.icon === 'Award' && <Award className="w-5 h-5" />}
-                      </div>
-                      <div>
-                        <h3 className="text-xs sm:text-sm font-black text-slate-900 dark:text-white leading-tight">
-                          {pillar.title}
-                        </h3>
-                        {pillar.subTag && (
-                          <span className="text-[8.5px] font-bold text-slate-400 dark:text-slate-500 tracking-wide">
-                            {pillar.subTag}
-                          </span>
-                        )}
-                      </div>
-                    </div>
+          <h3 className="text-2xl sm:text-4xl font-extrabold text-[#0B3B24] tracking-tight leading-tight mb-3">
+            Building Trust, Creating Better Futures.
+          </h3>
 
-                    <span
-                      className={`text-[8.5px] font-black px-2 py-0.5 rounded-full border uppercase tracking-wider shrink-0 ${pillar.badgeColor}`}
-                    >
-                      {pillar.badge}
-                    </span>
-                  </div>
+          <p className="text-slate-600 text-xs sm:text-sm leading-relaxed max-w-xl mx-auto">
+            We are a trusted real estate promoter committed to providing quality DTCP-approved residential plots with complete legal transparency, professional guidance, and guaranteed long-term value across Cuddalore and Pondicherry under the leadership of Managing Director <strong>Rajesh RTR</strong>.
+          </p>
 
-                  <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed pt-1 border-t border-slate-100 dark:border-emerald-950">
-                    {pillar.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ════════════════════════════════════════════════════════════
-            4. "1,200+ HAPPY FAMILIES" REVIEWS (Responsive Grid)
-            ════════════════════════════════════════════════════════════ */}
-        <section className="bg-white dark:bg-[#0B2516] rounded-[28px] border border-slate-100 dark:border-emerald-900/40 p-5 sm:p-6 md:p-8 lg:p-10 shadow-xl space-y-4 md:space-y-6 text-center">
-          {/* Header */}
-          <div className="space-y-1.5 flex flex-col items-center">
-            <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#FEF08A]/60 dark:bg-amber-950/40 border border-[#CA8A04]/40 text-[#854D0E] dark:text-[#EAB308] text-[9.5px] font-black uppercase tracking-wider">
-              <Star className="w-3 h-3 fill-current" />
-              <span>Verified Buyer Testimonials</span>
-            </div>
-
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
-              1,200+ Happy Families in Cuddalore &amp; Pondy
-            </h2>
-
-            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-md">
-              Real experiences from verified homeowners who acquired plots with confidence
-            </p>
-          </div>
-
-          {/* Review Cards: Mobile Vertical, Desktop 3-Column Grid */}
-          <div className="space-y-3 md:space-y-0 md:grid md:grid-cols-3 md:gap-5 pt-1 text-left">
-            {(showAllReviews ? TESTIMONIALS : TESTIMONIALS).map((rev, idx) => (
-              <div
-                key={rev.id}
-                className={`bg-white dark:bg-[#081B10] border border-slate-200/80 dark:border-emerald-800/50 rounded-2xl p-4 md:p-5 shadow-xs space-y-2.5 flex flex-col justify-between ${
-                  !showAllReviews && idx >= 2 ? 'hidden md:flex' : 'flex'
-                }`}
-              >
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-0.5">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-3.5 h-3.5 fill-[#EAB308] text-[#EAB308]" />
-                      ))}
-                    </div>
-                    <span className="text-[8.5px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider">
-                      VERIFIED PLOT BUYER
-                    </span>
-                  </div>
-
-                  <p className="text-xs text-slate-700 dark:text-slate-200 italic leading-relaxed">
-                    "{rev.quote}"
-                  </p>
-                </div>
-
-                <div className="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-emerald-950 mt-2">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-[#0B2516] border border-[#EAB308]/50 text-[#EAB308] font-black text-xs flex items-center justify-center shrink-0">
-                      {rev.initials}
-                    </div>
-                    <div>
-                      <h4 className="text-xs font-black text-slate-900 dark:text-white leading-tight">
-                        {rev.name}
-                      </h4>
-                      <p className="text-[10px] text-slate-500 dark:text-slate-400">{rev.role}</p>
-                    </div>
-                  </div>
-
-                  <span className="text-[8.5px] font-black text-[#15803D] dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 px-2 py-0.5 rounded-full shrink-0">
-                    {rev.plotBadge}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* View More Link (Mobile Only toggle) */}
-          <div className="md:hidden">
+          <div className="pt-4">
             <button
               type="button"
-              onClick={() => setShowAllReviews(!showAllReviews)}
-              className="text-xs font-bold text-[#854D0E] dark:text-[#EAB308] hover:underline cursor-pointer pt-1"
+              onClick={() => onTabChange('projects')}
+              className="px-7 py-2.5 rounded-full bg-[#0B3B24] text-white font-bold text-xs sm:text-sm hover:bg-[#072416] transition inline-flex items-center gap-2 shadow-sm cursor-pointer active:scale-95"
             >
-              {showAllReviews ? 'Show Less Reviews ▴' : 'View More Reviews →'}
+              <span>Know More</span>
+              <ArrowRight className="w-4 h-4" />
             </button>
           </div>
-        </section>
+        </div>
+      </section>
 
-      </div>
+      {/* =========================================================================
+          3. 3-SECOND ROTATING AD SHOWCASE (Exact 3 Ads from Reference)
+          ========================================================================= */}
+      <section
+        id="ads"
+        onMouseEnter={() => setIsAdPaused(true)}
+        onMouseLeave={() => setIsAdPaused(false)}
+        className="px-4 sm:px-8 py-6 sm:py-8 max-w-5xl mx-auto"
+      >
+        <div
+          onClick={() => onTabChange('projects')}
+          className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl border border-slate-200/90 bg-white cursor-pointer group"
+        >
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={PROMOTIONAL_ADS[currentAdIndex].id}
+              initial={{ opacity: 0, x: 25 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -25 }}
+              transition={{ duration: 0.4, ease: 'easeInOut' }}
+              className="w-full flex items-center justify-center bg-slate-50"
+            >
+              <img
+                src={PROMOTIONAL_ADS[currentAdIndex].src}
+                alt={PROMOTIONAL_ADS[currentAdIndex].alt}
+                className="w-full h-auto object-cover rounded-2xl sm:rounded-3xl shadow-sm"
+              />
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
-      {/* ════════════════════════════════════════════════════════════
-          5. FOOTER
-          ════════════════════════════════════════════════════════════ */}
-      <div className="mt-8">
-        <PublicFooter onTabChange={onTabChange} onOpenConsultation={onOpenConsultation} />
-      </div>
+        {/* 3 Interactive Dot Indicators */}
+        <div className="flex items-center justify-center gap-2 pt-3">
+          {PROMOTIONAL_ADS.map((_, idx) => (
+            <button
+              key={idx}
+              type="button"
+              onClick={() => setCurrentAdIndex(idx)}
+              className={`h-2 rounded-full transition-all cursor-pointer ${
+                idx === currentAdIndex ? 'w-7 bg-[#E5A91E]' : 'w-2 bg-slate-300 hover:bg-slate-400'
+              }`}
+              aria-label={`Switch to Ad ${idx + 1}`}
+            />
+          ))}
+        </div>
+      </section>
+
+      {/* =========================================================================
+          4. FOUR PILLARS (Left & Right Entrance Animation, then Fixed)
+          ========================================================================= */}
+      <section
+        id="pillars"
+        className="py-10 sm:py-12 px-4 sm:px-8 max-w-5xl mx-auto"
+      >
+        {/* Diamond Star Header with Gold Lines */}
+        <div className="text-center max-w-xl mx-auto mb-6 sm:mb-8">
+          <div className="flex items-center justify-center gap-2.5 mb-1.5">
+            <span className="w-8 sm:w-16 h-0.5 bg-[#E5A91E]" />
+            <span className="text-[#E5A91E] font-black text-sm">✦</span>
+            <span className="w-8 sm:w-16 h-0.5 bg-[#E5A91E]" />
+          </div>
+          <h3 className="text-2xl sm:text-3xl font-extrabold text-[#0B3B24] tracking-tight">
+            Our Four Pillars
+          </h3>
+          <p className="text-slate-600 text-xs sm:text-sm font-semibold mt-0.5">
+            Building Trust. Delivering Value.
+          </p>
+        </div>
+
+        {/* 4 White Rounded Cards: Animate Left & Right, then Fixed in Place */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-5">
+          {PILLARS_DATA.map((pillar, idx) => {
+            const IconComponent = pillar.icon;
+            const slideX = idx % 2 === 0 ? -50 : 50;
+
+            return (
+              <motion.div
+                key={pillar.id}
+                initial={{ opacity: 0, x: slideX }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.65, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                className="pillar-card bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-xs hover:border-[#0B3B24]/40 hover:shadow-md transition-all flex flex-col items-center text-center"
+              >
+                <div className="w-12 h-12 rounded-2xl bg-[#EBF5EE] text-[#0B3B24] flex items-center justify-center mb-3 border border-[#0B3B24]/10 shadow-2xs">
+                  <IconComponent className="w-6 h-6 stroke-[2.2]" />
+                </div>
+                <h4 className="font-extrabold text-xs sm:text-sm text-[#0B3B24] leading-tight mb-1">
+                  {pillar.title}
+                </h4>
+                <p className="text-[11px] text-slate-500 leading-snug">
+                  {pillar.subtitle}
+                </p>
+              </motion.div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* =========================================================================
+          5. 7-STEP PROPERTY BUYING JOURNEY PROCESS TIMELINE (Exact Specification)
+          ========================================================================= */}
+      <section
+        id="process"
+        ref={timelineRef}
+        className="py-12 sm:py-16 px-4 sm:px-6 max-w-5xl mx-auto relative"
+      >
+        {/* Section Heading */}
+        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+          <div className="flex items-center justify-center gap-2.5 mb-2">
+            <span className="w-8 sm:w-14 h-0.5 bg-[#E5A91E]" />
+            <h3 className="text-2xl sm:text-4xl font-extrabold text-[#0B3828] tracking-tight">
+              Your Property Buying Journey
+            </h3>
+            <span className="w-8 sm:w-14 h-0.5 bg-[#E5A91E]" />
+          </div>
+          <p className="text-slate-600 text-xs sm:text-sm font-medium">
+            From enquiry to ownership &mdash; we are with you at every step.
+          </p>
+        </div>
+
+        {/* Central Vertical Trail Container */}
+        <div className="relative">
+          {/* Base Underlying Light Line (#E6EEE8) */}
+          <div
+            className="absolute top-0 bottom-0 w-1 bg-[#E6EEE8] rounded-full
+                       left-6 md:left-1/2 -translate-x-1/2 pointer-events-none"
+          />
+
+          {/* Overlaid Animated Scroll-Driven Progress Line (Gradient from #E5A91E to #14563D) */}
+          <div
+            className="absolute top-0 w-1 rounded-full origin-top transition-all duration-300 ease-out
+                       left-6 md:left-1/2 -translate-x-1/2 pointer-events-none"
+            style={{
+              height: '100%',
+              transform: `scaleY(${timelineProgress})`,
+              background: 'linear-gradient(to bottom, #E5A91E 0%, #14563D 100%)',
+              boxShadow: '0 0 10px rgba(229, 169, 30, 0.6)',
+            }}
+          />
+
+          {/* 7 Timeline Milestones */}
+          <div className="space-y-8 sm:space-y-12">
+            {BUYING_PROCESS_STEPS.map((stepItem, idx) => {
+              const isEven = idx % 2 === 1; // 0: left, 1: right, 2: left...
+              const StepIcon = stepItem.icon;
+              const isExpanded = openStepIndex === idx;
+
+              return (
+                <motion.article
+                  key={stepItem.step}
+                  initial={{ opacity: 0, y: 35 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  className={`relative flex flex-col md:flex-row items-start md:items-center ${
+                    isEven ? 'md:flex-row-reverse' : ''
+                  }`}
+                >
+                  {/* Content Card (Desktop: 45% width, Mobile: pl-14 full width) */}
+                  <div
+                    className={`w-full md:w-[45%] pl-14 md:pl-0 ${
+                      isEven ? 'md:pl-8 text-left' : 'md:pr-8 md:text-left'
+                    }`}
+                  >
+                    <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#E6EEE8] shadow-sm hover:shadow-md transition-shadow relative">
+                      {/* Step Icon in soft light green square */}
+                      <div className="w-11 h-11 rounded-xl bg-[#EFF6F0] text-[#0B3828] border border-[#0B3828]/10 flex items-center justify-center mb-3">
+                        <StepIcon className="w-5 h-5 stroke-[2.2]" />
+                      </div>
+
+                      {/* Step Badge */}
+                      <span className="text-[11px] font-black uppercase tracking-wider text-[#E5A91E] block mb-1">
+                        STEP {stepItem.step}
+                      </span>
+
+                      {/* Title */}
+                      <h4 className="text-base sm:text-lg font-black text-[#0B3828] leading-tight mb-2">
+                        {stepItem.title}
+                      </h4>
+
+                      {/* Summary */}
+                      <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mb-3">
+                        {stepItem.summary}
+                      </p>
+
+                      {/* Expandable Accordion "Know More +" Button */}
+                      <button
+                        type="button"
+                        onClick={() => toggleStepDetails(idx)}
+                        className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0B3828] hover:text-[#E5A91E] transition-colors cursor-pointer group"
+                      >
+                        <span>{isExpanded ? 'Show Less -' : 'Know More +'}</span>
+                        <ArrowRight className="w-3.5 h-3.5 text-[#E5A91E] group-hover:translate-x-0.5 transition-transform" />
+                      </button>
+
+                      {/* Expandable Inner Details Drawer */}
+                      <AnimatePresence>
+                        {isExpanded && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.35, ease: 'easeInOut' }}
+                            className="overflow-hidden border-t border-slate-100 mt-3 pt-3"
+                          >
+                            <ul className="space-y-1.5 text-xs text-slate-600">
+                              {stepItem.details.map((bullet, bIdx) => (
+                                <li key={bIdx} className="flex items-start gap-2">
+                                  <span className="text-[#E5A91E] font-bold text-sm leading-none mt-0.5">✓</span>
+                                  <span>{bullet}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  </div>
+
+                  {/* Central Indicator Circle with Number (01, 02.. Exact as Attachment 1) */}
+                  <div
+                    className="absolute left-6 md:left-1/2 -translate-x-1/2 z-20 top-6 md:top-auto
+                               w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#E5A91E] text-[#0B3828]
+                               font-black text-xs sm:text-sm flex items-center justify-center
+                               border-2 border-white shadow-[0_0_14px_rgba(229,169,30,0.5)] transition-all"
+                  >
+                    <span>{stepItem.step}</span>
+                  </div>
+
+                  {/* Desktop Opposite Space Balancer (45% width) */}
+                  <div className="hidden md:block w-[45%]" />
+                </motion.article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          6. REVIEWS ("What Our Customers Say" with 3-sec Auto Transition)
+          ========================================================================= */}
+      <section
+        id="reviews"
+        onMouseEnter={() => setIsReviewsPaused(true)}
+        onMouseLeave={() => setIsReviewsPaused(false)}
+        className="py-12 sm:py-16 px-4 sm:px-8 max-w-4xl mx-auto"
+      >
+        <div className="text-center max-w-xl mx-auto mb-6 sm:mb-8">
+          <div className="flex items-center justify-center gap-2.5 mb-1.5">
+            <span className="w-8 sm:w-14 h-0.5 bg-[#E5A91E]" />
+            <h3 className="text-2xl sm:text-3xl font-extrabold text-[#0B3B24] tracking-tight">
+              What Our Customers Say
+            </h3>
+            <span className="w-8 sm:w-14 h-0.5 bg-[#E5A91E]" />
+          </div>
+          <p className="text-slate-600 text-xs sm:text-sm font-semibold">
+            Real People. Real Experiences.
+          </p>
+        </div>
+
+        {/* Review Card with Smooth Auto-Slide Animation */}
+        <div className="relative bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-md flex items-center gap-3 sm:gap-6 overflow-hidden">
+          {/* Left Arrow Button */}
+          <button
+            type="button"
+            onClick={handlePrevReview}
+            className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-[#0B3B24] hover:text-white transition shrink-0 cursor-pointer active:scale-95 shadow-xs"
+            aria-label="Previous Review"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+
+          {/* Active Review Content */}
+          <div className="flex-1 overflow-hidden min-h-[110px] flex items-center">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentReviewIndex}
+                initial={{ opacity: 0, x: 25 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -25 }}
+                transition={{ duration: 0.35, ease: 'easeInOut' }}
+                className="w-full flex flex-col md:flex-row items-center gap-4 sm:gap-6 text-center md:text-left"
+              >
+                {/* Customer Photo */}
+                <div className="relative w-18 h-18 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-[#E5A91E] shrink-0 shadow-md">
+                  <img
+                    src={currentReview.img}
+                    alt={currentReview.author}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+
+                {/* Rating & Quote */}
+                <div className="space-y-1.5 flex-1">
+                  <div className="flex items-center justify-center md:justify-start gap-1 text-[#E5A91E]">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-current" />
+                    ))}
+                  </div>
+                  <p className="text-xs sm:text-sm text-slate-700 italic leading-relaxed">
+                    {currentReview.quote}
+                  </p>
+                  <div>
+                    <span className="font-extrabold text-xs sm:text-sm text-[#0B3B24]">
+                      {currentReview.author}
+                    </span>
+                    <span className="text-[11px] text-slate-400 ml-2">
+                      ({currentReview.plot})
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Right Arrow Button */}
+          <button
+            type="button"
+            onClick={handleNextReview}
+            className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-[#0B3B24] hover:text-white transition shrink-0 cursor-pointer active:scale-95 shadow-xs"
+            aria-label="Next Review"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          7. FREQUENTLY ASKED QUESTIONS (With Draggable Plot-to-Home Transformation Slider)
+          ========================================================================= */}
+      <section id="faq" className="py-12 sm:py-16 px-4 sm:px-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center">
+          {/* Column 1: Interactive Draggable Plot-to-Home Comparison Slider (Attachments 4, 5, 6) */}
+          <div className="lg:col-span-5">
+            <div
+              ref={sliderContainerRef}
+              onMouseDown={handleMouseDown}
+              onMouseMove={handleMouseMove}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseUp}
+              onTouchMove={handleTouchMove}
+              className="relative rounded-3xl overflow-hidden shadow-xl border-2 border-slate-100 aspect-[4/3] sm:aspect-[16/11] bg-slate-100 select-none cursor-ew-resize group"
+            >
+              {/* Layer 1: Empty Residential Plot Background */}
+              <img
+                src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80"
+                alt="Empty Demarcated Plot"
+                className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+              />
+
+              {/* Layer 2: Completed Dream Home Foreground (Clipped by slider position) */}
+              <div
+                className="absolute inset-0 overflow-hidden pointer-events-none"
+                style={{
+                  clipPath: `inset(0 ${100 - sliderPosition}% 0 0)`,
+                }}
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80"
+                  alt="Completed Built Home on Plot"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              </div>
+
+              {/* Central Divider Line */}
+              <div
+                className="absolute top-0 bottom-0 w-1 bg-white shadow-xl pointer-events-none"
+                style={{ left: `${sliderPosition}%` }}
+              />
+
+              {/* Central Circular Draggable Handle (Exact as Attachment 4/5/6 without Before/After badges) */}
+              <div
+                className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 z-20 w-11 h-11 rounded-full bg-[#112419] border-2 border-white shadow-2xl flex items-center justify-center text-[#E5A91E] pointer-events-none"
+                style={{ left: `${sliderPosition}%` }}
+              >
+                <div className="flex items-center gap-0.5 text-xs font-black">
+                  <span>◀</span>
+                  <span>▶</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Instruction Caption (Exact as Attachment) */}
+            <p className="text-center text-xs text-slate-500 font-medium mt-3 flex items-center justify-center gap-1.5">
+              <span className="text-[#E5A91E]">✦</span>
+              <span>Drag the handle left or right to reveal Plot to Completed Home transformation</span>
+            </p>
+          </div>
+
+          {/* Column 2: Accordion FAQ Questions */}
+          <div className="lg:col-span-7 space-y-4">
+            <div className="space-y-1 text-left mb-6">
+              <div className="flex items-center gap-2">
+                <span className="w-8 h-0.5 bg-[#E5A91E]" />
+                <span className="text-xs sm:text-sm font-extrabold text-[#0B3B24] uppercase tracking-wider">
+                  Frequently Asked Questions
+                </span>
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-[#0B3B24] tracking-tight">
+                Get answers to common queries.
+              </h3>
+            </div>
+
+            {FAQS.map((faq, idx) => {
+              const isOpen = openFaqIndex === idx;
+              return (
+                <div
+                  key={idx}
+                  className="border border-slate-200/90 rounded-2xl overflow-hidden bg-white shadow-xs"
+                >
+                  <button
+                    type="button"
+                    onClick={() => toggleFaq(idx)}
+                    className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-3 font-bold text-xs sm:text-sm text-[#0B3B24] hover:bg-slate-50 transition cursor-pointer"
+                  >
+                    <span className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-[#E5A91E]" />
+                      <span>{faq.question}</span>
+                    </span>
+                    <span className="w-6 h-6 rounded-full bg-emerald-50 text-[#0B3B24] flex items-center justify-center shrink-0">
+                      {isOpen ? <Minus className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
+                    </span>
+                  </button>
+
+                  <AnimatePresence>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.25 }}
+                        className="px-4 sm:px-5 pb-4 sm:pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3"
+                      >
+                        {faq.answer}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          8. BOTTOM SITE VISIT CTA BANNER
+          ========================================================================= */}
+      <section className="px-4 sm:px-8 py-8 sm:py-10 max-w-5xl mx-auto">
+        <div className="rounded-3xl bg-[#0B3B24] p-6 sm:p-10 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl border border-[#1E5D32]">
+          <div className="flex items-center gap-4 text-center md:text-left">
+            <div className="w-14 h-14 rounded-2xl bg-[#E5A91E]/20 text-[#E5A91E] flex items-center justify-center shrink-0 border border-[#E5A91E]/40">
+              <Home className="w-7 h-7" />
+            </div>
+            <div>
+              <h4 className="text-xl sm:text-2xl font-black">
+                Let&rsquo;s Find the Right Plot for <span className="text-[#E5A91E]">Your Future.</span>
+              </h4>
+              <p className="text-xs sm:text-sm text-emerald-200 mt-1">
+                Schedule a site visit with Managing Director Rajesh RTR today.
+              </p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={onOpenConsultation}
+            className="px-7 py-3.5 rounded-full bg-[#E5A91E] hover:bg-[#d69814] text-[#0B3B24] font-black text-xs sm:text-sm flex items-center gap-2 shadow-md transition-all cursor-pointer active:scale-95 whitespace-nowrap"
+          >
+            <span>Schedule a Site Visit</span>
+            <ArrowRight className="w-4 h-4 stroke-[2.5]" />
+          </button>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          9. PUBLIC FOOTER
+          ========================================================================= */}
+      <PublicFooter
+        onTabChange={onTabChange}
+        onOpenConsultation={onOpenConsultation}
+        onOpenCabBooking={onOpenCabBooking}
+      />
     </div>
   );
 };

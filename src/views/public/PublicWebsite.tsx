@@ -38,7 +38,7 @@ export const PublicWebsite: React.FC = () => {
   };
 
   return (
-    <div className="w-full min-h-screen flex flex-col bg-[#F8FAFC] dark:bg-[#081B10] text-slate-900 dark:text-slate-100 overflow-x-hidden min-w-0 box-border">
+    <div className="w-full min-h-screen flex flex-col bg-white text-[#17251E] min-w-0 box-border">
       {/* ─────────────────────────────────────────────────────────────
           1. PUBLIC HEADER (Deep Forest Green #113B24)
           ───────────────────────────────────────────────────────────── */}
