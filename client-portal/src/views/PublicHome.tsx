@@ -457,11 +457,11 @@ export const PublicHome: React.FC<PublicHomeProps> = ({
         id="ads"
         onMouseEnter={() => setIsAdPaused(true)}
         onMouseLeave={() => setIsAdPaused(false)}
-        className="w-full px-1 sm:px-3 md:px-6 py-6 sm:py-10 max-w-[1560px] mx-auto"
+        className="w-full px-3 sm:px-6 py-4 sm:py-6 max-w-5xl sm:max-w-6xl mx-auto"
       >
         <div
           onClick={() => onTabChange('projects')}
-          className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-slate-200/90 bg-white cursor-pointer group"
+          className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl border border-slate-200/90 bg-white cursor-pointer group"
         >
           <AnimatePresence mode="wait">
             <motion.div
@@ -475,14 +475,14 @@ export const PublicHome: React.FC<PublicHomeProps> = ({
               <img
                 src={PROMOTIONAL_ADS[currentAdIndex].src}
                 alt={PROMOTIONAL_ADS[currentAdIndex].alt}
-                className="w-full h-auto min-h-[180px] sm:min-h-[280px] md:min-h-[380px] lg:min-h-[460px] object-cover rounded-2xl sm:rounded-3xl shadow-sm"
+                className="w-full h-[125px] sm:h-[185px] md:h-[240px] lg:h-[280px] object-cover rounded-2xl sm:rounded-3xl shadow-sm"
               />
             </motion.div>
           </AnimatePresence>
         </div>
 
         {/* 3 Interactive Dot Indicators */}
-        <div className="flex items-center justify-center gap-2 pt-4">
+        <div className="flex items-center justify-center gap-2 pt-3.5">
           {PROMOTIONAL_ADS.map((_, idx) => (
             <button
               key={idx}

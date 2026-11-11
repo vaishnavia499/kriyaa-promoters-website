@@ -18,7 +18,7 @@ export const PublicQuickActions: React.FC<PublicQuickActionsProps> = () => {
   return (
     <aside
       aria-label="Quick WhatsApp Contact"
-      className="fixed bottom-[110px] sm:bottom-12 right-4 sm:right-7 z-40 flex items-center justify-center pointer-events-auto"
+      className="fixed bottom-[160px] sm:bottom-24 right-4 sm:right-7 z-40 flex items-center justify-center pointer-events-auto"
     >
       <div className="relative group">
         {/* Floating WhatsApp Action Button */}
