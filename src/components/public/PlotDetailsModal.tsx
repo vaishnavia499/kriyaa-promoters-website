@@ -69,17 +69,17 @@ export const PlotDetailsModal: React.FC<PlotDetailsModalProps> = ({
   // Status Badge Styling (Available: Emerald, Reserved: Amber, Sold: Red)
   let statusBadgeConfig = {
     label: 'Available',
-    classes: 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border-emerald-500/40',
+    classes: 'bg-emerald-500/15 text-emerald-700 border-emerald-500/40',
   };
   if (plot?.status === 'Reserved') {
     statusBadgeConfig = {
       label: 'On Hold / Reserved',
-      classes: 'bg-amber-500/15 text-amber-700 dark:text-[#EAB308] border-amber-500/40',
+      classes: 'bg-amber-500/15 text-amber-700 border-amber-500/40',
     };
   } else if (plot?.status === 'Sold') {
     statusBadgeConfig = {
       label: 'Sold Out',
-      classes: 'bg-red-500/15 text-red-700 dark:text-red-400 border-red-500/40',
+      classes: 'bg-red-500/15 text-red-700 border-red-500/40',
     };
   }
 
@@ -110,7 +110,7 @@ export const PlotDetailsModal: React.FC<PlotDetailsModalProps> = ({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 40, scale: 0.96 }}
             transition={{ type: 'spring', damping: 26, stiffness: 340 }}
-            className="relative w-full max-w-md bg-white dark:bg-[#0B2516] rounded-t-3xl sm:rounded-3xl border border-slate-200 dark:border-[#1E5D32] shadow-2xl p-5 sm:p-6 z-10 max-h-[92vh] overflow-y-auto space-y-4"
+            className="relative w-full max-w-md bg-white rounded-t-3xl sm:rounded-3xl border border-slate-200 shadow-2xl p-5 sm:p-6 z-10 max-h-[92vh] overflow-y-auto space-y-4"
             onClick={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
@@ -119,13 +119,13 @@ export const PlotDetailsModal: React.FC<PlotDetailsModalProps> = ({
             {/* ─────────────────────────────────────────────────────────────
                 1. TOP HEADER & ACCESSIBLE CLOSE (✕)
                 ───────────────────────────────────────────────────────────── */}
-            <div className="flex items-start justify-between gap-3 border-b border-slate-100 dark:border-[#1E5D32]/80 pb-3">
+            <div className="flex items-start justify-between gap-3 border-b border-slate-100 pb-3">
               <div>
                 {/* Heading & Status Badge */}
                 <div className="flex items-center gap-2 flex-wrap">
                   <h3
                     id="plot-modal-heading"
-                    className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white"
+                    className="text-xl sm:text-2xl font-black text-slate-900"
                   >
                     Plot #{plot.plotNumber}
                   </h3>
@@ -137,7 +137,7 @@ export const PlotDetailsModal: React.FC<PlotDetailsModalProps> = ({
                 </div>
 
                 {/* Compass Direction Tag */}
-                <div className="flex items-center gap-1.5 text-xs font-bold text-slate-600 dark:text-[#EAB308] mt-1.5 bg-slate-100 dark:bg-[#112F1C] px-2.5 py-1 rounded-xl border border-slate-200 dark:border-[#1E5D32] w-fit">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-slate-600 mt-1.5 bg-slate-100 px-2.5 py-1 rounded-xl border border-slate-200 w-fit">
                   <Compass className="w-3.5 h-3.5 text-[#CA8A04] shrink-0" />
                   <span>🧭 {directionFacing} Facing · {roadWidthStr}</span>
                 </div>
@@ -147,7 +147,7 @@ export const PlotDetailsModal: React.FC<PlotDetailsModalProps> = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-[#112F1C] dark:hover:bg-[#184428] text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white flex items-center justify-center transition-colors cursor-pointer shrink-0 border border-slate-200/80 dark:border-[#1E5D32]"
+                className="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 flex items-center justify-center transition-colors cursor-pointer shrink-0 border border-slate-200/80"
                 title="Close (Esc)"
                 aria-label="Close dialog"
               >
@@ -160,81 +160,81 @@ export const PlotDetailsModal: React.FC<PlotDetailsModalProps> = ({
                 ───────────────────────────────────────────────────────────── */}
             <div className="grid grid-cols-2 gap-2.5">
               {/* 1. Dimensions */}
-              <div className="p-3 rounded-2xl bg-slate-50 dark:bg-[#112F1C] border border-slate-100 dark:border-[#1E5D32]/60">
+              <div className="p-3 rounded-2xl bg-slate-50 border border-slate-100">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
                   Dimensions
                 </span>
-                <span className="text-sm sm:text-base font-black text-slate-900 dark:text-white mt-0.5 block font-mono">
+                <span className="text-sm sm:text-base font-black text-slate-900 mt-0.5 block font-mono">
                   {formattedDimensions ? `${formattedDimensions} ft` : '30 × 50 ft'}
                 </span>
-                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium block mt-0.5">
+                <span className="text-[10px] text-slate-500 font-medium block mt-0.5">
                   Standard Parcel
                 </span>
               </div>
 
               {/* 2. Total Area */}
-              <div className="p-3 rounded-2xl bg-slate-50 dark:bg-[#112F1C] border border-slate-100 dark:border-[#1E5D32]/60">
+              <div className="p-3 rounded-2xl bg-slate-50 border border-slate-100">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
                   Total Area
                 </span>
-                <span className="text-sm sm:text-base font-black text-slate-900 dark:text-white mt-0.5 block">
+                <span className="text-sm sm:text-base font-black text-slate-900 mt-0.5 block">
                   {plot.areaSqFt?.toLocaleString('en-IN')} sq.ft
                 </span>
-                <span className="text-[10px] text-amber-600 dark:text-[#EAB308] font-bold block mt-0.5">
+                <span className="text-[10px] text-amber-600 font-bold block mt-0.5">
                   ({plot.areaCents} Cents)
                 </span>
               </div>
 
               {/* 3. Price per Sq.Ft */}
-              <div className="p-3 rounded-2xl bg-slate-50 dark:bg-[#112F1C] border border-slate-100 dark:border-[#1E5D32]/60">
+              <div className="p-3 rounded-2xl bg-slate-50 border border-slate-100">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
                   Price per Sq.Ft
                 </span>
-                <span className="text-sm sm:text-base font-black text-slate-900 dark:text-white mt-0.5 block">
+                <span className="text-sm sm:text-base font-black text-slate-900 mt-0.5 block">
                   ₹{plot.pricePerSqFt?.toLocaleString('en-IN') || '1,200'} / sq.ft
                 </span>
-                <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold block mt-0.5">
+                <span className="text-[10px] text-emerald-600 font-bold block mt-0.5">
                   Govt Sanctioned
                 </span>
               </div>
 
               {/* 4. Total Investment */}
-              <div className="p-3 rounded-2xl bg-slate-50 dark:bg-[#112F1C] border border-slate-100 dark:border-[#1E5D32]/60">
+              <div className="p-3 rounded-2xl bg-slate-50 border border-slate-100">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
                   Total Investment
                 </span>
-                <span className="text-sm sm:text-base font-black text-[#15803D] dark:text-emerald-400 mt-0.5 block">
+                <span className="text-sm sm:text-base font-black text-[#15803D] mt-0.5 block">
                   ₹{plot.totalPrice?.toLocaleString('en-IN')}
                 </span>
-                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-bold block mt-0.5">
+                <span className="text-[10px] text-slate-500 font-bold block mt-0.5">
                   ₹{(plot.totalPrice / 100000).toFixed(2)} Lakhs
                 </span>
               </div>
             </div>
 
             {/* 5. Estimated EMI Banner */}
-            <div className="p-3 rounded-2xl bg-emerald-500/10 dark:bg-emerald-950/40 border border-emerald-500/30 flex items-center justify-between gap-3">
+            <div className="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between gap-3">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-xl bg-[#113B24] border border-[#EAB308]/60 flex items-center justify-center text-[#EAB308] shrink-0">
                   <Landmark className="w-4 h-4" />
                 </div>
                 <div>
-                  <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">
+                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">
                     Estimated EMI
                   </span>
-                  <span className="text-sm font-black text-slate-900 dark:text-white">
+                  <span className="text-sm font-black text-slate-900">
                     ₹{estimatedEmi.toLocaleString('en-IN')} / month
                   </span>
                 </div>
               </div>
-              <span className="text-[10px] font-extrabold text-[#15803D] dark:text-emerald-300 text-right">
+              <span className="text-[10px] font-extrabold text-[#15803D] text-right">
                 Pre-approved by SBI / HDFC
               </span>
             </div>
 
             {/* 6. Legal Approval Tag */}
-            <div className="p-2.5 rounded-2xl bg-slate-50 dark:bg-[#112F1C] border border-slate-100 dark:border-[#1E5D32]/60 flex items-center justify-between gap-2 text-xs">
-              <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+            <div className="p-2.5 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-between gap-2 text-xs">
+              <div className="flex items-center gap-2 text-slate-700">
                 <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0" />
                 <span className="font-bold text-[11px]">
                   {project.dtcpNumber || 'DTCP No. 182/2023'} · Clear Patta Ready
@@ -255,15 +255,15 @@ export const PlotDetailsModal: React.FC<PlotDetailsModalProps> = ({
                 onClick={() => onToggleSave(plot.id)}
                 className={`min-h-[46px] px-3.5 py-2.5 rounded-2xl font-black text-xs sm:text-sm flex items-center justify-center gap-2 border transition-all cursor-pointer active:scale-95 ${
                   isSaved
-                    ? 'bg-rose-50 text-rose-700 border-rose-300 dark:bg-rose-950/40 dark:text-rose-300 dark:border-rose-800 shadow-sm'
-                    : 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-[#112F1C] dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-[#184428]'
+                    ? 'bg-rose-50 text-rose-700 border-rose-300 shadow-sm'
+                    : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
                 }`}
               >
                 <Heart
                   className={`w-4 h-4 transition-transform ${
                     isSaved
                       ? 'fill-rose-500 text-rose-500 scale-110'
-                      : 'text-slate-500 dark:text-slate-300'
+                      : 'text-slate-500'
                   }`}
                 />
                 <span>{isSaved ? '♥ Added to Favourites' : '♥ Add to Favourite'}</span>
@@ -290,7 +290,7 @@ export const PlotDetailsModal: React.FC<PlotDetailsModalProps> = ({
                   onClose();
                   onWhatsAppInquiry(plot);
                 }}
-                className="w-full py-1.5 text-center text-[11px] font-semibold text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                className="w-full py-1.5 text-center text-[11px] font-semibold text-slate-500 hover:text-emerald-600 flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
               >
                 <MessageCircle className="w-3.5 h-3.5 text-emerald-500" />
                 <span>Or WhatsApp directly with MD Rajesh RTR</span>

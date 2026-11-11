@@ -239,15 +239,15 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
   // ─────────────────────────────────────────────────────────────
   if (viewingProject) {
     return (
-      <div className="w-full min-h-screen bg-white dark:bg-[#081B10] text-slate-900 dark:text-slate-100 flex flex-col justify-between select-none">
+      <div className="w-full min-h-screen bg-white text-slate-900 flex flex-col justify-between select-none">
         <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 w-full space-y-6">
           {/* Top Bar: Back Button + Project Identity */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-[#1E5D32]">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
             <div className="flex items-center gap-3">
               <button
                 type="button"
                 onClick={() => setActiveProjectId(null)}
-                className="min-h-[44px] min-w-[44px] rounded-2xl bg-white dark:bg-[#112F1C] border border-slate-200 dark:border-[#1E5D32] hover:bg-slate-100 dark:hover:bg-[#184428] text-slate-800 dark:text-white flex items-center justify-center transition-all cursor-pointer shadow-sm group"
+                className="min-h-[44px] min-w-[44px] rounded-2xl bg-white border border-slate-200 hover:bg-slate-100 text-slate-800 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
                 title="Back to All Projects"
               >
                 <ArrowLeft className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" />
@@ -255,7 +255,7 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
 
               <div>
                 <div className="flex items-center gap-2 flex-wrap">
-                  <h1 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
+                  <h1 className="text-xl sm:text-2xl font-black text-slate-900">
                     {viewingProject.name}
                   </h1>
                   <span className="px-2.5 py-0.5 rounded-full bg-[#15803D] text-white text-xs font-bold shadow-xs">
@@ -267,7 +267,7 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
                     </span>
                   )}
                 </div>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                <p className="text-xs text-slate-500 mt-0.5">
                   {viewingProject.location}, {viewingProject.district} · {viewingProject.totalAreaExtent || '12.5 Acres'}
                 </p>
               </div>
@@ -290,15 +290,15 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
               1. TOP 3-TAB SEGMENTED NAVIGATION BAR (Sticky, Clean & Responsive)
               ───────────────────────────────────────────────────────────── */}
           <div className="sticky top-2 z-40 w-full max-w-xl mx-auto px-2">
-            <div className="bg-white/95 dark:bg-[#07170E]/95 backdrop-blur-md p-1.5 rounded-2xl border border-slate-200/90 dark:border-[#1E5D32] flex items-center justify-between gap-1 shadow-lg">
+            <div className="bg-white/95 backdrop-blur-md p-1.5 rounded-2xl border border-slate-200/90 flex items-center justify-between gap-1 shadow-lg">
               {/* Tab 1: Plot Details */}
               <button
                 type="button"
                 onClick={() => setProjectSubTab('details')}
                 className={`flex-1 min-h-[42px] px-3 py-2 rounded-xl text-xs sm:text-sm font-black flex items-center justify-center gap-2 transition-all cursor-pointer ${
                   projectSubTab === 'details'
-                    ? 'bg-[#15803D] dark:bg-[#113B24] text-white border border-[#EAB308]/40 shadow-md'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                    ? 'bg-[#15803D] text-white border border-[#EAB308]/40 shadow-md'
+                    : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
                 <FolderOpen className="w-4 h-4 text-[#EAB308]" />
@@ -311,8 +311,8 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
                 onClick={() => setProjectSubTab('layout')}
                 className={`flex-1 min-h-[42px] px-3 py-2 rounded-xl text-xs sm:text-sm font-black flex items-center justify-center gap-2 transition-all cursor-pointer ${
                   projectSubTab === 'layout'
-                    ? 'bg-[#15803D] dark:bg-[#113B24] text-white border border-[#EAB308]/40 shadow-md'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                    ? 'bg-[#15803D] text-white border border-[#EAB308]/40 shadow-md'
+                    : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
@@ -325,8 +325,8 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
                 onClick={() => setProjectSubTab('table')}
                 className={`flex-1 min-h-[42px] px-3 py-2 rounded-xl text-xs sm:text-sm font-black flex items-center justify-center gap-2 transition-all cursor-pointer ${
                   projectSubTab === 'table'
-                    ? 'bg-[#15803D] dark:bg-[#113B24] text-white border border-[#EAB308]/40 shadow-md'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                    ? 'bg-[#15803D] text-white border border-[#EAB308]/40 shadow-md'
+                    : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
                 <Layers className="w-4 h-4 text-[#EAB308]" />
@@ -341,7 +341,7 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
           {projectSubTab === 'details' && (
             <div className="space-y-5 max-w-3xl mx-auto">
               {/* A. HERO MEDIA CARD */}
-              <div className="relative rounded-3xl overflow-hidden border border-slate-200 dark:border-[#1E5D32] shadow-xl aspect-[16/10] sm:aspect-[21/10] bg-slate-950 group select-none">
+              <div className="relative rounded-3xl overflow-hidden border border-slate-200 shadow-xl aspect-[16/10] sm:aspect-[21/10] bg-slate-950 group select-none">
                 {/* Top Badges Overlay */}
                 <div className="absolute top-3 inset-x-3 flex items-center justify-between gap-2 z-20 pointer-events-none">
                   <div className="px-3 py-1.5 rounded-full bg-[#CA8A04] text-white text-[10px] sm:text-[11px] font-black shadow-lg flex items-center gap-1.5 backdrop-blur-xs">
@@ -443,14 +443,14 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
               </div>
 
               {/* B. PROJECT OVERVIEW CARD */}
-              <div className="bg-white dark:bg-[#0B2516] rounded-3xl border border-slate-200 dark:border-[#1E5D32] p-5 sm:p-6 shadow-md space-y-4">
+              <div className="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-md space-y-4">
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-2xl bg-amber-500/15 border border-amber-500/30 text-[#CA8A04] flex items-center justify-center shrink-0">
                       <FolderOpen className="w-5 h-5" />
                     </div>
                     <div>
-                      <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white">
+                      <h3 className="text-base sm:text-lg font-black text-slate-900">
                         Project Overview
                       </h3>
                       <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
@@ -458,65 +458,65 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
                       </p>
                     </div>
                   </div>
-                  <span className="px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-xs font-bold shrink-0">
+                  <span className="px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-600 border border-emerald-500/30 text-xs font-bold shrink-0">
                     Phase 1: ACTIVE
                   </span>
                 </div>
 
                 {/* 2x2 Clean Metric Grid */}
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="p-3.5 rounded-2xl bg-white dark:bg-[#112F1C]/70 border border-slate-200/90 dark:border-[#1E5D32]/50 shadow-2xs">
+                  <div className="p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs">
                     <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
                       TOTAL PLOTS
                     </span>
-                    <span className="text-sm sm:text-base font-black text-slate-900 dark:text-white mt-0.5 block">
+                    <span className="text-sm sm:text-base font-black text-slate-900 mt-0.5 block">
                       45 Demarcated Plots
                     </span>
-                    <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-bold block mt-0.5">
+                    <span className="text-[11px] text-emerald-600 font-bold block mt-0.5">
                       Phase 1 (Limited Units)
                     </span>
                   </div>
 
-                  <div className="p-3.5 rounded-2xl bg-white dark:bg-[#112F1C]/70 border border-slate-200/90 dark:border-[#1E5D32]/50 shadow-2xs">
+                  <div className="p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs">
                     <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
                       BASE PRICE
                     </span>
-                    <span className="text-sm sm:text-base font-black text-slate-900 dark:text-white mt-0.5 block">
+                    <span className="text-sm sm:text-base font-black text-slate-900 mt-0.5 block">
                       ₹1,200 / Sq.Ft
                     </span>
-                    <span className="text-[11px] text-amber-600 dark:text-[#EAB308] font-bold block mt-0.5">
+                    <span className="text-[11px] text-amber-600 font-bold block mt-0.5">
                       Approved Govt Valuation
                     </span>
                   </div>
 
-                  <div className="p-3.5 rounded-2xl bg-white dark:bg-[#112F1C]/70 border border-slate-200/90 dark:border-[#1E5D32]/50 shadow-2xs">
+                  <div className="p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs">
                     <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
                       TOTAL LAYOUT AREA
                     </span>
-                    <span className="text-sm sm:text-base font-black text-slate-900 dark:text-white mt-0.5 block">
+                    <span className="text-sm sm:text-base font-black text-slate-900 mt-0.5 block">
                       12.5 Gated Acres
                     </span>
-                    <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium block mt-0.5">
+                    <span className="text-[11px] text-slate-500 font-medium block mt-0.5">
                       Wide tar roads & green resv
                     </span>
                   </div>
 
-                  <div className="p-3.5 rounded-2xl bg-white dark:bg-[#112F1C]/70 border border-slate-200/90 dark:border-[#1E5D32]/50 shadow-2xs">
+                  <div className="p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs">
                     <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
                       PLOT SIZES AVAILABLE
                     </span>
-                    <span className="text-sm sm:text-base font-black text-slate-900 dark:text-white mt-0.5 block">
+                    <span className="text-sm sm:text-base font-black text-slate-900 mt-0.5 block">
                       800 – 2,400 Sq.Ft
                     </span>
-                    <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium block mt-0.5">
+                    <span className="text-[11px] text-slate-500 font-medium block mt-0.5">
                       1.8 – 5.5 Cents Units
                     </span>
                   </div>
                 </div>
 
                 {/* Bottom Strip */}
-                <div className="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-900 dark:text-amber-200 flex items-center gap-2.5 text-xs font-bold">
-                  <CheckCircle2 className="w-4 h-4 text-amber-600 dark:text-[#EAB308] shrink-0" />
+                <div className="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-900 flex items-center gap-2.5 text-xs font-bold">
+                  <CheckCircle2 className="w-4 h-4 text-amber-600 shrink-0" />
                   <span>Project Type: DTCP & RERA Approved Residential Plotted Colony</span>
                 </div>
               </div>
@@ -559,12 +559,12 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
               </div>
 
               {/* D. TOWNSHIP INFRASTRUCTURE CARD */}
-              <div className="bg-white dark:bg-[#0B2516] rounded-3xl border border-slate-200 dark:border-[#1E5D32] p-5 sm:p-6 shadow-md space-y-4">
+              <div className="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-md space-y-4">
                 <div className="flex items-center justify-between gap-2">
-                  <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white">
+                  <h3 className="text-base sm:text-lg font-black text-slate-900">
                     Township Infrastructure
                   </h3>
-                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-xs font-bold">
+                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 border border-emerald-500/30 text-xs font-bold">
                     FULLY COMPLETED
                   </span>
                 </div>
@@ -596,17 +596,17 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
                     return (
                       <div
                         key={idx}
-                        className="p-3.5 rounded-2xl bg-white dark:bg-[#112F1C]/70 border border-slate-200/90 dark:border-[#1E5D32]/50 shadow-2xs flex items-center justify-between gap-3"
+                        className="p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex items-center justify-between gap-3"
                       >
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 rounded-2xl bg-[#113B24] border border-[#1E5D32] text-emerald-400 flex items-center justify-center shrink-0">
                             <Icon className="w-5 h-5" />
                           </div>
                           <div>
-                            <h4 className="text-xs sm:text-sm font-black text-slate-900 dark:text-white">
+                            <h4 className="text-xs sm:text-sm font-black text-slate-900">
                               {infra.title}
                             </h4>
-                            <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+                            <p className="text-[11px] text-slate-500 mt-0.5">
                               {infra.desc}
                             </p>
                           </div>
@@ -619,12 +619,12 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
               </div>
 
               {/* E. NEARBY LANDMARKS & CONNECTIVITY */}
-              <div className="bg-white dark:bg-[#0B2516] rounded-3xl border border-slate-200 dark:border-[#1E5D32] p-5 sm:p-6 shadow-md space-y-4">
+              <div className="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-md space-y-4">
                 <div className="flex items-center justify-between gap-2">
-                  <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white">
+                  <h3 className="text-base sm:text-lg font-black text-slate-900">
                     Nearby Landmarks
                   </h3>
-                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-xs font-bold">
+                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 border border-emerald-500/30 text-xs font-bold">
                     KEY HUBS
                   </span>
                 </div>
@@ -678,17 +678,17 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
                     return (
                       <div
                         key={idx}
-                        className="p-3 rounded-2xl bg-white dark:bg-[#112F1C]/70 border border-slate-200/90 dark:border-[#1E5D32]/50 shadow-2xs flex items-center justify-between gap-3"
+                        className="p-3 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex items-center justify-between gap-3"
                       >
                         <div className="flex items-center gap-3">
-                          <div className="w-9 h-9 rounded-xl bg-emerald-500/10 dark:bg-[#113B24] text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                          <div className="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center shrink-0">
                             <Icon className="w-4 h-4" />
                           </div>
                           <div>
-                            <h4 className="text-xs font-black text-slate-900 dark:text-white">
+                            <h4 className="text-xs font-black text-slate-900">
                               {landmark.name}
                             </h4>
-                            <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-1">
+                            <p className="text-[10px] text-slate-500 mt-0.5 line-clamp-1">
                               {landmark.sub}
                             </p>
                           </div>
@@ -697,8 +697,8 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
                         <span
                           className={`px-2.5 py-1 rounded-full text-[10px] font-black shrink-0 ${
                             landmark.isAmber
-                              ? 'bg-amber-500/15 text-amber-700 dark:text-amber-300'
-                              : 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
+                              ? 'bg-amber-500/15 text-amber-700'
+                              : 'bg-emerald-500/15 text-emerald-700'
                           }`}
                         >
                           {landmark.dist}
@@ -710,49 +710,49 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
               </div>
 
               {/* F. PRE-APPROVED BANK LOANS CARD */}
-              <div className="bg-white dark:bg-[#0B2516] rounded-3xl border border-slate-200 dark:border-[#1E5D32] p-5 sm:p-6 shadow-md space-y-4">
+              <div className="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-md space-y-4">
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                    <div className="w-8 h-8 rounded-xl bg-emerald-500/15 text-emerald-600 flex items-center justify-center shrink-0">
                       <Landmark className="w-4 h-4" />
                     </div>
-                    <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white">
+                    <h3 className="text-base sm:text-lg font-black text-slate-900">
                       Pre-Approved Bank Loans
                     </h3>
                   </div>
-                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-xs font-bold">
+                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 border border-emerald-500/30 text-xs font-bold">
                     Up to 80% Funding
                   </span>
                 </div>
 
-                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                <p className="text-xs text-slate-600 leading-relaxed">
                   Instant spot loan approvals, zero hidden fees, and preferential interest rates from verified lending partners.
                 </p>
 
                 <div className="grid grid-cols-3 gap-2.5">
-                  <div className="p-3 rounded-2xl bg-white dark:bg-[#112F1C]/70 border border-slate-200/90 dark:border-[#1E5D32]/60 shadow-2xs text-center">
-                    <span className="text-sm font-black text-slate-900 dark:text-white block">
+                  <div className="p-3 rounded-2xl bg-white border border-slate-200/90 shadow-2xs text-center">
+                    <span className="text-sm font-black text-slate-900 block">
                       SBI
                     </span>
-                    <span className="text-[10px] text-slate-500 dark:text-slate-400 font-bold block mt-0.5">
+                    <span className="text-[10px] text-slate-500 font-bold block mt-0.5">
                       Home Finance
                     </span>
                   </div>
 
-                  <div className="p-3 rounded-2xl bg-white dark:bg-[#112F1C]/70 border border-slate-200/90 dark:border-[#1E5D32]/60 shadow-2xs text-center">
-                    <span className="text-sm font-black text-slate-900 dark:text-white block">
+                  <div className="p-3 rounded-2xl bg-white border border-slate-200/90 shadow-2xs text-center">
+                    <span className="text-sm font-black text-slate-900 block">
                       HDFC
                     </span>
-                    <span className="text-[10px] text-slate-500 dark:text-slate-400 font-bold block mt-0.5">
+                    <span className="text-[10px] text-slate-500 font-bold block mt-0.5">
                       Bank Ltd
                     </span>
                   </div>
 
-                  <div className="p-3 rounded-2xl bg-white dark:bg-[#112F1C]/70 border border-slate-200/90 dark:border-[#1E5D32]/60 shadow-2xs text-center">
-                    <span className="text-sm font-black text-slate-900 dark:text-white block">
+                  <div className="p-3 rounded-2xl bg-white border border-slate-200/90 shadow-2xs text-center">
+                    <span className="text-sm font-black text-slate-900 block">
                       CANARA
                     </span>
-                    <span className="text-[10px] text-slate-500 dark:text-slate-400 font-bold block mt-0.5">
+                    <span className="text-[10px] text-slate-500 font-bold block mt-0.5">
                       Priority Loan
                     </span>
                   </div>
@@ -804,7 +804,7 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
           {projectSubTab === 'table' && (
             <div className="space-y-4">
               {/* Filter Controls Bar */}
-              <div className="bg-white dark:bg-[#0B2516] rounded-2xl border border-slate-200 dark:border-[#1E5D32] p-4 shadow-sm flex flex-col md:flex-row items-center justify-between gap-3">
+              <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex flex-col md:flex-row items-center justify-between gap-3">
                 {/* Search */}
                 <div className="relative w-full md:w-72">
                   <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -813,7 +813,7 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
                     value={tableSearchQuery}
                     onChange={(e) => setTableSearchQuery(e.target.value)}
                     placeholder="Search plot #, size, facing..."
-                    className="w-full text-xs pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 dark:bg-[#112F1C] border border-slate-300 dark:border-[#1E5D32] text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#15803D]"
+                    className="w-full text-xs pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#15803D]"
                   />
                 </div>
 
@@ -824,7 +824,7 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
                     <select
                       value={tableStatusFilter}
                       onChange={(e) => setTableStatusFilter(e.target.value)}
-                      className="text-xs px-3 py-2 rounded-xl bg-slate-50 dark:bg-[#112F1C] border border-slate-300 dark:border-[#1E5D32] text-slate-900 dark:text-white focus:outline-none"
+                      className="text-xs px-3 py-2 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 focus:outline-none"
                     >
                       <option value="All">All Status ({projectPlots.length})</option>
                       <option value="Available">Available</option>
@@ -838,7 +838,7 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
                     <select
                       value={tableFacingFilter}
                       onChange={(e) => setTableFacingFilter(e.target.value)}
-                      className="text-xs px-3 py-2 rounded-xl bg-slate-50 dark:bg-[#112F1C] border border-slate-300 dark:border-[#1E5D32] text-slate-900 dark:text-white focus:outline-none"
+                      className="text-xs px-3 py-2 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 focus:outline-none"
                     >
                       <option value="All">All Facings</option>
                       <option value="East">East Facing</option>
@@ -851,7 +851,7 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
               </div>
 
               {/* Responsive Table */}
-              <div className="bg-white dark:bg-[#0B2516] rounded-2xl border border-slate-200 dark:border-[#1E5D32] overflow-hidden shadow-sm">
+              <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
                 <div className="overflow-x-auto">
                   <table className="w-full text-left text-xs">
                     <thead className="bg-[#113B24] text-white uppercase text-[10px] tracking-wider font-mono">
@@ -865,7 +865,7 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
                         <th className="py-3 px-4 text-right">Actions</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-100 dark:divide-[#1E5D32]">
+                    <tbody className="divide-y divide-slate-100">
                       {filteredTablePlots.length === 0 ? (
                         <tr>
                           <td colSpan={7} className="py-8 text-center text-slate-400">
@@ -882,9 +882,9 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
                                 setInspectedPlotId(plot.id);
                                 setIsPlotModalOpen(true);
                               }}
-                              className="hover:bg-emerald-50/50 dark:hover:bg-[#112F1C] cursor-pointer transition-colors"
+                              className="hover:bg-emerald-50/50 cursor-pointer transition-colors"
                             >
-                              <td className="py-3 px-4 font-black text-sm text-[#113B24] dark:text-[#EAB308]">
+                              <td className="py-3 px-4 font-black text-sm text-[#113B24]">
                                 #{plot.plotNumber}
                               </td>
                               <td className="py-3 px-4 font-mono font-bold">
@@ -897,7 +897,7 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
                               <td className="py-3 px-4">
                                 <span className="font-semibold">{plot.facing}</span> · {plot.roadWidth}
                               </td>
-                              <td className="py-3 px-4 font-black text-[#15803D] dark:text-emerald-400">
+                              <td className="py-3 px-4 font-black text-[#15803D]">
                                 ₹{(plot.totalPrice / 100000).toFixed(2)}L
                               </td>
                               <td className="py-3 px-4">
@@ -923,12 +923,12 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
                                     onClick={() => toggleSavePlot(plot.id)}
                                     className={`p-2 rounded-xl border transition-colors cursor-pointer ${
                                       isSaved
-                                        ? 'bg-emerald-50 border-emerald-400 text-[#15803D] dark:bg-[#113B24] dark:text-[#EAB308]'
-                                        : 'bg-slate-100 dark:bg-[#112F1C] border-slate-200 dark:border-[#1E5D32] text-slate-500 hover:text-slate-900'
+                                        ? 'bg-emerald-50 border-emerald-400 text-[#15803D]'
+                                        : 'bg-slate-100 border-slate-200 text-slate-500 hover:text-slate-900'
                                     }`}
                                     title={isSaved ? 'In My Plots' : 'Add to My Plots'}
                                   >
-                                    <BookmarkCheck className={`w-3.5 h-3.5 ${isSaved ? 'text-[#15803D] dark:text-[#EAB308]' : ''}`} />
+                                    <BookmarkCheck className={`w-3.5 h-3.5 ${isSaved ? 'text-[#15803D]' : ''}`} />
                                   </button>
 
                                   <button
@@ -981,15 +981,15 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
   // 2. PROJECT CATALOG CARDS VIEW
   // ─────────────────────────────────────────────────────────────
   return (
-    <div className="w-full min-h-screen bg-white dark:bg-[#081B10] text-slate-900 dark:text-slate-100 flex flex-col justify-between select-none">
+    <div className="w-full min-h-screen bg-white text-slate-900 flex flex-col justify-between select-none">
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 w-full space-y-6 sm:space-y-8">
         {/* ─────────────────────────────────────────────────────────────
             1. CLEAN HEADER (Title Only - No Subtitle)
             ───────────────────────────────────────────────────────────── */}
         <div className="text-center max-w-4xl mx-auto pt-2">
-          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
             Ready to Find Your Ideal{' '}
-            <span className="text-[#CA8A04] dark:text-[#EAB308]">Vastu-Compliant Plot?</span>
+            <span className="text-[#CA8A04]">Vastu-Compliant Plot?</span>
           </h1>
         </div>
 
@@ -1000,23 +1000,23 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
           {/* Full-width Search Input */}
           <div className="relative w-full">
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <Search className="w-5 h-5 text-slate-400 dark:text-emerald-400" />
+              <Search className="w-5 h-5 text-slate-400" />
             </div>
             <input
               type="text"
               value={projectSearchQuery}
               onChange={(e) => setProjectSearchQuery(e.target.value)}
               placeholder="Search by project name, layout, or DTCP number..."
-              className="w-full min-h-[50px] pl-11 pr-11 py-3 text-sm sm:text-base rounded-2xl bg-white dark:bg-[#0B2516] border-2 border-slate-200 dark:border-[#1E5D32] text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 shadow-xs focus:outline-none focus:border-[#15803D] dark:focus:border-[#EAB308] focus:ring-4 focus:ring-emerald-500/10 transition-all"
+              className="w-full min-h-[50px] pl-11 pr-11 py-3 text-sm sm:text-base rounded-2xl bg-white border-2 border-slate-200 text-slate-900 placeholder-slate-400 shadow-xs focus:outline-none focus:border-[#15803D] focus:ring-4 focus:ring-emerald-500/10 transition-all"
             />
             {projectSearchQuery && (
               <button
                 type="button"
                 onClick={() => setProjectSearchQuery('')}
-                className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-white cursor-pointer"
+                className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 cursor-pointer"
                 aria-label="Clear search"
               >
-                <div className="w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+                <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center">
                   <X className="w-3.5 h-3.5" />
                 </div>
               </button>
@@ -1077,7 +1077,7 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
 
         {/* Loading Indicator */}
         {isLoadingBackend && (
-          <div className="flex items-center justify-center gap-2 p-4 rounded-2xl bg-emerald-50/50 dark:bg-emerald-950/20 text-[#15803D] dark:text-emerald-400 text-xs font-bold max-w-md mx-auto">
+          <div className="flex items-center justify-center gap-2 p-4 rounded-2xl bg-emerald-50/50 text-[#15803D] text-xs font-bold max-w-md mx-auto">
             <span className="w-2 h-2 rounded-full bg-[#15803D] animate-ping" />
             <span>Syncing published plot data with promoter backend...</span>
           </div>
@@ -1085,7 +1085,7 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
 
         {/* Backend Error Alert with Retry */}
         {backendError && (
-          <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 text-amber-900 dark:text-amber-200 text-xs flex flex-col sm:flex-row items-center justify-between gap-3 max-w-xl mx-auto shadow-sm">
+          <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs flex flex-col sm:flex-row items-center justify-between gap-3 max-w-xl mx-auto shadow-sm">
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-amber-500" />
               <span>Offline cache active. Connect to promoter backend for latest plot releases.</span>
@@ -1093,7 +1093,7 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
             <button
               type="button"
               onClick={() => refreshBackendData()}
-              className="px-3 py-1.5 rounded-lg bg-amber-200 dark:bg-amber-900/60 text-amber-950 dark:text-amber-100 font-bold text-xs hover:brightness-105 cursor-pointer whitespace-nowrap"
+              className="px-3 py-1.5 rounded-lg bg-amber-200 text-amber-950 font-bold text-xs hover:brightness-105 cursor-pointer whitespace-nowrap"
             >
               Retry Sync
             </button>
@@ -1104,14 +1104,14 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
             3. PROJECT CARDS GRID (Filtered)
             ───────────────────────────────────────────────────────────── */}
         {filteredProjects.length === 0 ? (
-          <div className="bg-white dark:bg-[#0B2516] rounded-3xl border border-slate-200 dark:border-[#1E5D32] p-8 sm:p-12 text-center max-w-md mx-auto space-y-4 shadow-sm">
-            <div className="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-950/40 text-[#CA8A04] dark:text-[#EAB308] flex items-center justify-center mx-auto">
+          <div className="bg-white rounded-3xl border border-slate-200 p-8 sm:p-12 text-center max-w-md mx-auto space-y-4 shadow-sm">
+            <div className="w-12 h-12 rounded-2xl bg-amber-50 text-[#CA8A04] flex items-center justify-center mx-auto">
               <Search className="w-6 h-6" />
             </div>
-            <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white">
+            <h3 className="text-base sm:text-lg font-black text-slate-900">
               No matching layouts found
             </h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+            <p className="text-xs text-slate-500 leading-relaxed">
               Try adjusting your search keywords or switching location and status filters to view all available layouts.
             </p>
             <button
@@ -1121,7 +1121,7 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
                 setProjectLocationFilter('All Locations');
                 setProjectStatusFilter('All');
               }}
-              className="min-h-[44px] px-5 py-2.5 rounded-xl bg-[#113B24] dark:bg-[#15803D] text-[#EAB308] dark:text-white text-xs font-bold transition-all cursor-pointer hover:brightness-110 shadow-sm"
+              className="min-h-[44px] px-5 py-2.5 rounded-xl bg-[#113B24] text-[#EAB308] text-xs font-bold transition-all cursor-pointer hover:brightness-110 shadow-sm"
             >
               Reset All Filters
             </button>
@@ -1133,7 +1133,7 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
             return (
               <div
                 key={project.id}
-                className="bg-white dark:bg-[#0B2516] rounded-3xl border border-slate-200 dark:border-[#1E5D32] overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
+                className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
               >
                 {/* Thumbnail Image */}
                 <div className="relative aspect-[16/10] overflow-hidden bg-slate-900">
@@ -1168,27 +1168,27 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
 
                 {/* Card Body */}
                 <div className="p-5 space-y-4 flex-1 flex flex-col justify-between">
-                  <p className="text-xs text-slate-600 dark:text-slate-300 line-clamp-3 leading-relaxed">
+                  <p className="text-xs text-slate-600 line-clamp-3 leading-relaxed">
                     {project.description}
                   </p>
 
                   {/* Metrics Grid */}
-                  <div className="grid grid-cols-3 gap-2 py-3 border-y border-slate-100 dark:border-[#1E5D32] text-center">
+                  <div className="grid grid-cols-3 gap-2 py-3 border-y border-slate-100 text-center">
                     <div>
                       <span className="text-[10px] text-slate-400 block font-bold uppercase">Extent</span>
-                      <span className="text-xs font-black text-slate-900 dark:text-white">
+                      <span className="text-xs font-black text-slate-900">
                         {project.totalAreaExtent || '12.5 Acres'}
                       </span>
                     </div>
                     <div>
                       <span className="text-[10px] text-slate-400 block font-bold uppercase">Available</span>
-                      <span className="text-xs font-black text-[#15803D] dark:text-emerald-400">
+                      <span className="text-xs font-black text-[#15803D]">
                         {stats.available} Plots
                       </span>
                     </div>
                     <div>
                       <span className="text-[10px] text-slate-400 block font-bold uppercase">Starts At</span>
-                      <span className="text-xs font-black text-[#CA8A04] dark:text-[#EAB308]">
+                      <span className="text-xs font-black text-[#CA8A04]">
                         ₹{stats.startingLakhs}L
                       </span>
                     </div>

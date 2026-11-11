@@ -18,22 +18,12 @@ export const PublicQuickActions: React.FC<PublicQuickActionsProps> = () => {
   return (
     <aside
       aria-label="Quick WhatsApp Contact"
-      className="fixed bottom-[100px] sm:bottom-10 right-4 sm:right-7 z-40 flex items-center justify-center pointer-events-auto"
+      className="fixed bottom-[110px] sm:bottom-12 right-4 sm:right-7 z-40 flex items-center justify-center pointer-events-auto"
     >
       <div className="relative group">
-        {/* Continuous Animated Ping / Radar Wave Halo */}
-        <span
-          className="absolute -inset-1 rounded-full bg-[#25D366] opacity-60 animate-ping pointer-events-none"
-          style={{ animationDuration: '2.4s' }}
-        />
-        <span
-          className="absolute -inset-2.5 rounded-full bg-[#25D366]/30 animate-pulse pointer-events-none"
-          style={{ animationDuration: '2s' }}
-        />
-
         {/* Floating WhatsApp Action Button */}
         <motion.button
-          whileHover={{ scale: 1.1, rotate: [0, -6, 6, 0] }}
+          whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.92 }}
           animate={{
             y: [0, -4, 0],
@@ -44,10 +34,9 @@ export const PublicQuickActions: React.FC<PublicQuickActionsProps> = () => {
               repeat: Infinity,
               ease: 'easeInOut',
             },
-            rotate: { duration: 0.3 },
           }}
           onClick={handleWhatsAppClick}
-          className="relative w-14 h-14 sm:w-15 sm:h-15 rounded-full bg-[#25D366] hover:bg-[#20BD5A] text-white shadow-2xl shadow-[#25D366]/50 border-2 border-white/90 flex items-center justify-center cursor-pointer transition-colors"
+          className="relative w-14 h-14 sm:w-15 sm:h-15 rounded-full bg-[#25D366] hover:bg-[#20BD5A] text-white shadow-xl shadow-[#25D366]/40 border-2 border-white flex items-center justify-center cursor-pointer transition-transform"
           title="Chat with Rajesh RTR on WhatsApp (+91 94432 78899)"
           aria-label="Chat on WhatsApp"
         >

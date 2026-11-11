@@ -31,19 +31,19 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({ onOpenDroneVideo }) 
   };
 
   return (
-    <div className="w-full bg-white dark:bg-[#0B2516] rounded-3xl border border-slate-200 dark:border-[#1E5D32] p-4 sm:p-6 shadow-xl select-none">
+    <div className="w-full bg-white rounded-3xl border border-slate-200 p-4 sm:p-6 shadow-xl select-none">
       {/* Standalone Card Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="p-1 rounded-lg bg-[#15803D]/10 text-[#15803D] dark:text-emerald-400">
+            <span className="p-1 rounded-lg bg-[#15803D]/10 text-[#15803D]">
               <Camera className="w-4 h-4" />
             </span>
-            <span className="text-xs font-black uppercase tracking-wider text-[#15803D] dark:text-emerald-400">
+            <span className="text-xs font-black uppercase tracking-wider text-[#15803D]">
               Infrastructure & Site Renders
             </span>
           </div>
-          <h3 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white">
+          <h3 className="text-lg sm:text-xl font-black text-slate-900">
             Golden City Master Infrastructure Showcase
           </h3>
         </div>
@@ -146,7 +146,7 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({ onOpenDroneVideo }) 
             className={`h-1.5 rounded-full transition-all cursor-pointer ${
               idx === activeIndex
                 ? 'w-6 bg-[#15803D]'
-                : 'w-2 bg-slate-200 dark:bg-emerald-950 hover:bg-slate-300'
+                : 'w-2 bg-slate-200 hover:bg-slate-300'
             }`}
             aria-label={`Go to slide ${idx + 1}`}
           />

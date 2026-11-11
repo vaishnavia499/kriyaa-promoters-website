@@ -150,13 +150,13 @@ Generated on ${new Date().toLocaleDateString('en-IN')} via Kriyaa Promoters Port
   };
 
   return (
-    <div className="w-full min-h-screen bg-white dark:bg-[#081B10] text-slate-900 dark:text-slate-100 flex flex-col justify-between select-none">
+    <div className="w-full min-h-screen bg-white text-slate-900 flex flex-col justify-between select-none">
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-10 w-full space-y-6 sm:space-y-8">
         {/* ─────────────────────────────────────────────────────────────
             1. TOP TITLE
             ───────────────────────────────────────────────────────────── */}
         <div className="text-center max-w-3xl mx-auto py-2">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
             My Favourite plots
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-1 font-medium">
@@ -168,15 +168,15 @@ Generated on ${new Date().toLocaleDateString('en-IN')} via Kriyaa Promoters Port
             2. SELECTED PLOTS GRID OR EMPTY STATE
             ───────────────────────────────────────────────────────────── */}
         {savedPlots.length === 0 ? (
-          <div className="max-w-md mx-auto text-center py-16 px-6 bg-white dark:bg-[#0B2516] rounded-3xl border border-slate-200 dark:border-[#1E5D32] shadow-sm space-y-4">
-            <div className="w-16 h-16 mx-auto rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-[#15803D] dark:text-emerald-400 flex items-center justify-center border border-emerald-200 dark:border-emerald-800">
+          <div className="max-w-md mx-auto text-center py-16 px-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-4">
+            <div className="w-16 h-16 mx-auto rounded-full bg-emerald-50 text-[#15803D] flex items-center justify-center border border-emerald-200">
               <BookmarkCheck className="w-8 h-8" />
             </div>
             <div className="space-y-1">
-              <h3 className="text-lg font-black text-slate-900 dark:text-white">
+              <h3 className="text-lg font-black text-slate-900">
                 No plots selected yet
               </h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              <p className="text-xs text-slate-500 leading-relaxed">
                 Browse our DTCP-sanctioned layouts and bookmark plots to review measurements, road widths, and arrange a complimentary cab site visit.
               </p>
             </div>
@@ -200,7 +200,7 @@ Generated on ${new Date().toLocaleDateString('en-IN')} via Kriyaa Promoters Port
                   initial={{ opacity: 0, scale: 0.96 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.96 }}
-                  className="bg-white dark:bg-[#0B2516] rounded-3xl border border-slate-200 dark:border-[#1E5D32] overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
+                  className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
                 >
                   {/* Image & Plot Badge */}
                   <div className="relative aspect-[16/10] overflow-hidden bg-slate-900">
@@ -238,31 +238,31 @@ Generated on ${new Date().toLocaleDateString('en-IN')} via Kriyaa Promoters Port
                   {/* Specs Body */}
                   <div className="p-5 space-y-4 flex-1 flex flex-col justify-between">
                     <div className="grid grid-cols-2 gap-2 text-xs">
-                      <div className="p-2.5 rounded-xl bg-white dark:bg-[#112F1C] border border-slate-200/90 dark:border-[#1E5D32]/50 shadow-2xs">
+                      <div className="p-2.5 rounded-xl bg-white border border-slate-200/90 shadow-2xs">
                         <span className="text-[10px] text-slate-400 font-bold block uppercase">Dimensions</span>
-                        <span className="font-black text-slate-900 dark:text-white mt-0.5 block font-mono">
+                        <span className="font-black text-slate-900 mt-0.5 block font-mono">
                           {plot.plotDimensions}
                         </span>
                       </div>
 
-                      <div className="p-2.5 rounded-xl bg-white dark:bg-[#112F1C] border border-slate-200/90 dark:border-[#1E5D32]/50 shadow-2xs">
+                      <div className="p-2.5 rounded-xl bg-white border border-slate-200/90 shadow-2xs">
                         <span className="text-[10px] text-slate-400 font-bold block uppercase">Extent</span>
-                        <span className="font-black text-slate-900 dark:text-white mt-0.5 block">
+                        <span className="font-black text-slate-900 mt-0.5 block">
                           {plot.areaSqFt} Sq.Ft ({plot.areaCents} Cts)
                         </span>
                       </div>
 
-                      <div className="p-2.5 rounded-xl bg-white dark:bg-[#112F1C] border border-slate-200/90 dark:border-[#1E5D32]/50 shadow-2xs">
+                      <div className="p-2.5 rounded-xl bg-white border border-slate-200/90 shadow-2xs">
                         <span className="text-[10px] text-slate-400 font-bold block uppercase">Facing</span>
-                        <span className="font-black text-slate-900 dark:text-white mt-0.5 block flex items-center gap-1">
-                          <Compass className="w-3.5 h-3.5 text-[#CA8A04] dark:text-[#EAB308]" />
+                        <span className="font-black text-slate-900 mt-0.5 block flex items-center gap-1">
+                          <Compass className="w-3.5 h-3.5 text-[#CA8A04]" />
                           <span>{plot.facing}</span>
                         </span>
                       </div>
 
-                      <div className="p-2.5 rounded-xl bg-white dark:bg-[#112F1C] border border-slate-200/90 dark:border-[#1E5D32]/50 shadow-2xs">
+                      <div className="p-2.5 rounded-xl bg-white border border-slate-200/90 shadow-2xs">
                         <span className="text-[10px] text-slate-400 font-bold block uppercase">Road Width</span>
-                        <span className="font-black text-slate-900 dark:text-white mt-0.5 block">
+                        <span className="font-black text-slate-900 mt-0.5 block">
                           {plot.roadWidth} Road
                         </span>
                       </div>

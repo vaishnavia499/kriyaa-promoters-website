@@ -457,11 +457,11 @@ export const PublicHome: React.FC<PublicHomeProps> = ({
         id="ads"
         onMouseEnter={() => setIsAdPaused(true)}
         onMouseLeave={() => setIsAdPaused(false)}
-        className="px-1.5 sm:px-4 md:px-6 py-6 sm:py-10 max-w-[1420px] w-full mx-auto"
+        className="w-full px-1 sm:px-3 md:px-6 py-6 sm:py-10 max-w-[1560px] mx-auto"
       >
         <div
           onClick={() => onTabChange('projects')}
-          className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl border border-slate-200/90 bg-white cursor-pointer group"
+          className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-slate-200/90 bg-white cursor-pointer group"
         >
           <AnimatePresence mode="wait">
             <motion.div
@@ -475,7 +475,7 @@ export const PublicHome: React.FC<PublicHomeProps> = ({
               <img
                 src={PROMOTIONAL_ADS[currentAdIndex].src}
                 alt={PROMOTIONAL_ADS[currentAdIndex].alt}
-                className="w-full h-auto min-h-[160px] sm:min-h-[250px] md:min-h-[340px] lg:min-h-[420px] object-cover rounded-2xl sm:rounded-3xl shadow-sm"
+                className="w-full h-auto min-h-[180px] sm:min-h-[280px] md:min-h-[380px] lg:min-h-[460px] object-cover rounded-2xl sm:rounded-3xl shadow-sm"
               />
             </motion.div>
           </AnimatePresence>
