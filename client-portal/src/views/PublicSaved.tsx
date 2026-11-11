@@ -150,7 +150,7 @@ Generated on ${new Date().toLocaleDateString('en-IN')} via Kriyaa Promoters Port
   };
 
   return (
-    <div className="w-full min-h-screen bg-[#F8FAFC] dark:bg-[#081B10] text-slate-900 dark:text-slate-100 flex flex-col justify-between select-none">
+    <div className="w-full min-h-screen bg-white dark:bg-[#081B10] text-slate-900 dark:text-slate-100 flex flex-col justify-between select-none">
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-10 w-full space-y-6 sm:space-y-8">
         {/* ─────────────────────────────────────────────────────────────
             1. TOP TITLE
@@ -238,21 +238,21 @@ Generated on ${new Date().toLocaleDateString('en-IN')} via Kriyaa Promoters Port
                   {/* Specs Body */}
                   <div className="p-5 space-y-4 flex-1 flex flex-col justify-between">
                     <div className="grid grid-cols-2 gap-2 text-xs">
-                      <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-[#112F1C] border border-slate-100 dark:border-[#1E5D32]/50">
+                      <div className="p-2.5 rounded-xl bg-white dark:bg-[#112F1C] border border-slate-200/90 dark:border-[#1E5D32]/50 shadow-2xs">
                         <span className="text-[10px] text-slate-400 font-bold block uppercase">Dimensions</span>
                         <span className="font-black text-slate-900 dark:text-white mt-0.5 block font-mono">
                           {plot.plotDimensions}
                         </span>
                       </div>
 
-                      <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-[#112F1C] border border-slate-100 dark:border-[#1E5D32]/50">
+                      <div className="p-2.5 rounded-xl bg-white dark:bg-[#112F1C] border border-slate-200/90 dark:border-[#1E5D32]/50 shadow-2xs">
                         <span className="text-[10px] text-slate-400 font-bold block uppercase">Extent</span>
                         <span className="font-black text-slate-900 dark:text-white mt-0.5 block">
                           {plot.areaSqFt} Sq.Ft ({plot.areaCents} Cts)
                         </span>
                       </div>
 
-                      <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-[#112F1C] border border-slate-100 dark:border-[#1E5D32]/50">
+                      <div className="p-2.5 rounded-xl bg-white dark:bg-[#112F1C] border border-slate-200/90 dark:border-[#1E5D32]/50 shadow-2xs">
                         <span className="text-[10px] text-slate-400 font-bold block uppercase">Facing</span>
                         <span className="font-black text-slate-900 dark:text-white mt-0.5 block flex items-center gap-1">
                           <Compass className="w-3.5 h-3.5 text-[#CA8A04] dark:text-[#EAB308]" />
@@ -260,7 +260,7 @@ Generated on ${new Date().toLocaleDateString('en-IN')} via Kriyaa Promoters Port
                         </span>
                       </div>
 
-                      <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-[#112F1C] border border-slate-100 dark:border-[#1E5D32]/50">
+                      <div className="p-2.5 rounded-xl bg-white dark:bg-[#112F1C] border border-slate-200/90 dark:border-[#1E5D32]/50 shadow-2xs">
                         <span className="text-[10px] text-slate-400 font-bold block uppercase">Road Width</span>
                         <span className="font-black text-slate-900 dark:text-white mt-0.5 block">
                           {plot.roadWidth} Road

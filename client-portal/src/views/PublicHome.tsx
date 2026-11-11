@@ -457,7 +457,7 @@ export const PublicHome: React.FC<PublicHomeProps> = ({
         id="ads"
         onMouseEnter={() => setIsAdPaused(true)}
         onMouseLeave={() => setIsAdPaused(false)}
-        className="px-4 sm:px-8 py-6 sm:py-8 max-w-5xl mx-auto"
+        className="px-2.5 sm:px-6 lg:px-8 py-6 sm:py-10 max-w-7xl w-full mx-auto"
       >
         <div
           onClick={() => onTabChange('projects')}
@@ -470,26 +470,26 @@ export const PublicHome: React.FC<PublicHomeProps> = ({
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -25 }}
               transition={{ duration: 0.4, ease: 'easeInOut' }}
-              className="w-full flex items-center justify-center bg-slate-50"
+              className="w-full flex items-center justify-center bg-white"
             >
               <img
                 src={PROMOTIONAL_ADS[currentAdIndex].src}
                 alt={PROMOTIONAL_ADS[currentAdIndex].alt}
-                className="w-full h-auto object-cover rounded-2xl sm:rounded-3xl shadow-sm"
+                className="w-full h-auto min-h-[140px] sm:min-h-[220px] md:min-h-[290px] lg:min-h-[350px] object-cover rounded-2xl sm:rounded-3xl shadow-sm"
               />
             </motion.div>
           </AnimatePresence>
         </div>
 
         {/* 3 Interactive Dot Indicators */}
-        <div className="flex items-center justify-center gap-2 pt-3">
+        <div className="flex items-center justify-center gap-2 pt-4">
           {PROMOTIONAL_ADS.map((_, idx) => (
             <button
               key={idx}
               type="button"
               onClick={() => setCurrentAdIndex(idx)}
-              className={`h-2 rounded-full transition-all cursor-pointer ${
-                idx === currentAdIndex ? 'w-7 bg-[#E5A91E]' : 'w-2 bg-slate-300 hover:bg-slate-400'
+              className={`h-2.5 rounded-full transition-all cursor-pointer ${
+                idx === currentAdIndex ? 'w-8 bg-[#E5A91E]' : 'w-2.5 bg-slate-300 hover:bg-slate-400'
               }`}
               aria-label={`Switch to Ad ${idx + 1}`}
             />

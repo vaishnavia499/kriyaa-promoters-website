@@ -239,7 +239,7 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
   // ─────────────────────────────────────────────────────────────
   if (viewingProject) {
     return (
-      <div className="w-full min-h-screen bg-[#F8FAFC] dark:bg-[#081B10] text-slate-900 dark:text-slate-100 flex flex-col justify-between select-none">
+      <div className="w-full min-h-screen bg-white dark:bg-[#081B10] text-slate-900 dark:text-slate-100 flex flex-col justify-between select-none">
         <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 w-full space-y-6">
           {/* Top Bar: Back Button + Project Identity */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-[#1E5D32]">
@@ -465,7 +465,7 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
 
                 {/* 2x2 Clean Metric Grid */}
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-[#112F1C]/70 border border-slate-100 dark:border-[#1E5D32]/50">
+                  <div className="p-3.5 rounded-2xl bg-white dark:bg-[#112F1C]/70 border border-slate-200/90 dark:border-[#1E5D32]/50 shadow-2xs">
                     <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
                       TOTAL PLOTS
                     </span>
@@ -477,7 +477,7 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
                     </span>
                   </div>
 
-                  <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-[#112F1C]/70 border border-slate-100 dark:border-[#1E5D32]/50">
+                  <div className="p-3.5 rounded-2xl bg-white dark:bg-[#112F1C]/70 border border-slate-200/90 dark:border-[#1E5D32]/50 shadow-2xs">
                     <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
                       BASE PRICE
                     </span>
@@ -489,7 +489,7 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
                     </span>
                   </div>
 
-                  <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-[#112F1C]/70 border border-slate-100 dark:border-[#1E5D32]/50">
+                  <div className="p-3.5 rounded-2xl bg-white dark:bg-[#112F1C]/70 border border-slate-200/90 dark:border-[#1E5D32]/50 shadow-2xs">
                     <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
                       TOTAL LAYOUT AREA
                     </span>
@@ -501,7 +501,7 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
                     </span>
                   </div>
 
-                  <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-[#112F1C]/70 border border-slate-100 dark:border-[#1E5D32]/50">
+                  <div className="p-3.5 rounded-2xl bg-white dark:bg-[#112F1C]/70 border border-slate-200/90 dark:border-[#1E5D32]/50 shadow-2xs">
                     <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
                       PLOT SIZES AVAILABLE
                     </span>
@@ -596,7 +596,7 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
                     return (
                       <div
                         key={idx}
-                        className="p-3.5 rounded-2xl bg-slate-50 dark:bg-[#112F1C]/70 border border-slate-100 dark:border-[#1E5D32]/50 flex items-center justify-between gap-3"
+                        className="p-3.5 rounded-2xl bg-white dark:bg-[#112F1C]/70 border border-slate-200/90 dark:border-[#1E5D32]/50 shadow-2xs flex items-center justify-between gap-3"
                       >
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 rounded-2xl bg-[#113B24] border border-[#1E5D32] text-emerald-400 flex items-center justify-center shrink-0">
@@ -678,7 +678,7 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
                     return (
                       <div
                         key={idx}
-                        className="p-3 rounded-2xl bg-slate-50 dark:bg-[#112F1C]/70 border border-slate-100 dark:border-[#1E5D32]/50 flex items-center justify-between gap-3"
+                        className="p-3 rounded-2xl bg-white dark:bg-[#112F1C]/70 border border-slate-200/90 dark:border-[#1E5D32]/50 shadow-2xs flex items-center justify-between gap-3"
                       >
                         <div className="flex items-center gap-3">
                           <div className="w-9 h-9 rounded-xl bg-emerald-500/10 dark:bg-[#113B24] text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
@@ -730,7 +730,7 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
                 </p>
 
                 <div className="grid grid-cols-3 gap-2.5">
-                  <div className="p-3 rounded-2xl bg-slate-50 dark:bg-[#112F1C]/70 border border-slate-200 dark:border-[#1E5D32]/60 text-center">
+                  <div className="p-3 rounded-2xl bg-white dark:bg-[#112F1C]/70 border border-slate-200/90 dark:border-[#1E5D32]/60 shadow-2xs text-center">
                     <span className="text-sm font-black text-slate-900 dark:text-white block">
                       SBI
                     </span>
@@ -739,7 +739,7 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
                     </span>
                   </div>
 
-                  <div className="p-3 rounded-2xl bg-slate-50 dark:bg-[#112F1C]/70 border border-slate-200 dark:border-[#1E5D32]/60 text-center">
+                  <div className="p-3 rounded-2xl bg-white dark:bg-[#112F1C]/70 border border-slate-200/90 dark:border-[#1E5D32]/60 shadow-2xs text-center">
                     <span className="text-sm font-black text-slate-900 dark:text-white block">
                       HDFC
                     </span>
@@ -748,7 +748,7 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
                     </span>
                   </div>
 
-                  <div className="p-3 rounded-2xl bg-slate-50 dark:bg-[#112F1C]/70 border border-slate-200 dark:border-[#1E5D32]/60 text-center">
+                  <div className="p-3 rounded-2xl bg-white dark:bg-[#112F1C]/70 border border-slate-200/90 dark:border-[#1E5D32]/60 shadow-2xs text-center">
                     <span className="text-sm font-black text-slate-900 dark:text-white block">
                       CANARA
                     </span>
@@ -981,7 +981,7 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
   // 2. PROJECT CATALOG CARDS VIEW
   // ─────────────────────────────────────────────────────────────
   return (
-    <div className="w-full min-h-screen bg-[#F8FAFC] dark:bg-[#081B10] text-slate-900 dark:text-slate-100 flex flex-col justify-between select-none">
+    <div className="w-full min-h-screen bg-white dark:bg-[#081B10] text-slate-900 dark:text-slate-100 flex flex-col justify-between select-none">
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 w-full space-y-6 sm:space-y-8">
         {/* ─────────────────────────────────────────────────────────────
             1. CLEAN HEADER (Title Only - No Subtitle)
