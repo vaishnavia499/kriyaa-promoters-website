@@ -419,33 +419,6 @@ export const PublicHome: React.FC<PublicHomeProps> = ({
         </div>
       </section>
 
-      {/* =========================================================================
-          5. PROCESS OF BUYING PLOTS CALLOUT (Navigates to Dedicated Process Page)
-          ========================================================================= */}
-      <section className="py-8 sm:py-12 px-4 sm:px-6 max-w-5xl mx-auto">
-        <div className="bg-gradient-to-r from-[#0B3B24] to-[#14563D] rounded-3xl p-6 sm:p-10 text-white shadow-xl border border-emerald-700/80 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="space-y-2 text-center md:text-left max-w-xl">
-            <span className="inline-block px-3 py-1 rounded-full bg-white/10 text-[#E5A91E] text-xs font-black uppercase tracking-wider">
-              Transparent 7-Step Guide
-            </span>
-            <h3 className="text-xl sm:text-3xl font-black text-white tracking-tight">
-              Process of Buying DTCP Plots
-            </h3>
-            <p className="text-xs sm:text-sm text-emerald-100 leading-relaxed font-medium">
-              From requirement sharing and free doorstep cab visits to legal document verification and sub-registrar registration &mdash; see our full step-by-step roadmap.
-            </p>
-          </div>
-
-          <button
-            type="button"
-            onClick={() => onTabChange('process')}
-            className="px-6 py-3.5 rounded-full bg-[#E5A91E] hover:bg-[#CA8A04] text-[#0B2516] font-black text-xs sm:text-sm inline-flex items-center gap-2 shadow-lg transition cursor-pointer active:scale-95 shrink-0"
-          >
-            <span>View Full 7-Step Process</span>
-            <ArrowRight className="w-4 h-4 stroke-[3]" />
-          </button>
-        </div>
-      </section>
 
       {/* =========================================================================
           6. REVIEWS ("What Our Customers Say" with 3-sec Auto Transition)
@@ -550,7 +523,7 @@ export const PublicHome: React.FC<PublicHomeProps> = ({
               onMouseUp={handleMouseUp}
               onMouseLeave={handleMouseUp}
               onTouchMove={handleTouchMove}
-              className="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-slate-200/80 aspect-[8/9] sm:aspect-[1/1] max-w-md mx-auto bg-slate-900 select-none cursor-ew-resize group"
+              className="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-slate-200/80 aspect-[11/10] sm:aspect-[6/5] max-w-md mx-auto bg-slate-900 select-none cursor-ew-resize group"
             >
               {/* Layer 1: Completed Dream Home Foreground (After - Kriyaa Promoters Dream Villa) */}
               <img

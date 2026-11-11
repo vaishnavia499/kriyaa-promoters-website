@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useScroll, useSpring } from 'motion/react';
 import {
   FileText,
   Home,
@@ -9,10 +9,8 @@ import {
   FileEdit,
   Key,
   ArrowRight,
-  Sparkles,
   CalendarCheck,
   Building2,
-  Check,
 } from 'lucide-react';
 import { PublicTab } from '../../types';
 import { PublicFooter } from '../../components/public/PublicFooter';
@@ -122,43 +120,36 @@ export const PublicProcess: React.FC<PublicProcessProps> = ({
     setOpenStepIndex((prev) => (prev === idx ? null : idx));
   };
 
-  // Scroll Progress Tracking for Timeline Central Trail
-  const timelineRef = useRef<HTMLDivElement>(null);
-  const [timelineProgress, setTimelineProgress] = useState(0.2);
-
+  // Scroll to top when navigating to Process page
   useEffect(() => {
-    const handleScroll = () => {
-      if (!timelineRef.current) return;
-      const rect = timelineRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      const totalHeight = rect.height;
-      const topOffset = rect.top;
-
-      if (topOffset > windowHeight) {
-        setTimelineProgress(0);
-      } else if (topOffset + totalHeight < 0) {
-        setTimelineProgress(1);
-      } else {
-        const scrolled = windowHeight - topOffset;
-        const progress = Math.min(Math.max(scrolled / (totalHeight + windowHeight * 0.4), 0), 1);
-        setTimelineProgress(progress);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.scrollTo({ top: 0, behavior: 'auto' });
   }, []);
 
+  // Scroll Progress Tracking for Timeline Central Trail using Framer Motion
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ['start 80%', 'end 60%'],
+  });
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 24,
+    restDelta: 0.001,
+  });
+
   return (
-    <div className="w-full min-h-screen bg-white text-[#17251E] flex flex-col justify-between select-none">
+    <div className="w-full min-h-screen bg-white text-[#17251E] flex flex-col justify-between select-none overflow-x-hidden">
       <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12 w-full space-y-10 sm:space-y-12">
         {/* 1. HERO TITLE HEADER */}
-        <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-[#0B3828] text-xs font-black uppercase tracking-wider">
-            <Sparkles className="w-3.5 h-3.5 text-[#E5A91E]" />
-            <span>Transparent · Hassle-Free · Guaranteed Legality</span>
-          </div>
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center max-w-2xl mx-auto space-y-2.5"
+        >
+          <span className="text-[11px] font-black uppercase tracking-[0.2em] text-[#E5A91E] block">
+            Your Property Buying Journey
+          </span>
 
           <div className="flex items-center justify-center gap-2.5">
             <span className="w-8 sm:w-16 h-0.5 bg-[#E5A91E]" />
@@ -168,30 +159,12 @@ export const PublicProcess: React.FC<PublicProcessProps> = ({
             <span className="w-8 sm:w-16 h-0.5 bg-[#E5A91E]" />
           </div>
 
-          <p className="text-slate-600 text-xs sm:text-base leading-relaxed max-w-2xl mx-auto font-medium">
-            From enquiry to registered ownership &mdash; Rajesh RTR and the Kriyaa Promoters documentation team walk with you at every step with 100% legal scrutiny.
+          <p className="text-slate-600 text-xs sm:text-base leading-relaxed font-medium">
+            From enquiry to ownership &mdash; we are with you at every step.
           </p>
+        </motion.div>
 
-          {/* Quick Pillar Badges */}
-          <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
-            {[
-              '100% DTCP Approved',
-              'Individual Patta Guarantee',
-              'Free Doorstep Cab Visit',
-              'Spot Bank Loan Sanction',
-            ].map((badge, bIdx) => (
-              <span
-                key={bIdx}
-                className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-slate-50 border border-slate-200 text-slate-700 text-[11px] font-bold shadow-2xs"
-              >
-                <Check className="w-3 h-3 text-[#15803D]" />
-                <span>{badge}</span>
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* 2. 7-STEP TIMELINE WITH EXACT ANIMATION */}
+        {/* 2. 7-STEP TIMELINE WITH SMOOTH SPRING ANIMATIONS */}
         <section ref={timelineRef} className="relative py-4">
           {/* Base Underlying Light Line (#E6EEE8) */}
           <div
@@ -200,14 +173,13 @@ export const PublicProcess: React.FC<PublicProcessProps> = ({
           />
 
           {/* Overlaid Animated Scroll-Driven Progress Line (Gradient from #E5A91E to #14563D) */}
-          <div
-            className="absolute top-0 w-1 rounded-full origin-top transition-all duration-300 ease-out
+          <motion.div
+            className="absolute top-0 w-1 h-full rounded-full origin-top
                        left-6 md:left-1/2 -translate-x-1/2 pointer-events-none"
             style={{
-              height: '100%',
-              transform: `scaleY(${timelineProgress})`,
+              scaleY: smoothProgress,
               background: 'linear-gradient(to bottom, #E5A91E 0%, #14563D 100%)',
-              boxShadow: '0 0 10px rgba(229, 169, 30, 0.6)',
+              boxShadow: '0 0 12px rgba(229, 169, 30, 0.55)',
             }}
           />
 
@@ -221,10 +193,10 @@ export const PublicProcess: React.FC<PublicProcessProps> = ({
               return (
                 <motion.article
                   key={stepItem.step}
-                  initial={{ opacity: 0, y: 35 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  initial={{ opacity: 0, x: isEven ? 36 : -36, y: 24 }}
+                  whileInView={{ opacity: 1, x: 0, y: 0 }}
+                  viewport={{ once: true, amount: 0.15 }}
+                  transition={{ duration: 0.55, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
                   className={`relative flex flex-col md:flex-row items-start md:items-center ${
                     isEven ? 'md:flex-row-reverse' : ''
                   }`}
@@ -235,7 +207,11 @@ export const PublicProcess: React.FC<PublicProcessProps> = ({
                       isEven ? 'md:pl-8 text-left' : 'md:pr-8 md:text-left'
                     }`}
                   >
-                    <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#E6EEE8] shadow-sm hover:shadow-md transition-shadow relative">
+                    <motion.div
+                      whileHover={{ y: -3 }}
+                      transition={{ duration: 0.2 }}
+                      className="bg-white rounded-2xl p-5 sm:p-6 border border-[#E6EEE8] hover:border-[#0B3828]/25 shadow-sm hover:shadow-lg transition-all relative"
+                    >
                       {/* Step Icon in soft light green square */}
                       <div className="w-11 h-11 rounded-xl bg-[#EFF6F0] text-[#0B3828] border border-[#0B3828]/10 flex items-center justify-center mb-3">
                         <StepIcon className="w-5 h-5 stroke-[2.2]" />
@@ -260,20 +236,26 @@ export const PublicProcess: React.FC<PublicProcessProps> = ({
                       <button
                         type="button"
                         onClick={() => toggleStepDetails(idx)}
-                        className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0B3828] hover:text-[#E5A91E] transition-colors cursor-pointer group"
+                        className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0B3828] hover:text-[#E5A91E] transition-colors cursor-pointer active:scale-95 group"
                       >
                         <span>{isExpanded ? 'Show Less -' : 'Know More +'}</span>
-                        <ArrowRight className="w-3.5 h-3.5 text-[#E5A91E] group-hover:translate-x-0.5 transition-transform" />
+                        <ArrowRight
+                          className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                            isExpanded
+                              ? 'rotate-90 text-[#0B3828]'
+                              : 'text-[#E5A91E] group-hover:translate-x-0.5'
+                          }`}
+                        />
                       </button>
 
                       {/* Expandable Inner Details Drawer */}
-                      <AnimatePresence>
+                      <AnimatePresence initial={false}>
                         {isExpanded && (
                           <motion.div
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: 'auto' }}
                             exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.35, ease: 'easeInOut' }}
+                            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                             className="overflow-hidden border-t border-slate-100 mt-3 pt-3"
                           >
                             <ul className="space-y-1.5 text-xs text-slate-600">
@@ -287,17 +269,22 @@ export const PublicProcess: React.FC<PublicProcessProps> = ({
                           </motion.div>
                         )}
                       </AnimatePresence>
-                    </div>
+                    </motion.div>
                   </div>
 
                   {/* Central Indicator Circle with Number (01, 02.. in Gold) */}
-                  <div
-                    className="absolute left-6 md:left-1/2 -translate-x-1/2 z-20 top-6 md:top-auto
-                               w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#E5A91E] text-[#0B3828]
-                               font-black text-xs sm:text-sm flex items-center justify-center
-                               border-2 border-white shadow-[0_0_14px_rgba(229,169,30,0.5)] transition-all"
-                  >
-                    <span>{stepItem.step}</span>
+                  <div className="absolute left-6 md:left-1/2 -translate-x-1/2 z-20 top-6 md:top-auto">
+                    <motion.div
+                      initial={{ scale: 0.5, opacity: 0 }}
+                      whileInView={{ scale: 1, opacity: 1 }}
+                      viewport={{ once: true, amount: 0.2 }}
+                      transition={{ type: 'spring', stiffness: 260, damping: 18, delay: 0.1 }}
+                      className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#E5A91E] text-[#0B3828]
+                                 font-black text-xs sm:text-sm flex items-center justify-center
+                                 border-2 border-white shadow-[0_0_16px_rgba(229,169,30,0.55)]"
+                    >
+                      <span>{stepItem.step}</span>
+                    </motion.div>
                   </div>
 
                   {/* Desktop Opposite Space Balancer (45% width) */}
@@ -309,7 +296,13 @@ export const PublicProcess: React.FC<PublicProcessProps> = ({
         </section>
 
         {/* 3. BOTTOM CTA CARD TO START BUYING JOURNEY */}
-        <div className="bg-[#0B3B24] rounded-3xl p-6 sm:p-10 text-white text-center space-y-5 border border-emerald-700 shadow-xl">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="bg-[#0B3B24] rounded-3xl p-6 sm:p-10 text-white text-center space-y-5 border border-emerald-700 shadow-xl"
+        >
           <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center text-[#EAB308] mx-auto">
             <CalendarCheck className="w-6 h-6" />
           </div>
@@ -342,7 +335,7 @@ export const PublicProcess: React.FC<PublicProcessProps> = ({
               <span>Explore Sanctioned Plots</span>
             </button>
           </div>
-        </div>
+        </motion.div>
       </main>
 
       {/* 4. FOOTER */}

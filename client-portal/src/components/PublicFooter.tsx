@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Phone, Mail, Clock, ListOrdered, ArrowRight } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { KriyaaLogo } from '../KriyaaLogo';
 import { PublicTab } from '../../types';
 
@@ -8,7 +8,7 @@ interface PublicFooterProps {
   onOpenConsultation?: () => void;
 }
 
-export const PublicFooter: React.FC<PublicFooterProps> = ({ onTabChange }) => {
+export const PublicFooter: React.FC<PublicFooterProps> = () => {
   return (
     <footer className="w-full bg-[#06180D] border-t border-emerald-950/80 text-slate-200 select-none pt-10 pb-16 px-4">
       <div className="max-w-md mx-auto flex flex-col items-center">
@@ -24,83 +24,6 @@ export const PublicFooter: React.FC<PublicFooterProps> = ({ onTabChange }) => {
         <p className="italic text-xs font-semibold text-[#EAB308] mt-1">
           &ldquo;Your dream, our priority&rdquo;
         </p>
-
-        {/* About Us Summary */}
-        <div className="w-full text-center mt-4 space-y-2">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-800/80 text-[#EAB308] text-[11px] font-black uppercase tracking-wider">
-            <span>About Us</span>
-          </div>
-          <p className="text-xs text-slate-300 leading-relaxed max-w-sm mx-auto">
-            Kriyaa Promoters is Cuddalore &amp; Pondicherry&apos;s trusted real estate developer, providing 100% DTCP-approved gated community layouts with clear legal title, bank loan assistance, and direct guidance under Managing Director <strong className="text-white">Rajesh RTR</strong>.
-          </p>
-          {onTabChange && (
-            <div className="flex items-center justify-center gap-3 pt-1 text-xs font-bold text-emerald-400">
-              <button
-                type="button"
-                onClick={() => onTabChange('home')}
-                className="hover:text-[#EAB308] transition-colors cursor-pointer"
-              >
-                Home
-              </button>
-              <span>·</span>
-              <button
-                type="button"
-                onClick={() => onTabChange('projects')}
-                className="hover:text-[#EAB308] transition-colors cursor-pointer"
-              >
-                Projects
-              </button>
-              <span>·</span>
-              <button
-                type="button"
-                onClick={() => onTabChange('process')}
-                className="hover:text-[#EAB308] transition-colors cursor-pointer"
-              >
-                Buying Process
-              </button>
-              <span>·</span>
-              <button
-                type="button"
-                onClick={() => onTabChange('contact')}
-                className="hover:text-[#EAB308] transition-colors cursor-pointer"
-              >
-                About Us
-              </button>
-            </div>
-          )}
-        </div>
-
-        {/* Dedicated "Process of Buying Plots" Section in Footer */}
-        {onTabChange && (
-          <button
-            type="button"
-            onClick={() => {
-              onTabChange('process');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-            className="w-full mt-5 bg-gradient-to-r from-[#0B3B24] to-[#14563D] border border-emerald-600/60 hover:border-[#EAB308]/70 rounded-2xl p-4 flex items-center justify-between gap-3 text-left shadow-lg cursor-pointer transition-all group"
-          >
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center text-[#EAB308] shrink-0 group-hover:scale-105 transition-transform">
-                <ListOrdered className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="text-[10px] font-black text-[#EAB308] tracking-wider uppercase block">
-                  Step-by-Step Guide
-                </span>
-                <h4 className="text-sm font-black text-white leading-tight">
-                  Process of Buying Plots
-                </h4>
-                <p className="text-[11px] text-emerald-100/80 mt-0.5">
-                  View our animated 7-step buying &amp; registration journey
-                </p>
-              </div>
-            </div>
-            <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-[#EAB308] shrink-0 group-hover:translate-x-1 transition-transform">
-              <ArrowRight className="w-4 h-4" />
-            </div>
-          </button>
-        )}
 
         {/* 3. Four Contact Info Cards */}
         <div className="w-full space-y-3 mt-6">
