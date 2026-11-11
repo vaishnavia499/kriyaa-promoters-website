@@ -34,6 +34,7 @@ export const INITIAL_PROJECTS: Project[] = [
     availablePlots: 41,
     reservedPlots: 3,
     soldPlots: 1,
+    geoCoordinates: { lat: 11.7525, lng: 79.7540 },
   },
   {
     id: 'proj-chidambaram',
@@ -47,6 +48,7 @@ export const INITIAL_PROJECTS: Project[] = [
     status: 'Active',
     totalAreaExtent: '8.2 Acres',
     launchYear: 2022,
+    geoCoordinates: { lat: 11.3992, lng: 79.6936 },
   },
   {
     id: 'proj-pondy-heights',
@@ -60,6 +62,7 @@ export const INITIAL_PROJECTS: Project[] = [
     status: 'Upcoming',
     totalAreaExtent: '15.0 Acres',
     launchYear: 2024,
+    geoCoordinates: { lat: 11.9860, lng: 79.8320 },
   },
 ];
 

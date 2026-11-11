@@ -29,7 +29,7 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({
     { id: 'home', label: 'Home' },
     { id: 'projects', label: 'Projects & Master Plan' },
     { id: 'saved', label: 'My Plots' },
-    { id: 'contact', label: 'Contact Us' },
+    { id: 'contact', label: 'About Us' },
   ];
 
   const handleTabClick = (tab: PublicTab) => {

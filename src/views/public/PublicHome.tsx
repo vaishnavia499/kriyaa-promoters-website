@@ -792,16 +792,16 @@ export const PublicHome: React.FC<PublicHomeProps> = ({
               onMouseUp={handleMouseUp}
               onMouseLeave={handleMouseUp}
               onTouchMove={handleTouchMove}
-              className="relative rounded-3xl overflow-hidden shadow-xl border-2 border-slate-100 aspect-[4/3] sm:aspect-[16/11] bg-slate-100 select-none cursor-ew-resize group"
+              className="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-slate-200/80 aspect-[8/9] sm:aspect-[1/1] max-w-md mx-auto bg-slate-900 select-none cursor-ew-resize group"
             >
-              {/* Layer 1: Empty Residential Plot Background (Real Layout Project) */}
+              {/* Layer 1: Completed Dream Home Foreground (After - Kriyaa Promoters Dream Villa) */}
               <img
-                src="/project-slider/plot-layout.png"
-                alt="Golden City Demarcated Layout Plot"
-                className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+                src="/project-slider/after-dream.jpg"
+                alt="After: Completed Dream Home at Kriyaa Promoters"
+                className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none"
               />
 
-              {/* Layer 2: Completed Dream Home Foreground (Real Completed Villa on Project) */}
+              {/* Layer 2: Before Questions & Doubts (Before - Own Home? Budget? Legal? Location?) */}
               <div
                 className="absolute inset-0 overflow-hidden pointer-events-none"
                 style={{
@@ -809,19 +809,27 @@ export const PublicHome: React.FC<PublicHomeProps> = ({
                 }}
               >
                 <img
-                  src="/project-slider/villa-completed.png"
-                  alt="Completed Built Home on Layout Plot"
-                  className="absolute inset-0 w-full h-full object-cover"
+                  src="/project-slider/before-dream.jpg"
+                  alt="Before: Finding Your Dream Home Questions"
+                  className="absolute inset-0 w-full h-full object-cover object-center"
                 />
+              </div>
+
+              {/* Floating Badges */}
+              <div className="absolute top-3 left-3 z-10 px-3 py-1 rounded-full bg-black/75 backdrop-blur-xs text-white text-[11px] font-black border border-white/20 pointer-events-none shadow-md">
+                Before
+              </div>
+              <div className="absolute top-3 right-3 z-10 px-3 py-1 rounded-full bg-[#0B3B24]/90 backdrop-blur-xs text-[#EAB308] text-[11px] font-black border border-[#EAB308]/40 pointer-events-none shadow-md">
+                After
               </div>
 
               {/* Central Divider Line */}
               <div
-                className="absolute top-0 bottom-0 w-1 bg-white shadow-xl pointer-events-none"
+                className="absolute top-0 bottom-0 w-1 bg-white shadow-2xl pointer-events-none"
                 style={{ left: `${sliderPosition}%` }}
               />
 
-              {/* Central Circular Draggable Handle (Exact as Attachment 4/5/6 without Before/After badges) */}
+              {/* Central Circular Draggable Handle */}
               <div
                 className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 z-20 w-11 h-11 rounded-full bg-[#112419] border-2 border-white shadow-2xl flex items-center justify-center text-[#E5A91E] pointer-events-none"
                 style={{ left: `${sliderPosition}%` }}
@@ -833,10 +841,10 @@ export const PublicHome: React.FC<PublicHomeProps> = ({
               </div>
             </div>
 
-            {/* Instruction Caption (Exact as Attachment) */}
+            {/* Instruction Caption */}
             <p className="text-center text-xs text-slate-500 font-medium mt-3 flex items-center justify-center gap-1.5">
               <span className="text-[#E5A91E]">✦</span>
-              <span>Drag the handle left or right to reveal Plot to Completed Home transformation</span>
+              <span>Drag the handle left or right to reveal Before &amp; After Dream Home transformation</span>
             </p>
           </div>
 

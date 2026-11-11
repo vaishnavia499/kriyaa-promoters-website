@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Home, MapPin, BookmarkCheck, PhoneCall } from 'lucide-react';
-import { PublicTab } from '../types';
+import { Home, MapPin, BookmarkCheck, Info } from 'lucide-react';
+import { PublicTab } from '../../types';
 
 interface PublicBottomNavProps {
   activeTab: PublicTab;
@@ -22,7 +22,7 @@ export const PublicBottomNav: React.FC<PublicBottomNavProps> = ({
     { id: 'home', label: 'Home', icon: Home },
     { id: 'projects', label: 'Projects', icon: MapPin },
     { id: 'saved', label: 'My Plots', icon: BookmarkCheck },
-    { id: 'contact', label: 'Contact', icon: PhoneCall },
+    { id: 'contact', label: 'About Us', icon: Info },
   ];
 
   const handleTabClick = (tab: PublicTab) => {

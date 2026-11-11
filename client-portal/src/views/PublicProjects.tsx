@@ -42,6 +42,7 @@ import { Project, Property, LayoutDisplayMode, PropertyStatus, PublicTab } from 
 import { MasterLayoutViewer } from '../../components/public/MasterLayoutViewer';
 import { PlotInspectorCard } from '../../components/public/PlotInspectorCard';
 import { PlotDetailsModal } from '../../components/public/PlotDetailsModal';
+import { ProjectLandmarksMap } from '../../components/public/ProjectLandmarksMap';
 import { PublicFooter } from '../../components/public/PublicFooter';
 
 interface PublicProjectsProps {
@@ -627,6 +628,9 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
                   })}
                 </div>
               </div>
+
+              {/* E0. INTERACTIVE SITE LOCATION & NEARBY LANDMARKS MAP WITH ZOOM CONTROLS (PLACED BEFORE NEARBY LANDMARKS) */}
+              <ProjectLandmarksMap project={viewingProject} />
 
               {/* E. NEARBY LANDMARKS & CONNECTIVITY */}
               <div className="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-md space-y-4">

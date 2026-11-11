@@ -8,7 +8,7 @@ interface PublicFooterProps {
   onOpenConsultation?: () => void;
 }
 
-export const PublicFooter: React.FC<PublicFooterProps> = () => {
+export const PublicFooter: React.FC<PublicFooterProps> = ({ onTabChange }) => {
   return (
     <footer className="w-full bg-[#06180D] border-t border-emerald-950/80 text-slate-200 select-none pt-10 pb-16 px-4">
       <div className="max-w-md mx-auto flex flex-col items-center">
@@ -24,6 +24,51 @@ export const PublicFooter: React.FC<PublicFooterProps> = () => {
         <p className="italic text-xs font-semibold text-[#EAB308] mt-1">
           &ldquo;Your dream, our priority&rdquo;
         </p>
+
+        {/* About Us Summary */}
+        <div className="w-full text-center mt-4 space-y-2">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-800/80 text-[#EAB308] text-[11px] font-black uppercase tracking-wider">
+            <span>About Us</span>
+          </div>
+          <p className="text-xs text-slate-300 leading-relaxed max-w-sm mx-auto">
+            Kriyaa Promoters is Cuddalore &amp; Pondicherry&apos;s trusted real estate developer, providing 100% DTCP-approved gated community layouts with clear legal title, bank loan assistance, and direct guidance under Managing Director <strong className="text-white">Rajesh RTR</strong>.
+          </p>
+          {onTabChange && (
+            <div className="flex items-center justify-center gap-3 pt-1 text-xs font-bold text-emerald-400">
+              <button
+                type="button"
+                onClick={() => onTabChange('home')}
+                className="hover:text-[#EAB308] transition-colors cursor-pointer"
+              >
+                Home
+              </button>
+              <span>·</span>
+              <button
+                type="button"
+                onClick={() => onTabChange('projects')}
+                className="hover:text-[#EAB308] transition-colors cursor-pointer"
+              >
+                Projects
+              </button>
+              <span>·</span>
+              <button
+                type="button"
+                onClick={() => onTabChange('saved')}
+                className="hover:text-[#EAB308] transition-colors cursor-pointer"
+              >
+                My Plots
+              </button>
+              <span>·</span>
+              <button
+                type="button"
+                onClick={() => onTabChange('contact')}
+                className="hover:text-[#EAB308] transition-colors cursor-pointer"
+              >
+                About Us
+              </button>
+            </div>
+          )}
+        </div>
 
         {/* 3. Four Contact Info Cards */}
         <div className="w-full space-y-3 mt-6">
