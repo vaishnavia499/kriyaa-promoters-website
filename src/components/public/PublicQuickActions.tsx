@@ -18,7 +18,7 @@ export const PublicQuickActions: React.FC<PublicQuickActionsProps> = () => {
   return (
     <aside
       aria-label="Quick WhatsApp Contact"
-      className="fixed bottom-20 sm:bottom-6 right-4 sm:right-6 z-40 flex items-center justify-center pointer-events-auto"
+      className="fixed bottom-[100px] sm:bottom-10 right-4 sm:right-7 z-40 flex items-center justify-center pointer-events-auto"
     >
       <div className="relative group">
         {/* Continuous Animated Ping / Radar Wave Halo */}
