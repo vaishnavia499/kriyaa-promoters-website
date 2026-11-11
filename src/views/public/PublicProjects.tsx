@@ -241,49 +241,57 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
     return (
       <div className="w-full min-h-screen bg-white text-slate-900 flex flex-col justify-between select-none">
         <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 w-full space-y-6">
-          {/* Top Bar: Back Button + Project Identity */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={() => setActiveProjectId(null)}
-                className="min-h-[44px] min-w-[44px] rounded-2xl bg-white border border-slate-200 hover:bg-slate-100 text-slate-800 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
-                title="Back to All Projects"
-              >
-                <ArrowLeft className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" />
-              </button>
+          {/* Top Bar: Back Button + Project Identity matching Reference Image */}
+          <div className="bg-white rounded-3xl p-4 sm:p-6 border border-slate-200/80 shadow-xs space-y-4">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex items-start gap-3 sm:gap-4">
+                <button
+                  type="button"
+                  onClick={() => setActiveProjectId(null)}
+                  className="min-h-[44px] min-w-[44px] rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 flex items-center justify-center transition-all cursor-pointer shadow-xs group shrink-0 mt-0.5"
+                  title="Back to All Projects"
+                  aria-label="Back to All Projects"
+                >
+                  <ArrowLeft className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform text-[#0B3B24]" />
+                </button>
 
-              <div>
-                <div className="flex items-center gap-2 flex-wrap">
-                  <h1 className="text-xl sm:text-2xl font-black text-slate-900">
+                <div className="space-y-1">
+                  <h1 className="text-2xl sm:text-3xl font-black text-[#0B3B24] tracking-tight leading-tight">
                     {viewingProject.name}
                   </h1>
-                  <span className="px-2.5 py-0.5 rounded-full bg-[#15803D] text-white text-xs font-bold shadow-xs">
-                    {viewingProject.dtcpNumber}
-                  </span>
-                  {viewingProject.reraNumber && (
-                    <span className="px-2.5 py-0.5 rounded-full bg-[#0B2516] text-[#EAB308] border border-[#EAB308]/40 text-xs font-bold">
-                      {viewingProject.reraNumber}
+                  <div>
+                    <span className="px-3 py-1 rounded-md bg-[#0B3B24] text-white text-xs font-bold tracking-wide shadow-xs inline-block">
+                      {viewingProject.dtcpNumber}
                     </span>
-                  )}
+                  </div>
+                  <p className="text-xs sm:text-sm text-slate-600 font-medium flex items-center gap-1.5 pt-0.5">
+                    <MapPin className="w-3.5 h-3.5 text-[#E5A91E] shrink-0" />
+                    <span>
+                      {viewingProject.district} District · {viewingProject.totalAreaExtent || '12.5 Gated Acres'}
+                    </span>
+                  </p>
                 </div>
-                <p className="text-xs text-slate-500 mt-0.5">
-                  {viewingProject.location}, {viewingProject.district} · {viewingProject.totalAreaExtent || '12.5 Acres'}
-                </p>
               </div>
+
+              {/* RERA Badge on Top Right */}
+              {viewingProject.reraNumber && (
+                <div className="px-3.5 py-1.5 rounded-full bg-[#E8F8EE] text-[#15803D] border border-[#BDE8CD] text-xs font-bold flex items-center gap-1.5 shadow-xs shrink-0">
+                  <span className="w-2 h-2 rounded-full bg-[#15803D] shrink-0" />
+                  <span>{viewingProject.reraNumber.includes('TN/RERA') ? 'TN/RERA Active' : viewingProject.reraNumber}</span>
+                </div>
+              )}
             </div>
 
-            {/* Quick Action Buttons */}
-            <div className="flex items-center gap-2 self-start sm:self-auto">
-              <button
-                type="button"
-                onClick={() => onOpenConsultation(inspectedPlot || undefined)}
-                className="min-h-[44px] px-3.5 py-2 rounded-xl bg-[#15803D] hover:bg-[#113B24] text-white text-xs font-bold flex items-center gap-2 transition-all cursor-pointer shadow-md"
-              >
-                <Sparkles className="w-4 h-4 text-[#EAB308]" />
-                <span>Book Free Site Visit</span>
-              </button>
-            </div>
+            {/* Full-width Book Doorstep Cab Visit Button (Exact from Reference) */}
+            <button
+              type="button"
+              onClick={() => onOpenCabBooking(inspectedPlot || undefined)}
+              className="w-full min-h-[48px] sm:min-h-[52px] rounded-2xl bg-[#0B3B24] hover:bg-[#14563D] active:scale-[0.99] text-white font-black text-xs sm:text-sm md:text-base flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer"
+            >
+              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-[#EAB308] shrink-0" />
+              <span className="tracking-wider uppercase">BOOK FREE DOORSTEP CAB VISIT</span>
+              <ChevronRight className="w-4 h-4 ml-1 text-white/80 shrink-0" />
+            </button>
           </div>
 
           {/* ─────────────────────────────────────────────────────────────
@@ -817,36 +825,32 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
                   />
                 </div>
 
-                {/* Status & Facing Filters */}
-                <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
-                  <div className="flex items-center gap-1.5 text-xs">
-                    <span className="font-bold text-slate-500">Status:</span>
-                    <select
-                      value={tableStatusFilter}
-                      onChange={(e) => setTableStatusFilter(e.target.value)}
-                      className="text-xs px-3 py-2 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 focus:outline-none"
-                    >
-                      <option value="All">All Status ({projectPlots.length})</option>
-                      <option value="Available">Available</option>
-                      <option value="Reserved">Reserved</option>
-                      <option value="Sold">Sold</option>
-                    </select>
-                  </div>
+                {/* Status & Facing Filters (Same Row, No Grey Text) */}
+                <div className="flex items-center gap-2.5 w-full sm:w-auto">
+                  <select
+                    value={tableStatusFilter}
+                    onChange={(e) => setTableStatusFilter(e.target.value)}
+                    className="flex-1 sm:flex-initial text-xs font-bold px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#15803D] shadow-xs cursor-pointer"
+                    aria-label="Filter by Status"
+                  >
+                    <option value="All">All Status ({projectPlots.length})</option>
+                    <option value="Available">Available</option>
+                    <option value="Reserved">Reserved</option>
+                    <option value="Sold">Sold</option>
+                  </select>
 
-                  <div className="flex items-center gap-1.5 text-xs">
-                    <span className="font-bold text-slate-500">Facing:</span>
-                    <select
-                      value={tableFacingFilter}
-                      onChange={(e) => setTableFacingFilter(e.target.value)}
-                      className="text-xs px-3 py-2 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 focus:outline-none"
-                    >
-                      <option value="All">All Facings</option>
-                      <option value="East">East Facing</option>
-                      <option value="North">North Facing</option>
-                      <option value="North-East">North-East Facing</option>
-                      <option value="South">South Facing</option>
-                    </select>
-                  </div>
+                  <select
+                    value={tableFacingFilter}
+                    onChange={(e) => setTableFacingFilter(e.target.value)}
+                    className="flex-1 sm:flex-initial text-xs font-bold px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#15803D] shadow-xs cursor-pointer"
+                    aria-label="Filter by Facing"
+                  >
+                    <option value="All">All Facings</option>
+                    <option value="East">East Facing</option>
+                    <option value="North">North Facing</option>
+                    <option value="North-East">North-East Facing</option>
+                    <option value="South">South Facing</option>
+                  </select>
                 </div>
               </div>
 

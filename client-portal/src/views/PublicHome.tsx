@@ -457,7 +457,7 @@ export const PublicHome: React.FC<PublicHomeProps> = ({
         id="ads"
         onMouseEnter={() => setIsAdPaused(true)}
         onMouseLeave={() => setIsAdPaused(false)}
-        className="w-full px-3 sm:px-6 py-4 sm:py-6 max-w-5xl sm:max-w-6xl mx-auto"
+        className="w-full px-2 sm:px-4 md:px-6 py-4 sm:py-6 max-w-7xl mx-auto"
       >
         <div
           onClick={() => onTabChange('projects')}
@@ -475,7 +475,7 @@ export const PublicHome: React.FC<PublicHomeProps> = ({
               <img
                 src={PROMOTIONAL_ADS[currentAdIndex].src}
                 alt={PROMOTIONAL_ADS[currentAdIndex].alt}
-                className="w-full h-[125px] sm:h-[185px] md:h-[240px] lg:h-[280px] object-cover rounded-2xl sm:rounded-3xl shadow-sm"
+                className="w-full h-[130px] sm:h-[190px] md:h-[250px] lg:h-[290px] object-cover rounded-2xl sm:rounded-3xl shadow-sm"
               />
             </motion.div>
           </AnimatePresence>
@@ -794,14 +794,14 @@ export const PublicHome: React.FC<PublicHomeProps> = ({
               onTouchMove={handleTouchMove}
               className="relative rounded-3xl overflow-hidden shadow-xl border-2 border-slate-100 aspect-[4/3] sm:aspect-[16/11] bg-slate-100 select-none cursor-ew-resize group"
             >
-              {/* Layer 1: Empty Residential Plot Background */}
+              {/* Layer 1: Empty Residential Plot Background (Real Layout Project) */}
               <img
-                src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80"
-                alt="Empty Demarcated Plot"
+                src="/project-slider/plot-layout.png"
+                alt="Golden City Demarcated Layout Plot"
                 className="absolute inset-0 w-full h-full object-cover pointer-events-none"
               />
 
-              {/* Layer 2: Completed Dream Home Foreground (Clipped by slider position) */}
+              {/* Layer 2: Completed Dream Home Foreground (Real Completed Villa on Project) */}
               <div
                 className="absolute inset-0 overflow-hidden pointer-events-none"
                 style={{
@@ -809,8 +809,8 @@ export const PublicHome: React.FC<PublicHomeProps> = ({
                 }}
               >
                 <img
-                  src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80"
-                  alt="Completed Built Home on Plot"
+                  src="/project-slider/villa-completed.png"
+                  alt="Completed Built Home on Layout Plot"
                   className="absolute inset-0 w-full h-full object-cover"
                 />
               </div>
