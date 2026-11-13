@@ -36,6 +36,10 @@ import {
   ShoppingBag,
   FolderOpen,
   Compass,
+  LayoutGrid,
+  Tag,
+  Maximize2,
+  Ruler,
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { Project, Property, LayoutDisplayMode, PropertyStatus, PublicTab } from '../../types';
@@ -453,82 +457,102 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
                 </div>
               </div>
 
-              {/* B. PROJECT OVERVIEW CARD */}
-              <div className="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-md space-y-4">
-                <div className="flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-2xl bg-amber-500/15 border border-amber-500/30 text-[#CA8A04] flex items-center justify-center shrink-0">
-                      <FolderOpen className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h3 className="text-base sm:text-lg font-black text-slate-900">
-                        Project Overview
-                      </h3>
-                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                        KRIYAA PROMOTERS FLAGSHIP COLONY
-                      </p>
-                    </div>
-                  </div>
-                  <span className="px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-600 border border-emerald-500/30 text-xs font-bold shrink-0">
-                    Phase 1: ACTIVE
+              {/* B. PROJECT OVERVIEW SECTION (Matches Image 1) */}
+              <div className="space-y-3.5">
+                <div className="flex items-center justify-between gap-3 pt-1">
+                  <h3 className="text-2xl sm:text-3xl font-serif font-black text-[#0B3B24] tracking-tight">
+                    Project Overview
+                  </h3>
+                  <span className="px-3 py-1 rounded-full border border-[#EAB308]/70 text-[#CA8A04] bg-[#FEF9C3]/50 text-xs font-black uppercase tracking-wider shrink-0 shadow-2xs">
+                    PHASE 1 ACTIVE
                   </span>
                 </div>
 
-                {/* 2x2 Clean Metric Grid */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                      TOTAL PLOTS
-                    </span>
-                    <span className="text-sm sm:text-base font-black text-slate-900 mt-0.5 block">
-                      45 Demarcated Plots
-                    </span>
-                    <span className="text-[11px] text-emerald-600 font-bold block mt-0.5">
-                      Phase 1 (Limited Units)
-                    </span>
+                {/* 4 Overview Metric Cards */}
+                <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                  {/* Card 1: Demarcated Units (Green curved top) */}
+                  <div className="relative bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-sm overflow-hidden flex flex-col justify-between">
+                    <div className="absolute top-0 inset-x-0 h-1.5 bg-[#0B3B24]" />
+                    <div>
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-[10px] sm:text-xs font-black text-slate-500 uppercase tracking-wider">
+                          DEMARCATED UNITS
+                        </span>
+                        <div className="w-8 h-8 rounded-xl bg-[#EFF7F2] text-[#0B3B24] flex items-center justify-center shrink-0">
+                          <LayoutGrid className="w-4 h-4" />
+                        </div>
+                      </div>
+                      <div className="text-xl sm:text-2xl font-black text-[#0B3B24] tracking-tight mt-3 mb-1">
+                        45 Plots
+                      </div>
+                    </div>
+                    <p className="text-xs sm:text-sm font-bold text-slate-700">
+                      32 Available Now
+                    </p>
                   </div>
 
-                  <div className="p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                      BASE PRICE
-                    </span>
-                    <span className="text-sm sm:text-base font-black text-slate-900 mt-0.5 block">
-                      ₹1,200 / Sq.Ft
-                    </span>
-                    <span className="text-[11px] text-amber-600 font-bold block mt-0.5">
-                      Approved Govt Valuation
-                    </span>
+                  {/* Card 2: Base Tariff (Gold curved top) */}
+                  <div className="relative bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-sm overflow-hidden flex flex-col justify-between">
+                    <div className="absolute top-0 inset-x-0 h-1.5 bg-[#EAB308]" />
+                    <div>
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-[10px] sm:text-xs font-black text-slate-500 uppercase tracking-wider">
+                          BASE TARIFF
+                        </span>
+                        <div className="w-8 h-8 rounded-xl bg-[#FEF9C3] text-[#CA8A04] flex items-center justify-center shrink-0">
+                          <Tag className="w-4 h-4" />
+                        </div>
+                      </div>
+                      <div className="text-xl sm:text-2xl font-black text-[#0B3B24] tracking-tight mt-3 mb-1">
+                        ₹1,200 <span className="text-xs sm:text-sm font-semibold text-slate-500">/sq.ft</span>
+                      </div>
+                    </div>
+                    <p className="text-xs sm:text-sm font-bold text-[#CA8A04]">
+                      Govt Valuation Approved
+                    </p>
                   </div>
 
-                  <div className="p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                      TOTAL LAYOUT AREA
-                    </span>
-                    <span className="text-sm sm:text-base font-black text-slate-900 mt-0.5 block">
-                      12.5 Gated Acres
-                    </span>
-                    <span className="text-[11px] text-slate-500 font-medium block mt-0.5">
-                      Wide tar roads & green resv
-                    </span>
+                  {/* Card 3: Gross Layout (Green curved top) */}
+                  <div className="relative bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-sm overflow-hidden flex flex-col justify-between">
+                    <div className="absolute top-0 inset-x-0 h-1.5 bg-[#0B3B24]" />
+                    <div>
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-[10px] sm:text-xs font-black text-slate-500 uppercase tracking-wider">
+                          GROSS LAYOUT
+                        </span>
+                        <div className="w-8 h-8 rounded-xl bg-[#EFF7F2] text-[#0B3B24] flex items-center justify-center shrink-0">
+                          <Maximize2 className="w-4 h-4" />
+                        </div>
+                      </div>
+                      <div className="text-xl sm:text-2xl font-black text-[#0B3B24] tracking-tight mt-3 mb-1">
+                        12.5 Acres
+                      </div>
+                    </div>
+                    <p className="text-xs sm:text-sm font-bold text-slate-600">
+                      40ft &amp; 30ft Corridors
+                    </p>
                   </div>
 
-                  <div className="p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                      PLOT SIZES AVAILABLE
-                    </span>
-                    <span className="text-sm sm:text-base font-black text-slate-900 mt-0.5 block">
-                      800 – 2,400 Sq.Ft
-                    </span>
-                    <span className="text-[11px] text-slate-500 font-medium block mt-0.5">
-                      1.8 – 5.5 Cents Units
-                    </span>
+                  {/* Card 4: Plot Profiles (Green curved top) */}
+                  <div className="relative bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-sm overflow-hidden flex flex-col justify-between">
+                    <div className="absolute top-0 inset-x-0 h-1.5 bg-[#0B3B24]" />
+                    <div>
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-[10px] sm:text-xs font-black text-slate-500 uppercase tracking-wider">
+                          PLOT PROFILES
+                        </span>
+                        <div className="w-8 h-8 rounded-xl bg-[#EFF7F2] text-[#0B3B24] flex items-center justify-center shrink-0">
+                          <Ruler className="w-4 h-4" />
+                        </div>
+                      </div>
+                      <div className="text-xl sm:text-2xl font-black text-[#0B3B24] tracking-tight mt-3 mb-1">
+                        800–2,400
+                      </div>
+                    </div>
+                    <p className="text-xs sm:text-sm font-bold text-slate-600">
+                      1.8 to 5.5 Cents
+                    </p>
                   </div>
-                </div>
-
-                {/* Bottom Strip */}
-                <div className="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-900 flex items-center gap-2.5 text-xs font-bold">
-                  <CheckCircle2 className="w-4 h-4 text-amber-600 shrink-0" />
-                  <span>Project Type: DTCP & RERA Approved Residential Plotted Colony</span>
                 </div>
               </div>
 
@@ -569,7 +593,10 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
                 </div>
               </div>
 
-              {/* D. TOWNSHIP INFRASTRUCTURE CARD */}
+              {/* D. SITE LOCATION & PROXIMITY MAP (Placed after Brochure, Interactive) */}
+              <ProjectLandmarksMap project={viewingProject} />
+
+              {/* E. TOWNSHIP INFRASTRUCTURE CARD */}
               <div className="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-md space-y-4">
                 <div className="flex items-center justify-between gap-2">
                   <h3 className="text-base sm:text-lg font-black text-slate-900">
@@ -623,100 +650,6 @@ export const PublicProjects: React.FC<PublicProjectsProps> = ({
                           </div>
                         </div>
                         <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* E0. INTERACTIVE SITE LOCATION & NEARBY LANDMARKS MAP WITH ZOOM CONTROLS (PLACED BEFORE NEARBY LANDMARKS) */}
-              <ProjectLandmarksMap project={viewingProject} />
-
-              {/* E. NEARBY LANDMARKS & CONNECTIVITY */}
-              <div className="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-md space-y-4">
-                <div className="flex items-center justify-between gap-2">
-                  <h3 className="text-base sm:text-lg font-black text-slate-900">
-                    Nearby Landmarks
-                  </h3>
-                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 border border-emerald-500/30 text-xs font-bold">
-                    KEY HUBS
-                  </span>
-                </div>
-
-                <div className="space-y-2.5">
-                  {[
-                    {
-                      name: 'NH-45A / ECR Coastal Corridor',
-                      sub: 'Rapid seamless access to arterial highway connecting Puducherry & Chidambaram',
-                      dist: '400 m (1 min)',
-                      isAmber: false,
-                      icon: Navigation,
-                    },
-                    {
-                      name: 'Cuddalore Port Junction Rwy Station',
-                      sub: 'Main Southern Railway junction with express trains to Chennai & Tiruchirappalli',
-                      dist: '4.2 km (8 mins)',
-                      isAmber: true,
-                      icon: Train,
-                    },
-                    {
-                      name: 'Airport Connectivity',
-                      sub: 'Pondicherry Airport = 24 km (35 mins) & Chennai International Airport = 180 km',
-                      dist: '24 km (35 mins)',
-                      isAmber: false,
-                      icon: Plane,
-                    },
-                    {
-                      name: 'Schools & Premier Colleges',
-                      sub: "St. Joseph's Hr. Sec., Krishnasamy Memorial School & Periyar Arts College (2.5 km)",
-                      dist: '1.0 km (2 mins)',
-                      isAmber: false,
-                      icon: GraduationCap,
-                    },
-                    {
-                      name: 'Hospitals & Healthcare',
-                      sub: 'Government General Hospital, Krishna Hospital & 24x7 Multi-Specialty Clinics',
-                      dist: '3.5 km (6 mins)',
-                      isAmber: false,
-                      icon: HeartPulse,
-                    },
-                    {
-                      name: 'Shopping Malls & Commercial Hub',
-                      sub: 'AR Shopping Mall, Imperial Road Daily Produce Market & Banking Hubs',
-                      dist: '3.8 km (7 mins)',
-                      isAmber: true,
-                      icon: ShoppingBag,
-                    },
-                  ].map((landmark, idx) => {
-                    const Icon = landmark.icon;
-                    return (
-                      <div
-                        key={idx}
-                        className="p-3 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex items-center justify-between gap-3"
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center shrink-0">
-                            <Icon className="w-4 h-4" />
-                          </div>
-                          <div>
-                            <h4 className="text-xs font-black text-slate-900">
-                              {landmark.name}
-                            </h4>
-                            <p className="text-[10px] text-slate-500 mt-0.5 line-clamp-1">
-                              {landmark.sub}
-                            </p>
-                          </div>
-                        </div>
-
-                        <span
-                          className={`px-2.5 py-1 rounded-full text-[10px] font-black shrink-0 ${
-                            landmark.isAmber
-                              ? 'bg-amber-500/15 text-amber-700'
-                              : 'bg-emerald-500/15 text-emerald-700'
-                          }`}
-                        >
-                          {landmark.dist}
-                        </span>
                       </div>
                     );
                   })}
