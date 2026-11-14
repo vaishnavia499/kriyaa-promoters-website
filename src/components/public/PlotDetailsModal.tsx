@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import {
@@ -56,15 +56,24 @@ export const PlotDetailsModal: React.FC<PlotDetailsModalProps> = ({
     };
   }, [isOpen, onClose]);
 
-  // Format dimensions (e.g. "30x50" or "30 x 50" -> "30 × 50")
-  const rawDim = (plot?.plotDimensions || '')
-    .replace(/ft/gi, '')
-    .trim();
-  const formattedDimensions = rawDim.includes('x')
-    ? rawDim.replace(/\s*x\s*/gi, ' × ')
-    : rawDim.includes('X')
-    ? rawDim.replace(/\s*X\s*/gi, ' × ')
-    : rawDim;
+  // Parse dimensions for blueprint schematic (e.g. "35 x 43", "30x40 ft", "30 × 50")
+  const { dimWidth, dimDepth, formattedDimensions } = useMemo(() => {
+    const rawDim = (plot?.plotDimensions || '').replace(/ft/gi, '').trim();
+    const parts = rawDim.split(/\s*(?:x|X|×|\*)\s*/);
+    const w = parts[0] ? parts[0].trim() : '30';
+    const d = parts[1] ? parts[1].trim() : (parts[0] ? parts[0].trim() : '40');
+    return {
+      dimWidth: w,
+      dimDepth: d,
+      formattedDimensions: `${w} × ${d}`,
+    };
+  }, [plot?.plotDimensions]);
+
+  // Frontage road text for blueprint (e.g. "40' WIDE BLACKTOP MAIN RING ROAD FRONTAGE")
+  const frontageText = useMemo(() => {
+    const rw = (plot?.roadWidth || '40').replace(/ft|'/gi, '').trim();
+    return `${rw || '40'}' WIDE BLACKTOP MAIN RING ROAD FRONTAGE`;
+  }, [plot?.roadWidth]);
 
   // Status Badge Styling (Available: Emerald, Reserved: Amber, Sold: Red)
   let statusBadgeConfig = {
@@ -156,63 +165,147 @@ export const PlotDetailsModal: React.FC<PlotDetailsModalProps> = ({
             </div>
 
             {/* ─────────────────────────────────────────────────────────────
-                2. PLOT SPECIFICATIONS GRID (Clean 2x2 & Highlight Rows)
+                2. CADASTRAL DIMENSION BLUEPRINT (Matches Reference Image 2)
+                ───────────────────────────────────────────────────────────── */}
+            <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 p-3.5 sm:p-4 shadow-sm space-y-2.5">
+              {/* Header: Title & Scale 1:200 Badge */}
+              <div className="flex items-center justify-between gap-2 px-0.5">
+                <span className="text-[11px] sm:text-xs font-black tracking-wider text-slate-800 uppercase font-serif">
+                  Cadastral Dimension Blueprint
+                </span>
+                <span className="px-2.5 py-0.5 rounded-full border border-amber-300 text-amber-800 bg-amber-50/90 text-[10px] font-black tracking-wider uppercase shadow-2xs">
+                  Scale 1:200
+                </span>
+              </div>
+
+              {/* Visual Blueprint Schematic Box */}
+              <div className="relative rounded-2xl border border-slate-200 bg-[#FAFCFA] p-3 sm:p-4 overflow-hidden flex flex-col items-center justify-center">
+                {/* SVG Engineering Grid Background */}
+                <svg
+                  className="absolute inset-0 w-full h-full pointer-events-none opacity-60"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <defs>
+                    <pattern
+                      id="cadastralGrid"
+                      width="16"
+                      height="16"
+                      patternUnits="userSpaceOnUse"
+                    >
+                      <path
+                        d="M 16 0 L 0 0 0 16"
+                        fill="none"
+                        stroke="#E2E8F0"
+                        strokeWidth="0.8"
+                      />
+                    </pattern>
+                  </defs>
+                  <rect width="100%" height="100%" fill="url(#cadastralGrid)" />
+                </svg>
+
+                {/* Compass North Arrow (Top Right) */}
+                <div className="absolute top-2.5 right-3 flex flex-col items-center text-slate-700 pointer-events-none z-10 select-none">
+                  <span className="text-xs leading-none">↑</span>
+                  <span className="text-[10px] font-black leading-tight">N</span>
+                </div>
+
+                {/* Top Dimension Tag */}
+                <div className="z-10 mb-2">
+                  <span className="px-3 py-0.5 rounded-lg bg-white border border-slate-200 text-xs font-black text-slate-800 shadow-2xs inline-block">
+                    {dimWidth} ft
+                  </span>
+                </div>
+
+                {/* Center Plot Area flanked by Left & Right Dimension Tags */}
+                <div className="w-full flex items-center justify-center gap-2 sm:gap-4 z-10 my-0.5">
+                  {/* Left Dimension Tag */}
+                  <span className="px-1.5 py-1.5 rounded-lg bg-white border border-slate-200 text-[11px] font-black text-slate-800 shadow-2xs [writing-mode:vertical-lr] rotate-180 inline-block shrink-0">
+                    {dimDepth} ft
+                  </span>
+
+                  {/* Center Plot Box */}
+                  <div className="flex-1 max-w-[260px] bg-white/95 rounded-2xl border-2 border-[#0B3B24] py-3.5 px-4 text-center shadow-xs">
+                    <h4 className="text-base sm:text-lg font-black text-[#0B3B24] tracking-wider uppercase">
+                      Plot #{plot.plotNumber}
+                    </h4>
+                    <p className="text-xs sm:text-sm font-black text-[#CA8A04] mt-0.5 tracking-wide uppercase">
+                      {plot.areaSqFt?.toLocaleString('en-IN')} SQ.FT
+                    </p>
+                  </div>
+
+                  {/* Right Dimension Tag */}
+                  <span className="px-1.5 py-1.5 rounded-lg bg-white border border-slate-200 text-[11px] font-black text-slate-800 shadow-2xs [writing-mode:vertical-lr] rotate-180 inline-block shrink-0">
+                    {dimDepth} ft
+                  </span>
+                </div>
+
+                {/* Bottom Road Frontage Pill */}
+                <div className="w-full max-w-sm py-1.5 px-3 rounded-xl bg-[#0B3B24] text-center shadow-xs z-10 mt-2.5">
+                  <span className="text-[10px] sm:text-[11px] font-black tracking-wide text-[#EAB308] uppercase block truncate">
+                    {frontageText}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* ─────────────────────────────────────────────────────────────
+                3. 4 PLOT SPECIFICATION METRIC CARDS (Matches Image 3)
                 ───────────────────────────────────────────────────────────── */}
             <div className="grid grid-cols-2 gap-2.5">
               {/* 1. Dimensions */}
-              <div className="p-3 rounded-2xl bg-slate-50 border border-slate-100">
+              <div className="p-3 sm:p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col justify-between">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                  Dimensions
+                  DIMENSIONS
                 </span>
-                <span className="text-sm sm:text-base font-black text-slate-900 mt-0.5 block font-mono">
-                  {formattedDimensions ? `${formattedDimensions} ft` : '30 × 50 ft'}
+                <span className="text-base sm:text-lg font-black text-slate-900 mt-1 block font-mono">
+                  {formattedDimensions} ft
                 </span>
-                <span className="text-[10px] text-slate-500 font-medium block mt-0.5">
-                  Standard Parcel
+                <span className="text-[11px] text-slate-500 font-medium block mt-0.5">
+                  {plot.isCornerPlot ? 'Corner Parcel' : 'Standard Parcel'}
                 </span>
               </div>
 
               {/* 2. Total Area */}
-              <div className="p-3 rounded-2xl bg-slate-50 border border-slate-100">
+              <div className="p-3 sm:p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col justify-between">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                  Total Area
+                  TOTAL AREA
                 </span>
-                <span className="text-sm sm:text-base font-black text-slate-900 mt-0.5 block">
+                <span className="text-base sm:text-lg font-black text-slate-900 mt-1 block">
                   {plot.areaSqFt?.toLocaleString('en-IN')} sq.ft
                 </span>
-                <span className="text-[10px] text-amber-600 font-bold block mt-0.5">
+                <span className="text-[11px] text-[#CA8A04] font-black block mt-0.5">
                   ({plot.areaCents} Cents)
                 </span>
               </div>
 
               {/* 3. Price per Sq.Ft */}
-              <div className="p-3 rounded-2xl bg-slate-50 border border-slate-100">
+              <div className="p-3 sm:p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col justify-between">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                  Price per Sq.Ft
+                  PRICE PER SQ.FT
                 </span>
-                <span className="text-sm sm:text-base font-black text-slate-900 mt-0.5 block">
-                  ₹{plot.pricePerSqFt?.toLocaleString('en-IN') || '1,200'} / sq.ft
+                <span className="text-base sm:text-lg font-black text-slate-900 mt-1 block">
+                  ₹{plot.pricePerSqFt?.toLocaleString('en-IN') || '1,000'} / sq.ft
                 </span>
-                <span className="text-[10px] text-emerald-600 font-bold block mt-0.5">
+                <span className="text-[11px] text-[#15803D] font-bold block mt-0.5">
                   Govt Sanctioned
                 </span>
               </div>
 
-              {/* 4. Total Investment */}
-              <div className="p-3 rounded-2xl bg-slate-50 border border-slate-100">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                  Total Investment
+              {/* 4. Total Investment (Green highlight background & border - Image 3) */}
+              <div className="p-3 sm:p-3.5 rounded-2xl bg-emerald-50/60 border border-emerald-300/80 shadow-2xs flex flex-col justify-between">
+                <span className="text-[10px] font-bold text-[#15803D] uppercase tracking-wider block">
+                  TOTAL INVESTMENT
                 </span>
-                <span className="text-sm sm:text-base font-black text-[#15803D] mt-0.5 block">
+                <span className="text-base sm:text-lg font-black text-[#0B3B24] mt-1 block">
                   ₹{plot.totalPrice?.toLocaleString('en-IN')}
                 </span>
-                <span className="text-[10px] text-slate-500 font-bold block mt-0.5">
+                <span className="text-[11px] text-slate-700 font-bold block mt-0.5">
                   ₹{(plot.totalPrice / 100000).toFixed(2)} Lakhs
                 </span>
               </div>
             </div>
 
-            {/* 5. Estimated EMI Banner */}
+            {/* 4. Estimated EMI Banner */}
             <div className="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between gap-3">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-xl bg-[#113B24] border border-[#EAB308]/60 flex items-center justify-center text-[#EAB308] shrink-0">
@@ -232,7 +325,7 @@ export const PlotDetailsModal: React.FC<PlotDetailsModalProps> = ({
               </span>
             </div>
 
-            {/* 6. Legal Approval Tag */}
+            {/* 5. Legal Approval Tag */}
             <div className="p-2.5 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-between gap-2 text-xs">
               <div className="flex items-center gap-2 text-slate-700">
                 <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0" />
@@ -246,7 +339,7 @@ export const PlotDetailsModal: React.FC<PlotDetailsModalProps> = ({
             </div>
 
             {/* ─────────────────────────────────────────────────────────────
-                3. ACTION BUTTONS (Footer of the Pop-up)
+                6. ACTION BUTTONS (Footer of the Pop-up)
                 ───────────────────────────────────────────────────────────── */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
               {/* Button 1: "♥ Add to Favourite" (or "Saved" toggle) */}
