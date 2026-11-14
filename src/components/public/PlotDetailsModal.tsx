@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'motion/react';
 import {
   X,
   Compass,
-  Heart,
   ShieldCheck,
   Landmark,
   MessageCircle,
@@ -16,8 +15,8 @@ interface PlotDetailsModalProps {
   onClose: () => void;
   plot: Property | null;
   project: Project;
-  isSaved: boolean;
-  onToggleSave: (plotId: string) => void;
+  isSaved?: boolean;
+  onToggleSave?: (plotId: string) => void;
   onBookConsultation: (plot: Property) => void;
   onWhatsAppInquiry?: (plot: Property) => void;
 }
@@ -27,8 +26,6 @@ export const PlotDetailsModal: React.FC<PlotDetailsModalProps> = ({
   onClose,
   plot,
   project,
-  isSaved,
-  onToggleSave,
   onBookConsultation,
   onWhatsAppInquiry,
 }) => {
@@ -341,35 +338,15 @@ export const PlotDetailsModal: React.FC<PlotDetailsModalProps> = ({
             {/* ─────────────────────────────────────────────────────────────
                 6. ACTION BUTTONS (Footer of the Pop-up)
                 ───────────────────────────────────────────────────────────── */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
-              {/* Button 1: "♥ Add to Favourite" (or "Saved" toggle) */}
-              <button
-                type="button"
-                onClick={() => onToggleSave(plot.id)}
-                className={`min-h-[46px] px-3.5 py-2.5 rounded-2xl font-black text-xs sm:text-sm flex items-center justify-center gap-2 border transition-all cursor-pointer active:scale-95 ${
-                  isSaved
-                    ? 'bg-rose-50 text-rose-700 border-rose-300 shadow-sm'
-                    : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
-                }`}
-              >
-                <Heart
-                  className={`w-4 h-4 transition-transform ${
-                    isSaved
-                      ? 'fill-rose-500 text-rose-500 scale-110'
-                      : 'text-slate-500'
-                  }`}
-                />
-                <span>{isSaved ? '♥ Added to Favourites' : '♥ Add to Favourite'}</span>
-              </button>
-
-              {/* Button 2: "Book Consultation →" (Primary Metallic Gold CTA) */}
+            <div className="w-full pt-1">
+              {/* Primary Metallic Gold CTA */}
               <button
                 type="button"
                 onClick={() => {
                   onClose();
                   onBookConsultation(plot);
                 }}
-                className="min-h-[46px] px-3.5 py-2.5 rounded-2xl bg-[#EAB308] hover:bg-[#CA8A04] text-[#0B2516] font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-lg shadow-amber-500/25 active:scale-95 transition-all cursor-pointer"
+                className="w-full min-h-[48px] px-4 py-3 rounded-2xl bg-[#EAB308] hover:bg-[#CA8A04] text-[#0B2516] font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-amber-500/25 active:scale-95 transition-all cursor-pointer"
               >
                 <span>Book Consultation →</span>
               </button>
